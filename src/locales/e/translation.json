@@ -1,0 +1,14 @@
+{
+  "common":{
+    "ecommerce":"E-commerce",
+    "products":"Products",
+    "orders":"Orders",
+    "inventory":"Inventory",
+    "charts":"Charts",
+    "seller-dashboard":"Seller Dashboard",
+    "admin-dashboard":"Admin Dashboard",
+    "user-management":"User Management",
+    "users":"Users",
+    "roles":"Roles"
+  }
+}
