@@ -40,7 +40,7 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
     } catch (error: any) {
       console.log(error)
       notificationController.error({
-        message:error,
+        message:error.errors.message,
         duration: null
       })
     }
