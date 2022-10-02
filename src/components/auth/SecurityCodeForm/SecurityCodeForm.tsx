@@ -1,39 +1,60 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAppDispatch } from '../../../store';
+import { actionOTPResetPassword } from '../../../store/authentication/action'
+import { notificationController } from '../../../controllers/notificationController'
 import { Image, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
 import { VerificationCodeInput } from '../../../components/common/VerificationCodeInput/VerificationCodeInput';
-import VerifyEmailImage from '../../../components/assets/images/verify-email.webp';
+import VerifyEmailImage from '../../../assets/images/verify-email.webp';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
 import * as S from './SecurityCodeForm.styles';
 
 interface SecurityCodeFormProps {
-  onBack?: () => void;
-  onFinish?: () => void;
+  onForgot:(toggle: boolean) => void;
+  onSecurityCode: (toggle: boolean) => void;
+  onNewPassword: (toggle: boolean) => void;
 }
 
-export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onBack, onFinish }) => {
-  const navigate = useNavigate();
+export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, onNewPassword , onSecurityCode }) => {
   const { t } = useTranslation();
-
-  const navigateBack = useCallback(() => navigate(-1), [navigate]);
-  const navigateForward = useCallback(() => navigate('/auth/new-password'), [navigate]);
-
+  const dispatch = useAppDispatch()
+  
   const [securityCode, setSecurityCode] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (securityCode.length === 6) {
       setLoading(true);
+      handleFinish()
     }
-    
-  }, [securityCode, navigateForward, onFinish]);
+  }, [securityCode]);
+
+  const handleFinish = useCallback(async () => {
+    try {
+      await dispatch(actionOTPResetPassword(Number(securityCode)))
+      onSecurityCode(false)
+      onNewPassword(true)
+      setLoading(false)
+    } catch (error: any) {
+      console.log(error)
+      notificationController.error({
+        message:error,
+        duration: null
+      })
+    }
+  }, [securityCode])
 
   return (
     <Auth.FormWrapper>
       <BaseForm layout="vertical" requiredMark="optional">
-        <Auth.BackWrapper onClick={onBack || navigateBack}>
+        <Auth.BackWrapper onClick={
+          () => {
+            onSecurityCode(false)
+            onForgot(true)
+          }
+        }>
           <Auth.BackIcon />
           {t('common.back')}
         </Auth.BackWrapper>

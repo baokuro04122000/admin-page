@@ -6,6 +6,8 @@ import { AuthenticationSlice } from "../../interfaces/authentication";
 
 const initialState: AuthenticationSlice = {
   authUser: null,
+  notifyResetPassowrd: undefined,
+  verifyToken: undefined,
 };
 
 export const authenticationSlice = createSlice({
@@ -14,12 +16,27 @@ export const authenticationSlice = createSlice({
   reducers: {
     setAuthUser(state, action: PayloadAction<UserCredentialResponse | null>) {
       state.authUser = action.payload;
+    },
+    setNotifyResetPassowrd(
+      state,
+      {payload}: PayloadAction<string | undefined>
+    ){
+      state.notifyResetPassowrd = payload
+    },
+    setVerifyToken(
+      state,
+      {payload}: PayloadAction<string | undefined>
+    ){
+      state.verifyToken = payload
     }
+
   },
 });
 
 export const { 
-  setAuthUser
+  setAuthUser,
+  setNotifyResetPassowrd,
+  setVerifyToken
 } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

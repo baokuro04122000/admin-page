@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { actionNewPassword } from '../../../store/authentication/action';
+import { notificationController } from '../../../controllers/notificationController'
+import { LOGIN_PATH } from '../../../constants/routes'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
 import * as S from './NewPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
@@ -11,23 +15,48 @@ interface NewPasswordFormData {
 }
 
 const initStates = {
-  password: 'new-password',
-  confirmPassword: 'new-password',
+  password: '',
+  confirmPassword: '',
 };
 
-export const NewPasswordForm: React.FC = () => {
+interface Props {
+  onForgot:(toggle: boolean) => void;
+  onNewPassword:(toggle: boolean) => void;
+}
+
+export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
+  const verifyCode = useAppSelector(({authentication}) => authentication.verifyToken)
   const { t } = useTranslation();
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
-  const handleSubmit = (values: NewPasswordFormData) => {
+  const handleSubmit = useCallback(async (values: NewPasswordFormData) => {
     setLoading(true);
-  };
+    try {
+      if(verifyCode){
+        await dispatch(actionNewPassword(verifyCode, values.password))  
+        setLoading(false)
+        navigate(LOGIN_PATH)
+      }
+    } catch (error: any) {
+      console.log(error)
+      setLoading(false)
+      notificationController.error({
+        message:error,
+        duration:null
+      })
+    }
+  },[verifyCode]);
 
   return (
     <Auth.FormWrapper>
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initStates}>
-        <Auth.BackWrapper onClick={() => navigate(-1)}>
+        <Auth.BackWrapper onClick={() => {
+          onForgot(true)
+          onNewPassword(false)
+        }
+        }>
           <Auth.BackIcon />
           {t('common.back')}
         </Auth.BackWrapper>

@@ -3,9 +3,8 @@ export const LOGIN_PATH = "/auth/login";
 export const LOGIN_SUBPATH = "login"
 export const RESET_PASSWORD_SUBPATH = "forgot-password"
 export const RESET_PASSWORD_PATH = "/auth/forgot-password"
-export const SEND_EMAIL_SUBPATH = "confirm-email"
-export const SEND_EMAIL_PATH = "/auth/confirm-email"
-export const ACTIVATE_PASSWORD_SUBPATH = "activate-password"
+export const CHANGE_PASSWORD_SUBPATH = "reset-password"
+export const CHANGE_PASSWORD_PATH = "reset-password"
 export const NOTFOUND_PATH = "*";
 
 // Paths for main seller dashboard pages
@@ -15,6 +14,8 @@ export const SELLER_DASHBOARD_PRODUCTS_SUBPATH = "products";
 export const SELLER_DASHBOARD_CREATE_PRODUCT_SUBPATH = "create-product"
 export const SELLER_DASHBOARD_ORDERS_SUBPATH = "orders";
 export const SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH = "unauthorized";
+
+export const LOGOUT_SUBPATH = "logout"
 
 // Paths for main dashboard pages
 export const ADMIN_PATH = "/admin";

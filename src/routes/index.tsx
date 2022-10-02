@@ -10,14 +10,12 @@ import {
   ADMIN_USERS_SUBPATH,
   LOGIN_SUBPATH,
   AUTH_PATH,
-  SEND_EMAIL_SUBPATH,
   RESET_PASSWORD_SUBPATH,
-  ACTIVATE_PASSWORD_SUBPATH,
   SELLER_DASHBOARD_PATH,
   SELLER_DASHBOARD_HOME_SUBPATH,
   SELLER_DASHBOARD_PRODUCTS_SUBPATH,
-  SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH
-
+  SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
+  LOGOUT_SUBPATH
 } from "../constants/routes";
 
 import { RouteConfig } from "../interfaces/routes";
@@ -25,15 +23,13 @@ import Layout from "../layout/MainLayout/MainLayout";
 import AuthRoute from "./AuthRoute";
 import UnauthRoute from "./UnauthRoute";
 import PermissionRoute from "./PermissionRoute";
+import Logout from "../pages/Logout";
+import ResetPassword from "../pages/ResetPassword"
 const AuthLayout = React.lazy(() => import("../layout/AuthLayout/AuthLayout")) 
-const ResetPassword = React.lazy(()=>import("../pages/ResetPassword")) ;
-const ActivatePassWord = React.lazy(() => import("../pages/ActivateAccount"));
 const Login = React.lazy(() => import("../pages/Login"));
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
-const ResetPassWordForm = React.lazy(() => import("../pages/ResetPassword/ResetPassWordForm"));
-
-
+const Product = React.lazy(() => import("../pages/Product"))
 const unauthRoutes: RouteConfig = {
   path: AUTH_PATH,
   element: <AuthLayout />,
@@ -44,16 +40,8 @@ const unauthRoutes: RouteConfig = {
       element: <Login/>
     },
     {
-      path: SEND_EMAIL_SUBPATH,
-      element:<ResetPassword/>
-    },
-    {
       path: RESET_PASSWORD_SUBPATH,
-      element: <ResetPassWordForm/>
-    },
-    {
-      path: ACTIVATE_PASSWORD_SUBPATH,
-      element: <ActivatePassWord/>
+      element:<ResetPassword/>
     }
   ]
 };
@@ -85,9 +73,17 @@ const sellerRoutes: RouteConfig = {
       element: <Navigate to={SELLER_DASHBOARD_PRODUCTS_SUBPATH} />,
     },
     {
-      path: SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
-      element: <Unauthorized />,
+      path: SELLER_DASHBOARD_PRODUCTS_SUBPATH,
+      element: <Product />,
     },
+    {
+      path:LOGOUT_SUBPATH,
+      element: <Logout />
+    },
+    {
+      path:SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
+      element: <Unauthorized />
+    }
   ],
 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import { FONT_SIZE, FONT_WEIGHT, media } from '../../../styles/themes/constants';
 
 export const Description = styled.div`
   margin-bottom: 1.875rem;

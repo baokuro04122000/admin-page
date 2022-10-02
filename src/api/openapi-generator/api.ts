@@ -35,21 +35,21 @@ export interface AnnouceSuccess {
     'status'?: number;
     /**
      * 
-     * @type {AnnouceSuccessErrors}
+     * @type {AnnouceSuccessData}
      * @memberof AnnouceSuccess
      */
-    'errors'?: AnnouceSuccessErrors;
+    'data'?: AnnouceSuccessData;
 }
 /**
  * 
  * @export
- * @interface AnnouceSuccessErrors
+ * @interface AnnouceSuccessData
  */
-export interface AnnouceSuccessErrors {
+export interface AnnouceSuccessData {
     /**
      * 
      * @type {string}
-     * @memberof AnnouceSuccessErrors
+     * @memberof AnnouceSuccessData
      */
     'message'?: string;
 }
@@ -147,6 +147,64 @@ export interface MetaSeller {
      * @memberof MetaSeller
      */
     'title'?: string;
+}
+/**
+ * OTP got from your email
+ * @export
+ * @interface OTPRequest
+ */
+export interface OTPRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof OTPRequest
+     */
+    'otp'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OTPResponse
+ */
+export interface OTPResponse {
+    /**
+     * 
+     * @type {OTPResponseData}
+     * @memberof OTPResponse
+     */
+    'data'?: OTPResponseData;
+}
+/**
+ * 
+ * @export
+ * @interface OTPResponseData
+ */
+export interface OTPResponseData {
+    /**
+     * 
+     * @type {string}
+     * @memberof OTPResponseData
+     */
+    'token'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ResetPasswordRequest
+ */
+export interface ResetPasswordRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResetPasswordRequest
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResetPasswordRequest
+     */
+    'password'?: string;
 }
 /**
  * Seller detail information
@@ -474,14 +532,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Check email and send link to reset password
-         * @summary Forgot password
+         * Send mail to reset password - step 1
          * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authForgotPasswordPost: async (forgotPasswordRequest?: ForgotPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auth/forgot-password`;
+        authEmailResetPasswordPost: async (forgotPasswordRequest?: ForgotPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/email-reset-password`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -545,8 +602,38 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLogoutPost: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authLogoutGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/auth/logout`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * OTP matched then server will send for you verify token to reset password - step 2
+         * @param {OTPRequest} [oTPRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOtpResetPasswordPost: async (oTPRequest?: OTPRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/otp-reset-password`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -560,9 +647,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(oTPRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -602,6 +692,39 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Reset password follow by verify token - final step
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authResetPasswordPost: async (resetPasswordRequest?: ResetPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/reset-password`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(resetPasswordRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -631,14 +754,13 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Check email and send link to reset password
-         * @summary Forgot password
+         * Send mail to reset password - step 1
          * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authForgotPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ErrorResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authForgotPasswordPost(forgotPasswordRequest, options);
+        async authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authEmailResetPasswordPost(forgotPasswordRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -656,8 +778,18 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authLogoutPost(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authLogoutPost(options);
+        async authLogoutGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authLogoutGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * OTP matched then server will send for you verify token to reset password - step 2
+         * @param {OTPRequest} [oTPRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTPResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authOtpResetPasswordPost(oTPRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -668,6 +800,16 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authRegisterPost(userRegister?: UserRegister, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authRegisterPost(userRegister, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Reset password follow by verify token - final step
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authResetPasswordPost(resetPasswordRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -697,14 +839,13 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.apiOauthGoogleGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * Check email and send link to reset password
-         * @summary Forgot password
+         * Send mail to reset password - step 1
          * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authForgotPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: any): AxiosPromise<ErrorResponse> {
-            return localVarFp.authForgotPasswordPost(forgotPasswordRequest, options).then((request) => request(axios, basePath));
+        authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authEmailResetPasswordPost(forgotPasswordRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * User Login by Email and Password 
@@ -720,8 +861,17 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLogoutPost(options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.authLogoutPost(options).then((request) => request(axios, basePath));
+        authLogoutGet(options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authLogoutGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * OTP matched then server will send for you verify token to reset password - step 2
+         * @param {OTPRequest} [oTPRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: any): AxiosPromise<OTPResponse> {
+            return localVarFp.authOtpResetPasswordPost(oTPRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * User sign up an local account
@@ -731,6 +881,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authRegisterPost(userRegister?: UserRegister, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.authRegisterPost(userRegister, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reset password follow by verify token - final step
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authResetPasswordPost(resetPasswordRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -763,15 +922,14 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * Check email and send link to reset password
-     * @summary Forgot password
+     * Send mail to reset password - step 1
      * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authForgotPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authForgotPasswordPost(forgotPasswordRequest, options).then((request) => request(this.axios, this.basePath));
+    public authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authEmailResetPasswordPost(forgotPasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -791,8 +949,19 @@ export class AuthApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authLogoutPost(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authLogoutPost(options).then((request) => request(this.axios, this.basePath));
+    public authLogoutGet(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authLogoutGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * OTP matched then server will send for you verify token to reset password - step 2
+     * @param {OTPRequest} [oTPRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authOtpResetPasswordPost(oTPRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -804,6 +973,17 @@ export class AuthApi extends BaseAPI {
      */
     public authRegisterPost(userRegister?: UserRegister, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authRegisterPost(userRegister, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reset password follow by verify token - final step
+     * @param {ResetPasswordRequest} [resetPasswordRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authResetPasswordPost(resetPasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -86,6 +86,96 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
   
+  /auth/email-reset-password:
+    post:
+      tags:
+        - Auth
+      description: Send mail to reset password - step 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordRequest"
+      responses:
+        "200":
+          description: Server will send OTP code to your email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Invalid Email Format/Email is not Registered
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"  
+  
+  /auth/otp-reset-password:
+    post:
+      tags:
+        - Auth
+      description: OTP matched then server will send for you verify token to reset password - step 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OTPRequest"
+      responses:
+        "200":
+          description: Server will send verify code to you, then you get it  to reset password
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OTPResponse"
+        "400":
+            description: Invalid otp code
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth
+      description: Reset password follow by verify token - final step
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        "200":
+          description: Reset password is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Invalid verify code
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
   /api/oauth/google:
     get:
       tags:
@@ -132,7 +222,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
   
   /auth/logout:
-    post:
+    get:
       tags:
         - Auth
       description: Users can only log themselves out, not other users
@@ -150,36 +240,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /auth/forgot-password:
-    post:
-      tags:
-        - Auth
-      summary: Forgot password
-      description: Check email and send link to reset password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ForgotPasswordRequest'
-      responses:
-        "200":
-          description: Email matched
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "400":
-          description: Invalid Email Format/Email is not Registered
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
 
 
 
@@ -369,16 +429,45 @@ components:
         email:
           type: string
           example: baotrandinh100@gmail.com
+          
+    OTPRequest:
+      type: object
+      description: OTP got from your email
+      properties:
+        otp:
+          type: integer
+          example: 123456
+          
+    ResetPasswordRequest:
+      type: object
+      properties:
+        token:
+          type: string
+        password:
+          type: string
+          example: "12345678a"
+          
     AnnouceSuccess:
       type: object
       properties:
         status:
           type: integer
           example: 200
-        errors:
+        data:
           type: object
           properties:
             message:
               type: string
               example: "register is success, please check your email to active account"
+    
+    OTPResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: "12312-dasd-dasdasd"
+    
     

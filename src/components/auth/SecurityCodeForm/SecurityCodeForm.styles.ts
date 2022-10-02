@@ -1,4 +1,4 @@
-import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import { FONT_SIZE, FONT_WEIGHT, media } from '../../../styles/themes/constants';
 import styled from 'styled-components';
 
 export const ImageWrapper = styled.div`

@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '../../../store'
+import { actionEmailResetPassword } from '../../../store/authentication/action'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
+import {notificationController} from '../../../controllers/notificationController'
 import * as S from './ForgotPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
 
@@ -10,17 +13,35 @@ interface ForgotPasswordFormData {
 }
 
 const initValues = {
-  email: 'chris.johnson@altence.com',
+  email: '',
 };
-
-export const ForgotPasswordForm: React.FC = () => {
+interface Props {
+  onForgot:(toggle: boolean) => void,
+  onSecurityCode: (toggle: boolean) => void,
+  onNewPassword?: (toggle: boolean) => void
+}
+export const ForgotPasswordForm: React.FC<Props> = ({onForgot, onNewPassword, onSecurityCode}) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
   const [isLoading, setLoading] = useState(false);
 
-  const handleSubmit = (values: ForgotPasswordFormData) => {
+  const handleSubmit = useCallback(async (values: ForgotPasswordFormData) => {
     setLoading(true);
-  };
+    try {
+      await dispatch(actionEmailResetPassword(values.email))
+      onForgot(false)
+      onSecurityCode(true)
+      setLoading(false)
+    } catch (error: any) {
+      setLoading(false)
+      console.log(error)
+      notificationController.error({
+        message: error,
+        duration: null
+      })
+    }
+  }, [dispatch])
 
   return (
     <Auth.FormWrapper>

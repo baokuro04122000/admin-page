@@ -14,12 +14,12 @@ const baseClient = axios.create({
 export const injectStore = (_store: EnhancedStore<RootState>) =>
   (store = _store);
 
-baseClient.interceptors.request.use(async (config) => {
-  const { authUser } = store.getState().authentication;
+// baseClient.interceptors.request.use(async (config) => {
+//   const { authUser } = store.getState().authentication;
 
-  if (!authUser?.access_token || !config.headers) return config;
+//   if (!authUser?.access_token || !config.headers) return config;
 
-  return config;
-});
+//   return config;
+// });
 
 export default baseClient;

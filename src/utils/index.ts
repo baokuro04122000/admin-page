@@ -135,7 +135,7 @@ export function getGoogleOAuthURL(){
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth"
   
   const options = {
-    redirect_uri:"https://auth-server-btn-v1.herokuapp.com/v1/api/oauth/google",
+    redirect_uri:`${process.env.REACT_APP_BASE_URL}/api/oauth/google`,
     client_id:"177322333542-5s78k6m5htmshg70qiprq450413qafts.apps.googleusercontent.com",
     access_type:"online",
     response_type:'code',

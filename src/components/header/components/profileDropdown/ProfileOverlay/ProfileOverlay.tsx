@@ -6,7 +6,7 @@ import { DropdownMenu } from '../../../Header.styles';
 
 export const ProfileOverlay: React.FC = ({ ...props }) => {
   const { t } = useTranslation();
-
+ 
   return (
     <DropdownMenu selectable={false} {...props}>
       <S.MenuItem key={0}>
@@ -17,7 +17,7 @@ export const ProfileOverlay: React.FC = ({ ...props }) => {
       <S.ItemsDivider />
       <S.MenuItem key={1}>
         <S.Text>
-          <Link to="/logout">{t('header.logout')}</Link>
+          <Link to={'/logout'}>{t('header.logout')}</Link>
         </S.Text>
       </S.MenuItem>
     </DropdownMenu>
