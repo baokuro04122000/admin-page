@@ -9,3 +9,8 @@ export interface AuthenticationSlice {
 export interface JWTPayload {
   exp: number;
 }
+
+export interface ResponseUploadFile {
+  fileLink?: string;
+  fileId?: string;
+}

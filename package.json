@@ -13,6 +13,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "antd": "^4.21.6",
+    "antd-img-crop": "^4.2.5",
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
     "formik": "^2.2.9",

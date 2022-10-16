@@ -15,21 +15,28 @@ import {
   SELLER_DASHBOARD_HOME_SUBPATH,
   SELLER_DASHBOARD_PRODUCTS_SUBPATH,
   SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
-  LOGOUT_SUBPATH
+  LOGOUT_SUBPATH,
+  SIGNUP_SUBPATH,
+  USER_PATH
 } from "../constants/routes";
 
 import { RouteConfig } from "../interfaces/routes";
 import Layout from "../layout/MainLayout/MainLayout";
-import AuthRoute from "./AuthRoute";
+import AdminRoute from './AdminRoute';
+import SellerRoute from './SellerRoute';
+import UserRoute from './UserRoute';
 import UnauthRoute from "./UnauthRoute";
 import PermissionRoute from "./PermissionRoute";
+import UserTest from '../pages/UserPage';
 import Logout from "../pages/Logout";
-import ResetPassword from "../pages/ResetPassword"
+import ResetPassword from "../pages/ResetPassword";
+import SignUp from "../pages/SignUp"
 const AuthLayout = React.lazy(() => import("../layout/AuthLayout/AuthLayout")) 
 const Login = React.lazy(() => import("../pages/Login"));
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
 const Product = React.lazy(() => import("../pages/Product"))
+
 const unauthRoutes: RouteConfig = {
   path: AUTH_PATH,
   element: <AuthLayout />,
@@ -42,13 +49,22 @@ const unauthRoutes: RouteConfig = {
     {
       path: RESET_PASSWORD_SUBPATH,
       element:<ResetPassword/>
+    },
+    {
+      path: SIGNUP_SUBPATH,
+      element:<SignUp/>
     }
   ]
 };
+const userRoutes: RouteConfig = {
+  path: USER_PATH,
+  guard: <UserRoute/>,
+  element: <UserTest/>
+}
 
 const adminRoutes: RouteConfig = {
   path: ADMIN_PATH,
-  guard: <AuthRoute />,
+  guard: <AdminRoute />,
   element: <Layout page="admin"/>,
   children: [
     {
@@ -65,7 +81,7 @@ const adminRoutes: RouteConfig = {
 
 const sellerRoutes: RouteConfig = {
   path: SELLER_DASHBOARD_PATH,
-  guard: <AuthRoute />,
+  guard: <SellerRoute />,
   element: <Layout page="seller" />,
   children: [
     {
@@ -92,7 +108,7 @@ const notfoundRoute: RouteConfig = {
   element: <NotFound />,
 };
 
-const routes = [unauthRoutes, adminRoutes, sellerRoutes, notfoundRoute];
+const routes = [unauthRoutes, adminRoutes, sellerRoutes, userRoutes , notfoundRoute];
 
 const Routes = () => {
   return (

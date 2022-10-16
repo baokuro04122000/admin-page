@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Button as AntButton } from 'antd';
-import { Severity } from '@app/interfaces/interfaces';
-import { defineColorBySeverity } from '@app/utils/utils';
+import { Severity } from '../../../../interfaces/interfaces';
+import { defineColorBySeverity } from '../../../../utils/utils';
 
 interface BtnProps {
   $severity?: Severity;

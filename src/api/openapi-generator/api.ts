@@ -54,6 +54,31 @@ export interface AnnouceSuccessData {
     'message'?: string;
 }
 /**
+ * API to save a list of photos to delete
+ * @export
+ * @interface DeleteImagesRequest
+ */
+export interface DeleteImagesRequest {
+    /**
+     * the field that it is unique
+     * @type {string}
+     * @memberof DeleteImagesRequest
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteImagesRequest
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeleteImagesRequest
+     */
+    'fileList'?: Array<string>;
+}
+/**
  * Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
  * @export
  * @interface ErrorResponse
@@ -109,7 +134,7 @@ export interface ForgotPasswordRequest {
      * @type {string}
      * @memberof ForgotPasswordRequest
      */
-    'email'?: string;
+    'email': string;
 }
 /**
  * some information that it relate the shop of seller
@@ -159,7 +184,26 @@ export interface OTPRequest {
      * @type {number}
      * @memberof OTPRequest
      */
-    'otp'?: number;
+    'otp': number;
+}
+/**
+ * OTP got from your email
+ * @export
+ * @interface OTPRequestActive
+ */
+export interface OTPRequestActive {
+    /**
+     * 
+     * @type {string}
+     * @memberof OTPRequestActive
+     */
+    'email': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OTPRequestActive
+     */
+    'otp': number;
 }
 /**
  * 
@@ -250,6 +294,99 @@ export interface SellerDetail {
     'isDisable'?: boolean;
 }
 /**
+ * the info of seller will send to server to create a seller account
+ * @export
+ * @interface SellerRegisterRequest
+ */
+export interface SellerRegisterRequest {
+    /**
+     * check role
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'fbLink'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'inLink'?: string;
+    /**
+     * name is unique
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'slogan': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'phone': string;
+    /**
+     * 
+     * @type {SellerRegisterRequestLogo}
+     * @memberof SellerRegisterRequest
+     */
+    'logo'?: SellerRegisterRequestLogo;
+    /**
+     * It help the seller confirm the Genuine Store
+     * @type {Array<SellerRegisterRequestProofInner>}
+     * @memberof SellerRegisterRequest
+     */
+    'proof'?: Array<SellerRegisterRequestProofInner>;
+}
+/**
+ * The logo of shop
+ * @export
+ * @interface SellerRegisterRequestLogo
+ */
+export interface SellerRegisterRequestLogo {
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequestLogo
+     */
+    'fileLink'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequestLogo
+     */
+    'fileId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SellerRegisterRequestProofInner
+ */
+export interface SellerRegisterRequestProofInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequestProofInner
+     */
+    'fileLink'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequestProofInner
+     */
+    'fileId'?: string;
+}
+/**
  * 
  * @export
  * @interface UserCredentialResponse
@@ -291,7 +428,19 @@ export interface UserCredentialResponseData {
      * @type {string}
      * @memberof UserCredentialResponseData
      */
-    'name'?: string;
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
+    'nickName'?: string;
     /**
      * 
      * @type {string}
@@ -438,6 +587,43 @@ export interface UserDetailMeta {
 /**
  * 
  * @export
+ * @interface UserMobileRegister
+ */
+export interface UserMobileRegister {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserMobileRegister
+     */
+    'email': string;
+    /**
+     * Password must be 8-16 characters and contain both numbers and letters characters
+     * @type {string}
+     * @memberof UserMobileRegister
+     */
+    'password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserMobileRegister
+     */
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserMobileRegister
+     */
+    'lastName': string;
+    /**
+     * it kind of a checkbok
+     * @type {string}
+     * @memberof UserMobileRegister
+     */
+    'gender': string;
+}
+/**
+ * 
+ * @export
  * @interface UserRegister
  */
 export interface UserRegister {
@@ -458,13 +644,32 @@ export interface UserRegister {
      * @type {string}
      * @memberof UserRegister
      */
-    'name': string;
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRegister
+     */
+    'lastName': string;
     /**
      * it kind of a checkbok
      * @type {string}
      * @memberof UserRegister
      */
     'gender': string;
+}
+/**
+ * 
+ * @export
+ * @interface UserRequestSignUpSeller
+ */
+export interface UserRequestSignUpSeller {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequestSignUpSeller
+     */
+    'token': string;
 }
 
 /**
@@ -525,6 +730,72 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Check the token is valid to access the seller register page
+         * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authCheckSellerRegisterRequestPost: async (userRequestSignUpSeller?: UserRequestSignUpSeller, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/check-seller-register-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userRequestSignUpSeller, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete file by token
+         * @param {DeleteImagesRequest} [deleteImagesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authDeleteFilesPost: async (deleteImagesRequest?: DeleteImagesRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/delete-files`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deleteImagesRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -627,6 +898,72 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * User sign up an local account - spend for mobile
+         * @param {UserMobileRegister} [userMobileRegister] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authMobileRegisterPost: async (userMobileRegister?: UserMobileRegister, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/mobile-register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userMobileRegister, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * User active account that it just created - mobile
+         * @param {OTPRequestActive} [oTPRequestActive] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOtpRegisterPost: async (oTPRequestActive?: OTPRequestActive, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/otp-register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(oTPRequestActive, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * OTP matched then server will send for you verify token to reset password - step 2
          * @param {OTPRequest} [oTPRequest] 
          * @param {*} [options] Override http request option.
@@ -653,6 +990,35 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(oTPRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Refresh token when access token is expired
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authRefreshTokenGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/refresh-token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -725,6 +1091,68 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * API seller register account
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterPost: async (sellerRegisterRequest?: SellerRegisterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/seller-register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sellerRegisterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * User sign up seller account by token and this user need to sign in before
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterRequestGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/seller-register-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -751,6 +1179,26 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async apiOauthGoogleGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiOauthGoogleGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Check the token is valid to access the seller register page
+         * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authCheckSellerRegisterRequestPost(userRequestSignUpSeller?: UserRequestSignUpSeller, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authCheckSellerRegisterRequestPost(userRequestSignUpSeller, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Delete file by token
+         * @param {DeleteImagesRequest} [deleteImagesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authDeleteFilesPost(deleteImagesRequest?: DeleteImagesRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authDeleteFilesPost(deleteImagesRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -783,6 +1231,26 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * User sign up an local account - spend for mobile
+         * @param {UserMobileRegister} [userMobileRegister] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authMobileRegisterPost(userMobileRegister, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * User active account that it just created - mobile
+         * @param {OTPRequestActive} [oTPRequestActive] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authOtpRegisterPost(oTPRequestActive?: OTPRequestActive, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authOtpRegisterPost(oTPRequestActive, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * OTP matched then server will send for you verify token to reset password - step 2
          * @param {OTPRequest} [oTPRequest] 
          * @param {*} [options] Override http request option.
@@ -790,6 +1258,15 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTPResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authOtpResetPasswordPost(oTPRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Refresh token when access token is expired
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authRefreshTokenGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCredentialResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authRefreshTokenGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -810,6 +1287,25 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authResetPasswordPost(resetPasswordRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * API seller register account
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authSellerRegisterPost(sellerRegisterRequest?: SellerRegisterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authSellerRegisterPost(sellerRegisterRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * User sign up seller account by token and this user need to sign in before
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authSellerRegisterRequestGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authSellerRegisterRequestGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -839,6 +1335,24 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.apiOauthGoogleGet(options).then((request) => request(axios, basePath));
         },
         /**
+         * Check the token is valid to access the seller register page
+         * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authCheckSellerRegisterRequestPost(userRequestSignUpSeller?: UserRequestSignUpSeller, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authCheckSellerRegisterRequestPost(userRequestSignUpSeller, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete file by token
+         * @param {DeleteImagesRequest} [deleteImagesRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authDeleteFilesPost(deleteImagesRequest?: DeleteImagesRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authDeleteFilesPost(deleteImagesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Send mail to reset password - step 1
          * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
          * @param {*} [options] Override http request option.
@@ -865,6 +1379,24 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authLogoutGet(options).then((request) => request(axios, basePath));
         },
         /**
+         * User sign up an local account - spend for mobile
+         * @param {UserMobileRegister} [userMobileRegister] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authMobileRegisterPost(userMobileRegister, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * User active account that it just created - mobile
+         * @param {OTPRequestActive} [oTPRequestActive] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOtpRegisterPost(oTPRequestActive?: OTPRequestActive, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authOtpRegisterPost(oTPRequestActive, options).then((request) => request(axios, basePath));
+        },
+        /**
          * OTP matched then server will send for you verify token to reset password - step 2
          * @param {OTPRequest} [oTPRequest] 
          * @param {*} [options] Override http request option.
@@ -872,6 +1404,14 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: any): AxiosPromise<OTPResponse> {
             return localVarFp.authOtpResetPasswordPost(oTPRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Refresh token when access token is expired
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authRefreshTokenGet(options?: any): AxiosPromise<UserCredentialResponse> {
+            return localVarFp.authRefreshTokenGet(options).then((request) => request(axios, basePath));
         },
         /**
          * User sign up an local account
@@ -890,6 +1430,23 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.authResetPasswordPost(resetPasswordRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API seller register account
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterPost(sellerRegisterRequest?: SellerRegisterRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authSellerRegisterPost(sellerRegisterRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * User sign up seller account by token and this user need to sign in before
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterRequestGet(options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authSellerRegisterRequestGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -919,6 +1476,28 @@ export class AuthApi extends BaseAPI {
      */
     public apiOauthGoogleGet(options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).apiOauthGoogleGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Check the token is valid to access the seller register page
+     * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authCheckSellerRegisterRequestPost(userRequestSignUpSeller?: UserRequestSignUpSeller, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authCheckSellerRegisterRequestPost(userRequestSignUpSeller, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete file by token
+     * @param {DeleteImagesRequest} [deleteImagesRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authDeleteFilesPost(deleteImagesRequest?: DeleteImagesRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authDeleteFilesPost(deleteImagesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -954,6 +1533,28 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
+     * User sign up an local account - spend for mobile
+     * @param {UserMobileRegister} [userMobileRegister] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authMobileRegisterPost(userMobileRegister, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * User active account that it just created - mobile
+     * @param {OTPRequestActive} [oTPRequestActive] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authOtpRegisterPost(oTPRequestActive?: OTPRequestActive, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authOtpRegisterPost(oTPRequestActive, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * OTP matched then server will send for you verify token to reset password - step 2
      * @param {OTPRequest} [oTPRequest] 
      * @param {*} [options] Override http request option.
@@ -962,6 +1563,16 @@ export class AuthApi extends BaseAPI {
      */
     public authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authOtpResetPasswordPost(oTPRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Refresh token when access token is expired
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authRefreshTokenGet(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authRefreshTokenGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -984,6 +1595,27 @@ export class AuthApi extends BaseAPI {
      */
     public authResetPasswordPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authResetPasswordPost(resetPasswordRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API seller register account
+     * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authSellerRegisterPost(sellerRegisterRequest?: SellerRegisterRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authSellerRegisterPost(sellerRegisterRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * User sign up seller account by token and this user need to sign in before
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authSellerRegisterRequestGet(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authSellerRegisterRequestGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

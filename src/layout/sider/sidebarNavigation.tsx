@@ -1,18 +1,12 @@
 import React from 'react';
 import {
-  CompassOutlined,
-  DashboardOutlined,
-  FormOutlined,
   HomeOutlined,
-  LayoutOutlined,
   LineChartOutlined,
-  TableOutlined,
-  UserOutlined,
-  BlockOutlined,
 } from '@ant-design/icons';
 import {
-  ADMIN_PATH,
-  ADMIN_USERS_SUBPATH
+  SELLER_DASHBOARD_HOME_SUBPATH,
+  SELLER_DASHBOARD_PATH,
+  SELLER_DASHBOARD_PRODUCTS_SUBPATH
 } from '../../constants/routes'
 import { ReactComponent as NftIcon } from '../../assets/icons/nft-icon.svg';
 
@@ -27,24 +21,24 @@ export interface SidebarNavigationItem {
 
 export const sidebarNavigationSeller: SidebarNavigationItem[] = [
   {
-    title: 'common.nft-dashboard',
-    key: 'nft-dashboard',
-    url: ADMIN_PATH,
+    title: 'common.sellerDashboard',
+    key: 'sellerDashboard',
+    url: SELLER_DASHBOARD_PATH + SELLER_DASHBOARD_HOME_SUBPATH,
     icon: <NftIcon />,
   },
   {
-    title: 'common.user-management',
-    key: 'user-management',
+    title: 'common.shop',
+    key: 'shop',
     icon: <HomeOutlined />,
     children: [
       {
-        title: 'common.users',
-        key: 'users',
-        url: ADMIN_PATH+"/"+ ADMIN_USERS_SUBPATH,
+        title: 'common.products',
+        key: 'products',
+        url: SELLER_DASHBOARD_PATH+"/"+ SELLER_DASHBOARD_PRODUCTS_SUBPATH,
       },
       {
-        title: 'common.roles',
-        key: 'roles',
+        title: 'common.orders',
+        key: 'orders',
         url: '/apps/kanban',
       },
     ],
@@ -59,24 +53,24 @@ export const sidebarNavigationSeller: SidebarNavigationItem[] = [
 
 export const sidebarNavigationAdmin: SidebarNavigationItem[] = [
   {
-    title: 'common.admin-dashboard',
-    key: 'admin-dashboard',
+    title: 'common.adminDashboard',
+    key: 'adminDashboard',
     url: '/',
     icon: <NftIcon />,
   },
   {
-    title: 'common.apps',
-    key: 'apps',
+    title: 'common.userManagement',
+    key: 'userManagement',
     icon: <HomeOutlined />,
     children: [
       {
-        title: 'common.feed',
-        key: 'feed',
+        title: 'common.users',
+        key: 'users',
         url: '/apps/feed',
       },
       {
-        title: 'common.kanban',
-        key: 'kanban',
+        title: 'common.roles',
+        key: 'roles',
         url: '/apps/kanban',
       },
     ],

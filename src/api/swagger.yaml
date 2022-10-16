@@ -85,6 +85,187 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+  /auth/mobile-register:
+    post:
+      tags:
+        - Auth
+      description: User sign up an local account - spend for mobile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserMobileRegister"
+      responses:
+        "200":
+          description: Server will send an email to user to active this account then it sets a cookie with the value {"active_account":false, expired:60s}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/seller-register-request:
+    get:
+      tags:
+        - Auth
+      description: User sign up seller account by token and this user need to sign in before
+      responses:
+        "200":
+          description: Server will send an email to the email of user to access the register seller page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/check-seller-register-request:
+    post:
+      tags:
+        - Auth
+      description: Check the token is valid to access the seller register page
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequestSignUpSeller"
+      responses:
+        "200":
+          description: Server will send an email to the email of user to access the register seller page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+  /auth/seller-register:
+    post:
+      tags:
+        - Auth
+      description: API seller register account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerRegisterRequest"
+      responses:
+        "200":
+          description: Server will send an email to the email of user to access the register seller page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+  /auth/delete-files:
+    post:
+      tags:
+        - Auth
+      description: Delete file by token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteImagesRequest"
+      responses:
+        "200":
+          description: Server will send an email to the email of user to access the register seller page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/otp-register:
+    post:
+      tags:
+        - Auth
+      description: User active account that it just created - mobile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OTPRequestActive"
+      responses:
+        "200":
+          description: Server send message success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   
   /auth/email-reset-password:
     post:
@@ -176,6 +357,31 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
   
+  /auth/refresh-token:
+    get:
+      tags:
+        - Auth
+      description: Refresh token when access token is expired
+      responses:
+        "200":
+          description: return a new payload + access_token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCredentialResponse"
+        "400":
+          description: error token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
   /api/oauth/google:
     get:
       tags:
@@ -264,7 +470,8 @@ components:
       required:
         - email
         - password
-        - name
+        - firstName
+        - lastName
         - gender
       properties:
         email:
@@ -274,14 +481,51 @@ components:
           type: string
           description: Password must be 8-16 characters and contain both numbers and letters characters
           example: 12345678b
-        name:
+        firstName:
           type: string
-          example: bao tran
+        lastName:
+          type: string
+        gender:
+          type: string
+          description: it kind of a checkbok
+          example: "male | female "
+    
+    UserMobileRegister:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+        - gender
+      properties:
+        email:
+          type: string
+          example: baotrandinh100@gmail.com
+        password:
+          type: string
+          description: Password must be 8-16 characters and contain both numbers and letters characters
+          example: 12345678b
+        firstName:
+          type: string
+        lastName:
+          type: string
         gender:
           type: string
           description: it kind of a checkbok
           example: "male | female "
           
+    
+    UserRequestSignUpSeller:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          example: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
+    
+    
     ForgotPassword:
       type: object
       required:
@@ -303,7 +547,11 @@ components:
               type: string
             email:
               type: string
-            name:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            nickName:
               type: string
             role:
               type: string
@@ -328,7 +576,50 @@ components:
             sellers:
               items:
                 $ref: "#/components/schemas/SellerDetail"
-
+                
+    SellerRegisterRequest:
+      description: the info of seller will send to server to create a seller account
+      type: object
+      required:
+        - name
+        - slogan
+        - phone
+      properties:
+        token:
+          type: string
+          description: check role
+        fbLink:
+          type: string
+        inLink:
+          type: string
+        name:
+          type: string
+          description: name is unique
+          example: BTN Shop
+        slogan:
+          type: string
+          example: Just do it!
+        phone:
+          type: string
+          example: 0329460523
+        logo:
+          type: object
+          description: The logo of shop
+          properties:
+            fileLink: 
+              type: string
+            fileId:
+              type: string
+        proof:
+          type: array
+          description: It help the seller confirm the Genuine Store
+          items:
+            type: object
+            properties:
+              fileLink:
+                type: string
+              fileId:
+                type: string
     ErrorResponse:
       description: Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
       type: object
@@ -422,9 +713,26 @@ components:
         title:
           type: string
           example: the best seller
-
+          
+    DeleteImagesRequest:
+      description: API to save a list of photos to delete
+      type: object
+      properties:
+        id:
+          type: string
+          description: the field that it is unique
+        token:
+          type: string
+        fileList:
+          type: array
+          items:
+            type: string
+            example: file id
+            
     ForgotPasswordRequest:
       type: object
+      required:
+        - email
       properties:
         email:
           type: string
@@ -432,11 +740,25 @@ components:
           
     OTPRequest:
       type: object
+      required:
+        - otp
       description: OTP got from your email
       properties:
         otp:
           type: integer
           example: 123456
+    
+    OTPRequestActive:
+      type: object
+      required:
+        - email
+        - otp
+      description: OTP got from your email
+      properties:
+        email:
+          type: string
+        otp:
+          type: integer
           
     ResetPasswordRequest:
       type: object

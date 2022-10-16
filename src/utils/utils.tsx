@@ -192,3 +192,13 @@ export const hexToHSL = (hex: string): { h: number; s: number; l: number } => {
 export const formatNumberWithCommas = (value: number): string => {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+
+export const checkEmptyObject = (obj: any) => {
+  for(const prop in obj) {
+    if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+      return false;
+    }
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}

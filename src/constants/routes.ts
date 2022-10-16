@@ -6,6 +6,7 @@ export const RESET_PASSWORD_PATH = "/auth/forgot-password"
 export const CHANGE_PASSWORD_SUBPATH = "reset-password"
 export const CHANGE_PASSWORD_PATH = "reset-password"
 export const NOTFOUND_PATH = "*";
+export const SIGNUP_SUBPATH='sign-up/:token'
 
 // Paths for main seller dashboard pages
 export const SELLER_DASHBOARD_PATH = "/";
@@ -24,5 +25,8 @@ export const ADMIN_USERS_SUBPATH = "users";
 export const ADMIN_UNAUTHORIZED_SUBPATH = "unauthorized";
 export const ADMIN_CREATE_USER_SUBPATH = "create-user"
 export const ADMIN_CREATE_USER_SUCCESS_SUBPATH = 'create-user-success'
+
+// Paths for user dashboard pages
+export const USER_PATH = '/user'
 
 

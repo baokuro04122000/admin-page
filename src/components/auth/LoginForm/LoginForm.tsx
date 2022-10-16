@@ -26,11 +26,12 @@ export const initValues: LoginFormData = {
 };
 
 export const LoginForm: React.FC = () => {
-  const dispatch = useAppDispatch()
   
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
-
+  
+  const dispatch = useAppDispatch()
+  
   useEffect(() => {
     dispatch(actionGoogleLogin())
   }, [dispatch])
@@ -42,11 +43,10 @@ export const LoginForm: React.FC = () => {
       setLoading(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log(error.errors.message)
       setLoading(false)
       notificationController.error(
         {
-          message: error.errors.message,
+          message: error? error.errors.message: "NETWORK ERROR",
           duration: null
         })    
     }
@@ -56,7 +56,8 @@ export const LoginForm: React.FC = () => {
       const {data} = await register({
         email:"baotrandinh100@gmail.com",
         password:"12345678a",
-        name:"bao tran",
+        firstName:"bao",
+        lastName:"tran",
         gender:'male'
       })
       console.log(data)

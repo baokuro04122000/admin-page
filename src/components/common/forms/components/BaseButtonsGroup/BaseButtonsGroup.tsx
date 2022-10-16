@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 import { Col, Row } from 'antd';
-import { Button } from '@app/components/common/buttons/Button/Button';
+import { Button } from '../../../../common/buttons/Button/Button';
 import { useTranslation } from 'react-i18next';
 
 interface BaseButtonsGroupProps extends ComponentProps<typeof Button> {
