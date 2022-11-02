@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Col, DatePickerProps, Row } from 'antd';
+import { Col, Row } from 'antd';
+import { useNavigate } from 'react-router-dom'
 import { BaseButtonsForm } from '../../../components/common/forms/BaseButtonsForm/BaseButtonsForm';
 import { Card } from '../../../components/common/Card/Card';
 import { BaseInputItem } from '../../../components/BaseInputItem/BaseInputItem';
@@ -48,9 +49,9 @@ export const ProductForm: React.FC = () => {
 
   const [form] = BaseButtonsForm.useForm();
 
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-
+  const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const onFinish = useCallback(
      (values: ProductInfoFormValues) => {
       // todo dispatch an action here
@@ -71,11 +72,11 @@ export const ProductForm: React.FC = () => {
         productPictures: productImages,
         language: values.language
       }
-      console.log(product)
-      dispatch(actionAddProduct(product)).then((success) => {
+        dispatch(actionAddProduct(product)).then((success) => {
         setLoading(false);
         setFieldsChanged(false);
         notificationController.success({ message: success, duration:5 });
+        navigate('/products')
       }).catch((error) => {
         setLoading(false);
         notificationController.error({ message: error ? error.errors.message : "NETWORK ERROR" })
