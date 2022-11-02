@@ -10,8 +10,6 @@ import { notificationController } from '../../../controllers/notificationControl
 import { 
   RESET_PASSWORD_PATH,
 } from '../../../constants/routes'
-import {register} from '../../../api/authentication'
-import {AxiosError} from 'axios'
 import * as S from './LoginForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
 
@@ -51,21 +49,6 @@ export const LoginForm: React.FC = () => {
         })    
     }
   }, [dispatch])
-  const testRegister= async () => {
-    try {
-      const {data} = await register({
-        email:"baotrandinh100@gmail.com",
-        password:"12345678a",
-        firstName:"bao",
-        lastName:"tran",
-        gender:'male'
-      })
-      console.log(data)
-    } catch (error) {
-      const err = error as AxiosError
-      console.log(err.response?.data)
-    }
-  }
   return (
     <Auth.FormWrapper>
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initValues}>
@@ -116,12 +99,6 @@ export const LoginForm: React.FC = () => {
             {t('login.googleLink')}
           </Auth.SocialButton>
         </a>
-        <Auth.SocialButton type="default" onClick={testRegister}>
-            <Auth.SocialIconWrapper>
-              <GoogleIcon />
-            </Auth.SocialIconWrapper>
-            test register
-          </Auth.SocialButton>
         </BaseForm.Item>
     </Auth.FormWrapper>
   );

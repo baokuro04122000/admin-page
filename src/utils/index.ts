@@ -25,42 +25,7 @@ export const responseToTablePagination = (
   };
 };
 
-export const tablePaginationToRequest = (
-  pagination?: TablePaginationConfig
-): RequestSearchParams => {
-  if (!pagination) return {};
-  const { current, pageSize } = pagination;
-  let offset: number | undefined = undefined;
-  if (current !== undefined && pageSize !== undefined) {
-    offset = (current - 1) * pageSize;
-  }
-  return {
-    limit: pageSize,
-    offset,
-  };
-};
 
-export const tableSorterToRequest = <T = { [key: string]: unknown }>(
-  sorter?: SorterResult<T>
-): RequestSearchParams => {
-  if (!sorter) return {};
-  const { field, order } = sorter;
-
-  return {
-    sort_by: field?.toString(),
-    order_by: order ? order.toString() : undefined,
-  };
-};
-
-export const filtersToRequest = <T>(
-  filters?: FilterApiParams<T>
-): RequestSearchParams => {
-  const { offset, limit } = tablePaginationToRequest(filters?.pagination);
-  const { sort_by, order_by } = tableSorterToRequest(filters?.sort);
-  const q = filterToSearchParams(filters?.query);
-
-  return { offset, limit, sort_by, order_by, q };
-};
 
 export const ObjectToSearchParams = (query?: Query, parentObjKey?: string) => {
   if (!query) return undefined;

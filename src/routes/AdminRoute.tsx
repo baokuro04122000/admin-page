@@ -13,8 +13,8 @@ const AdminRoute: FC<Props> = () => {
   const isAdmin = useAppSelector(selectIsAdmin);
   const isUser = useAppSelector(selectIsUser);
   const isSeller = useAppSelector(selectIsSeller);
-  if(isAdmin) return <Outlet />
   if (!isAuth) return <Navigate to={LOGIN_PATH} />;
+  if(isAdmin) return <Outlet />
   if (isUser) return < Navigate to={USER_PATH} />;
   if (isSeller) return < Navigate to={SELLER_DASHBOARD_PATH} />;
   return <Outlet/>

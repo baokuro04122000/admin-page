@@ -1,26 +1,26 @@
 import React from 'react';
 import { Avatar, Col, Row } from 'antd';
-import { Dropdown } from '../../../../../components/Dropdown/Dropdown';
+import { Dropdown } from '../../../../common/Dropdown/Dropdown';
 import { H6 } from '../../../../../components/typography/H6/H6';
 import { ProfileOverlay } from '../ProfileOverlay/ProfileOverlay';
-
+import { useAppSelector } from '../../../../../store'
 import { useResponsive } from '../../../../../hooks/useResponsive';
 import * as S from './ProfileDropdown.styles';
 
 export const ProfileDropdown: React.FC = () => {
   const { isTablet } = useResponsive();
 
-  const user = true
+  const user = useAppSelector(({authentication}) => authentication?.authUser?.data)
 
   return user ? (
     <Dropdown overlay={<ProfileOverlay />} trigger={['click']}>
       <S.ProfileDropdownHeader as={Row} gutter={[10, 10]} align="middle">
         <Col>
-          <Avatar src={"#"} alt="User" shape="circle" size={40} />
+          <Avatar src={user?.profilePicture?.fileLink} alt="User" shape="circle" size={40} />
         </Col>
         {isTablet && (
           <Col>
-            <H6>{`John Tom`}</H6>
+            <H6>{`${user.firstName} ${user.lastName}`}</H6>
           </Col>
         )}
       </S.ProfileDropdownHeader>

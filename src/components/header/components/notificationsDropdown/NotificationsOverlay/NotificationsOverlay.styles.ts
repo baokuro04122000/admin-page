@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Divider, Row, Typography } from 'antd';
 import { DropdownMenu } from '@app/components/header/Header.styles';
-import { Button } from '@app/components/buttons/Button/Button';
+import { Button } from '../../../../common/buttons/Button/Button';
 import { media } from '@app/styles/themes/constants';
 
 export const MenuRow = styled(Row).withConfig({

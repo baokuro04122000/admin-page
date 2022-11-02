@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://auth-server-btn-v1.herokuapp.com/v1
+    url: http://localhost:4000/v1
 info:
   description: This is a BT API document
   version: 1.0.1
@@ -15,6 +15,8 @@ info:
 tags:
   - name: Auth
     description: Authentication
+  - name: Product
+    description: Product
   - name: Admin
     description: Admin
   - name: Seller
@@ -446,12 +448,301 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /categories:
+    get:
+      tags:
+        - Product
+      description: Get all categories from database
+      responses:
+        "200":
+          description: login by google successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesResponse"
+        "400":
+          description: errors are from google api
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: category is empty in the database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+  /products:
+    get:
+      tags:
+        - Product
+      description: Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
+      parameters:
+        - in: query
+          name: keyword
+          schema:
+            type: string
+          description: search products by name
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
+        - in: query
+          name: sellerId
+          schema:
+            type: string
+          description: search products by seller id
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: search products by category id
+        - in: query
+          name: currentPage
+          schema:
+            type: number
+          description: the current page of web site
+        - in: query
+          name: price[gte]
+          schema:
+            type: number
+          description: find products that it >= the price inputted
+        - in: query
+          name: price[gt]
+          schema:
+            type: number
+          description: >
+        - in: query
+          name: price[lte]
+          schema:
+            type: number
+          description: <=
+        - in: query
+          name: price[lt]
+          schema:
+            type: number
+          description: <
+      responses:
+        "200":
+          description: product list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsResponse"
+        "404":
+          description: products are empty in the database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /product/{slug}:
+    get:
+      summary: Get product by slug
+      tags:
+        - Product
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: product list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductDetailsResponse"
+        "404":
+          description: products are empty in the database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+      
+  
+  /seller/add-product:
+    post:
+      tags:
+        - Seller
+      description: Add product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddProductRequest"
+      responses:
+        "200":
+          description: Add product is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "401":
+            description: Category is not exist
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        
+        "403":
+            description: product validation errors
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
 
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
+  /seller/update-product:
+    put:
+      tags:
+        - Seller
+      description: update product by seller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditProductRequest"
+      responses:
+        "200":
+          description: Add product is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "401":
+            description: Category is not exist
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        
+        "403":
+            description: product validation errors
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
 
-
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
+  /seller/delete-product/{id}:
+    delete:
+      tags: 
+        - Seller
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Deleting is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "402":
+          description: The product is being ordered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        
+        "403":
+          description: The product has a buyer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        
+  /admin/add-category:
+    post:
+      tags:
+        - Admin
+      description: Add a category from admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryRequest"
+      responses:
+        "200":
+          description: adding is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Invalid verify code
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        
 components:
   
   schemas:
+    FileInfo:
+      type: object
+      properties:
+        fileLink:
+          type: string
+        fileId:
+          type: string
+          
     UserCredentials:
       type: object
       required:
@@ -543,7 +834,7 @@ components:
         data:
           type: object
           properties:
-            id:
+            _id:
               type: string
             email:
               type: string
@@ -557,7 +848,7 @@ components:
               type: string
               example: user | seller
             profilePicture:
-              type: string
+              $ref: "#/components/schemas/FileInfo"
             meta:
               type: object
               properties:
@@ -568,14 +859,8 @@ components:
             typeLogin:
               type: string
               example: local | google
-            special:
-              type: array
-              example: ['friendly']
-              items: 
-                $ref: "#/components/schemas/SellerDetail"
             sellers:
-              items:
-                $ref: "#/components/schemas/SellerDetail"
+              $ref: "#/components/schemas/SellerDetail"
                 
     SellerRegisterRequest:
       description: the info of seller will send to server to create a seller account
@@ -614,12 +899,8 @@ components:
           type: array
           description: It help the seller confirm the Genuine Store
           items:
-            type: object
-            properties:
-              fileLink:
-                type: string
-              fileId:
-                type: string
+            $ref: "#/components/schemas/FileInfo"
+            
     ErrorResponse:
       description: Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
       type: object
@@ -672,7 +953,7 @@ components:
       description: Seller detail information
       type: object
       properties:
-        id:
+        _id:
           type: string
           example: 63312b2a82dc64f45360ff5a
         name:
@@ -686,9 +967,7 @@ components:
           type: string
           example: normal | mall | global
         meta:
-          type: object
-          items: 
-            $ref: "#/components/schemas/MetaSeller"
+          $ref: "#/components/schemas/MetaSeller"
         isDisable:
           description: to implement lock the account of seller
           type: boolean
@@ -791,5 +1070,180 @@ components:
             token:
               type: string
               example: "12312-dasd-dasdasd"
+              
+    CategoriesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              slug:
+                type: string
+              name:
+                type: string
+              categoryImage:
+                type: string
+              _id:
+                type: string
+    
+    CategoryRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          
+    
+    AddProductRequest:
+      type: object
+      required:
+        - name
+        - author
+        - publisher
+        - language
+        - category
+        - publicationDate
+        - quantity
+        - city
+        - price
+      properties:
+        sellerId:
+          type: string
+        name:
+          type: string
+          example: name of book
+        author:
+          type: string
+        publisher:
+          type: string
+        language:
+          type: string
+        category:
+          type: string
+          example: object id
+        publicationDate:
+          type: string
+          example: mm/dd/yyyy - 10/26/2022
+        quantity:
+          type: number
+        city:
+          type: string
+        productPictures:
+          type: array
+          items:
+              $ref: "#/components/schemas/FileInfo"
+        summary:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: number
+        printLength:
+          type: number
+        price:
+          type: number
     
     
+    CategoryInfo:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        categoryImage:
+          type: string
+          
+    SpecsProduct:
+      type: object
+      properties:
+        author:
+          type: string
+        printLength:
+          type: number
+        publisher:
+          type: string
+        language:
+          type: string
+        city:
+          type: string
+        publicationDate:
+          type: string
+    
+    MetaProduct:
+      type: object
+      properties:
+        totalSold:
+          type: number
+        totalOrder:
+          type: number
+        totalReview:
+          type: number
+    
+    ProductDetails:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        seller:
+            $ref: "#/components/schemas/SellerDetail"
+        slug:
+          type: string
+        price:
+          type: number
+        discountPercent:
+          type: number
+        summary:
+          type: string
+        description:
+          type: string
+        quantity:
+          type: number
+        productPictures:
+          type: array
+          items:
+              $ref: "#/components/schemas/FileInfo"
+        category:
+            $ref: "#/components/schemas/CategoryInfo"
+        specs:
+            $ref: "#/components/schemas/SpecsProduct"
+        meta:
+            $ref: "#/components/schemas/MetaProduct"
+        
+    EditProductRequest:
+      type: object
+      properties:
+        product:
+          $ref: "#/components/schemas/AddProductRequest"
+        slug:
+          type: string
+    
+    ProductsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+              $ref: "#/components/schemas/ProductDetails"
+        totalProduct:
+          type: number
+    
+    ProductDetailsResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/ProductDetails"
+              
+            
+        
+          
+          
+          
+          

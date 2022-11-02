@@ -13,8 +13,9 @@ const SellerRoute: FC<Props> = () => {
   const isAdmin = useAppSelector(selectIsAdmin);
   const isUser = useAppSelector(selectIsUser);
   const isSeller = useAppSelector(selectIsSeller);
-  if(isSeller) return <Outlet />
+  console.log("Check::",isAuth)
   if (!isAuth) return <Navigate to={LOGIN_PATH} />;
+  if(isSeller) return <Outlet />
   if (isAdmin) return < Navigate to={ADMIN_PATH} />;
   if (isUser) return < Navigate to={USER_PATH} />;
   return <Outlet/>

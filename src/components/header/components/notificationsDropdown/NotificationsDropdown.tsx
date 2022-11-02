@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BellOutlined } from '@ant-design/icons';
-import { Dropdown } from '../../../Dropdown/Dropdown';
-import { Button } from '../../../buttons/Button/Button';
+import { Dropdown } from '../../../common/Dropdown/Dropdown';
+import { Button } from '../../../common/buttons/Button/Button';
 import { Badge } from '../../../Badge/Badge';
 
 import { notifications as fetchedNotifications, Notification } from '../../../../api/notifications.api';

@@ -1,5 +1,5 @@
 import { AppThunk } from "..";
-import { AnnouceSuccess, DeleteImagesRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
+import { DeleteImagesRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
 import { AUTH_USER_DATA_LS_ITEM } from "../../constants/authentication";
 import { 
   setAuthUser,
@@ -21,7 +21,6 @@ import {
 } from "../../api/authentication";
 import { ResponseUploadFile } from '../../interfaces/authentication'
 import { RcFile } from "antd/lib/upload";
-
 
 export const actionLogin = (
   email: string,
@@ -196,6 +195,19 @@ export const actionDeleteFileList = (fileList: DeleteImagesRequest)
   }
 }
 
+export const actionDeleteFileListbySeller = (fileList: string[])
+: AppThunk<Promise<void>> => {
+  return async () => {
+    try {
+      const {data} = await axios.post('/upload/delete-file', {fileList})
+      console.log(data.data)
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
 export const actionSellerRegister = (seller: SellerRegisterRequest)
 : AppThunk<Promise<boolean>> => {
   return async () => {

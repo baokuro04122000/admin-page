@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { SearchDropdown } from '../searchDropdown/SearchDropdown';
-import { Button } from '../../../../components/buttons/Button/Button';
+import { Button } from '../../../../components/common/buttons/Button/Button';
 import { components as configComponents, Component } from '../../../../constants/config/components';
 import { categoriesList, CategoryType } from '../../../../constants/categoriesList';
 import { useResponsive } from '../../../../hooks/useResponsive';

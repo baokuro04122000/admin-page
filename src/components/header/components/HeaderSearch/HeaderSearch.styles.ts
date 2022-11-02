@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { SearchOutlined } from '@ant-design/icons';
 import { Modal } from '../../../../components/Modal/Modal';
-import { Button } from '../../../../components/buttons/Button/Button';
-import { SearchInput } from '../../../../components/inputs/SearchInput/SearchInput';
+import { Button } from '../../../../components/common/buttons/Button/Button';
+import { SearchInput } from '../../../common/inputs/SearchInput/SearchInput';
 import { BORDER_RADIUS, media } from '../../../../styles/themes/constants';
 
 export const SearchIcon = styled(SearchOutlined)`

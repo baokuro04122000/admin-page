@@ -13,7 +13,7 @@ import {notificationController} from '../../../controllers/notificationControlle
 import { RcFile, UploadChangeParam, UploadFile, UploadProps } from 'antd/lib/upload';
 import { FacebookIcon } from '../../../components/common/icons/FacebookIcon';
 import { LinkedinIcon } from '../../../components/common/icons/LinkedinIcon';
-import { Button } from '../../../components/buttons/Button/Button';
+import { Button } from '../../../components/common/buttons/Button/Button';
 import { UploadOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '../../../store'
 import { LOGIN_PATH } from '../../../constants/routes'
@@ -88,7 +88,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
       return
     } else if(file.file.status === 'error'){
       notificationController.error({
-        message:file.file.error?.errors.message,
+        message:file.file.error ? file.file.error : "NETWORK ERROR",
         duration:null
       })
       return
@@ -191,12 +191,10 @@ export const SignUpForm: React.FC = () => {
   } = useUploadLogo(t, dispatch)
   const {
     configProof,
-    proofLoading,
     fileListDeleteProof,
     proof
   } = useUploadProof(t, dispatch)
   const [isLoading, setLoading] = useState(false);
-  const [selectedFileList, setSelectedFileList] = useState<any>([])
   
   
   useEffect(() => {
@@ -262,20 +260,14 @@ export const SignUpForm: React.FC = () => {
         await dispatch(actionDeleteFileList(deleteFiles))
         await dispatch(actionSellerRegister(seller))
         return navigate(LOGIN_PATH)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.log(error)
         notificationController.error({
           message: error ? error.errors.message : "NETWORK ERROR"
         })
       }
-  }, [
-    fileListDeleteLogo,
-    fileListDeleteProof,
-    logo,
-    proof,
-    token,
-    dispatch
-  ])
+  }, [token, logo, proof, fileListDeleteLogo, fileListDeleteProof, dispatch, navigate])
 
 
   

@@ -1,4 +1,4 @@
-import { Button } from "../../components/buttons/Button/Button"
+import { Button } from "../../components/common/buttons/Button/Button"
 import { useAppDispatch } from "../../store"
 import { actionLogout, actionRegisterSellerRequest } from '../../store/authentication/action'
 import { notificationController } from "../../controllers/notificationController"

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
-import { Dropdown } from '../../../Dropdown/Dropdown';
-import { Button } from '../../../buttons/Button/Button';
+import { Dropdown } from '../../../common/Dropdown/Dropdown';
+import { Button } from '../../../common/buttons/Button/Button';
 import { HeaderActionWrapper } from '../../Header.styles';
 import { SettingsOverlay } from './settingsOverlay/SettingsOverlay/SettingsOverlay';
 

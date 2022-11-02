@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
-import { Button } from '../../../../components/buttons/Button/Button';
+import { Button } from '../../../../components/common/buttons/Button/Button';
 import { RequireFullscreen } from '../../../../components/RequireFullscreen/RequireFullscreen';
 import { HeaderActionWrapper } from '../../Header.styles';
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FilterIcon } from '../../../../components/icons/FilterIcon';
+import { FilterIcon } from '../../../common/icons/FilterIcon';
 import { SearchOverlay } from './searchOverlay/SearchOverlay/SearchOverlay';
 import { HeaderActionWrapper } from '../../../../components/header/Header.styles';
 import { CategoryComponents } from '../../../../components/header/components/HeaderSearch/HeaderSearch';
 import { Btn, InputSearch } from '../HeaderSearch/HeaderSearch.styles';
 import { useTranslation } from 'react-i18next';
-import { Dropdown } from '../../../../components/Dropdown/Dropdown';
+import { Dropdown } from '../../../common/Dropdown/Dropdown';
 
 interface SearchOverlayProps {
   query: string;

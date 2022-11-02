@@ -15,6 +15,7 @@ interface SearchInputProps extends InputProps {
   inputPrefixCls?: string;
 }
 
+// eslint-disable-next-line react/display-name
 export const SearchInput = React.forwardRef<InputRef, SearchInputProps>(({ loading, filter, ...props }, ref) => {
   return (
     <S.SearchInput

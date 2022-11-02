@@ -43,6 +43,115 @@
     "proof":"Click to upload the proof of your shop",
     "proofFileLimitSize":"file must smaller than 5MB!"
   },
+  "product":{
+    "name":"Name",
+    "description":"Description",
+    "price":"Price",
+    "discountPercent":"Discount Percent",
+    "productPictures":"Product Pictures",
+    "author":"Author",
+    "category":"Category",
+    "placeholderCategory":"Select Category",
+    "publicationDate":"Publication Date",
+    "publisher":"Publisher",
+    "paperBack":"Paper Back",
+    "language":"Language",
+    "placeholderLanguage":"Select Language",
+    "summary":"Summary",
+    "printLength":"Print Length",
+    "productDescription":"Product Description",
+    "multipleUpload":"Multiple Upload",
+    "quantity":"Quantity",
+    "upload":"Click to upload product images",
+    "priceMin":"Price must be more than 1",
+    "priceMax":"Number is so big",
+    "products":"Products",
+    "productTable":"Product Table",
+    "discount":"Discount",
+    "edit":"Edit",
+    "editProduct": "Edit Product",
+    "addProduct":"Add Product",
+    "actions":"Actions",
+    "delete":"Delete",
+    "titlePopconfirmDelete":"Are you sure to delete?"
+
+  },
+  "profile": {
+    "fullness": "fullness of your profile",
+    "nav": {
+        "notifications": {
+            "actionRequired": "Action required",
+            "activities": "Activities",
+            "allNews": "All news",
+            "description": "Choose for which activities you want to get an email or push notification.",
+            "directMessages": "Direct messages",
+            "importantNews": "Important news and updates",
+            "mentions": "Mentions",
+            "push": "Push",
+            "reminders": "Reminders",
+            "settings": "Notifications settings",
+            "SMS": "SMS",
+            "title": "Notifications"
+        },
+        "payments": {
+            "addNewCard": "Add New Card",
+            "cardholderName": "Cardholder Name",
+            "cardNumber": "Card Number",
+            "cardTheme": "Card Theme",
+            "CVV": "CVV",
+            "date": "Date",
+            "details": "Details",
+            "expDate": "Exp. Date",
+            "noHistory": "There is no payment history at the moment",
+            "paymentHistory": "Payment history",
+            "paymentMethod": "Payment Method",
+            "recipient": "Recipient",
+            "sameCard": "You can't add the same card!",
+            "status": {
+                "failed": "Failed",
+                "paid": "Paid",
+                "pending": "Pending",
+                "scheduled": "Scheduled",
+                "title": "Status"
+            },
+            "title": "Payments",
+            "totalAmount": "Total Amount",
+            "yourCardNumber": "Your card number",
+            "yourName": "Your name"
+        },
+        "personalInfo": {
+            "birthday": "Birthday",
+            "contactInfo": "Contact Info",
+            "female": "Female",
+            "language": "Language",
+            "male": "Male",
+            "nickname": "Nickname",
+            "notValidWebsite": "Please input a valid URL!",
+            "notVerified": "Not verified",
+            "otherInfo": "Other info",
+            "sex": "Sex",
+            "socialLinks": "Social links",
+            "title": "Personal Info",
+            "verified": "Verified",
+            "website": "Website",
+            "wrongNumber": "Wrong number"
+        },
+        "securitySettings": {
+            "changePassword": "Change Password",
+            "confirmPassword": "Confirm Password",
+            "currentPassword": "Current Password",
+            "dontMatchPassword": "The two passwords that you entered do not match",
+            "newPassword": "New Password",
+            "notValidPassword": "Your password should be minimum eight characters and contain at least one uppercase letter, one lowercase letter and one number",
+            "requiredPassword": "Please input your password!",
+            "samePassword": "Your new password can't be same as previous password",
+            "title": "Security Settings",
+            "twoFactorAuth": "Two–factor authentication",
+            "verify": "Verify"
+        }
+    },
+    "title": "Profile"
+  },
   "common":{
     "ecommerce":"E-commerce",
     "products":"Products",
@@ -115,7 +224,11 @@
     "warning":"Warning",
     "zipcode":"Zipcode",
     "delete":"Delete",
-    "forgotPass":"Forgot Password"
+    "forgotPass":"Forgot Password",
+    "addProduct":"Add Product",
+    "minLength2":"The value must be more than 2 characters long",
+    "maxLength150":"The value must be less than 150 characters long",
+    "maxLength30":"The value must be less than 30 characters long"
 
   },
   "forms": {
@@ -262,9 +375,6 @@
         "successPayment": "Your payment was successfully made",
         "viewAll": "View all"
     }
-  },
-  "profile":{
-    "title":"Profile"
   },
   "stepFormLabels": {
     "addressError": "Address is required",

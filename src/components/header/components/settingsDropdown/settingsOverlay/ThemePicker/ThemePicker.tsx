@@ -1,5 +1,5 @@
 import React from 'react';
-import { MoonSunSwitch } from '../../../../../MoonSunSwitch/MoonSunSwitch';
+import { MoonSunSwitch } from '../../../../../common/MoonSunSwitch/MoonSunSwitch';
 import { ThemeType } from '@app/interfaces/interfaces';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { setTheme } from '../../../../../../store/theme/slice';

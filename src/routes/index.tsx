@@ -17,7 +17,9 @@ import {
   SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
   LOGOUT_SUBPATH,
   SIGNUP_SUBPATH,
-  USER_PATH
+  USER_PATH,
+  SELLER_ADD_PRODUCT_SUBPATH,
+  SELLER_EDIT_PRODUCT_SUBPATH
 } from "../constants/routes";
 
 import { RouteConfig } from "../interfaces/routes";
@@ -31,11 +33,13 @@ import UserTest from '../pages/UserPage';
 import Logout from "../pages/Logout";
 import ResetPassword from "../pages/ResetPassword";
 import SignUp from "../pages/SignUp"
+import AddProduct from "../pages/AddProduct"
+import EditProduct from "../pages/EditProduct"
 const AuthLayout = React.lazy(() => import("../layout/AuthLayout/AuthLayout")) 
 const Login = React.lazy(() => import("../pages/Login"));
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
-const Product = React.lazy(() => import("../pages/Product"))
+const Product = React.lazy(() => import("../pages/Products"))
 
 const unauthRoutes: RouteConfig = {
   path: AUTH_PATH,
@@ -99,6 +103,14 @@ const sellerRoutes: RouteConfig = {
     {
       path:SELLER_DASHBOARD_UNAUTHORIZED_SUBPATH,
       element: <Unauthorized />
+    },
+    {
+      path:SELLER_ADD_PRODUCT_SUBPATH,
+      element: <AddProduct />
+    },
+    {
+      path: SELLER_DASHBOARD_PRODUCTS_SUBPATH + "/"+ SELLER_EDIT_PRODUCT_SUBPATH,
+      element: <EditProduct />
     }
   ],
 };

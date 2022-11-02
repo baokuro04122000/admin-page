@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Typography, Divider } from 'antd';
-import { MenuItem as MenuItemBase } from '../../../../../components/Menu/Menu';
+import { MenuItem as MenuItemBase } from '../../../../common/Menu/Menu';
 import { media } from '../../../../../styles/themes/constants';
 
 export const Text = styled(Typography.Text)`

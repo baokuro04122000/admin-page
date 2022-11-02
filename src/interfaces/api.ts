@@ -22,11 +22,15 @@ export interface ContractsQuery extends FilterQuery {
 }
 
 export interface RequestSearchParams {
-  offset?: number;
+  keyword?: string;
   limit?: number;
-  q?: URLSearchParams;
-  order_by?: string;
-  sort_by?: string;
+  priceGte?: number;
+  priceGt?: number;
+  priceLte?: number;
+  priceLt?: number;
+  sellerId?: string;
+  category?: string;
+  currentPage?: number;
 }
 
 export interface FilterApiParams<T> {

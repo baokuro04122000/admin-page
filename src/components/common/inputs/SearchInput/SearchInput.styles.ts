@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Space as AntSpace, Input } from 'antd';
-import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import { FONT_SIZE, FONT_WEIGHT, media } from '../../../../styles/themes/constants';
 
 const { Search } = Input;
 

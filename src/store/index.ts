@@ -1,11 +1,13 @@
 import { AnyAction, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authenticationSlice from "./authentication/slice";
-
+import productSlice from "./product/slice";
 import themeSlice from './theme/slice'
+
 export const store = configureStore({
   reducer: {
     authentication: authenticationSlice,
+    product: productSlice,
     theme: themeSlice
   },
   middleware: (getDefaultMiddleware) =>

@@ -6,7 +6,8 @@ import {
 import {
   SELLER_DASHBOARD_HOME_SUBPATH,
   SELLER_DASHBOARD_PATH,
-  SELLER_DASHBOARD_PRODUCTS_SUBPATH
+  SELLER_DASHBOARD_PRODUCTS_SUBPATH,
+  SELLER_ADD_PRODUCT_SUBPATH
 } from '../../constants/routes'
 import { ReactComponent as NftIcon } from '../../assets/icons/nft-icon.svg';
 
@@ -34,7 +35,12 @@ export const sidebarNavigationSeller: SidebarNavigationItem[] = [
       {
         title: 'common.products',
         key: 'products',
-        url: SELLER_DASHBOARD_PATH+"/"+ SELLER_DASHBOARD_PRODUCTS_SUBPATH,
+        url: SELLER_DASHBOARD_PATH+ SELLER_DASHBOARD_PRODUCTS_SUBPATH,
+      },
+      {
+        title: 'common.addProduct',
+        key: 'addProduct',
+        url: SELLER_DASHBOARD_PATH+ SELLER_ADD_PRODUCT_SUBPATH,
       },
       {
         title: 'common.orders',
@@ -66,12 +72,12 @@ export const sidebarNavigationAdmin: SidebarNavigationItem[] = [
       {
         title: 'common.users',
         key: 'users',
-        url: '/apps/feed',
+        url: '/admin/users',
       },
       {
         title: 'common.roles',
         key: 'roles',
-        url: '/apps/kanban',
+        url: '/admin/roles',
       },
     ],
   },
