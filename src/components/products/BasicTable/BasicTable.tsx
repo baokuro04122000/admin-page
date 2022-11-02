@@ -97,8 +97,10 @@ export const BasicTable: React.FC = () => {
       setPagination({...pagination, total: totalProduct})
       setLoading(false)
       return list
+    } else{
+      setLoading(false)
+      return []
     }
-    return []
   }, [products])
 
   const columns: ColumnsType<ProductDetails> & { dataIndex?: keyof ProductDetails}[] = useMemo(() =>
