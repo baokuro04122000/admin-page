@@ -57,7 +57,7 @@ const useUploadProductImages = (t:any, dispatch: any, fileListDefault: UploadFil
     multiple:true,
     listType:"picture",
     maxCount:5,
-    action:`${process.env.SERVER_UPLOAD}/api/upload-image`,
+    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://extenal-services.herokuapp.com"}/api/upload-image`,
     beforeUpload:handleBeforeUpload,
     onChange:handleOnChange,
     onRemove:handleOnRemove,
