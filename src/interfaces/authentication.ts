@@ -4,6 +4,7 @@ export interface AuthenticationSlice {
   authUser: null | UserCredentialResponse;
   notifyResetPassowrd: string | undefined;
   verifyToken:string | undefined;
+  userId: string | undefined;
 }
 
 export interface JWTPayload {

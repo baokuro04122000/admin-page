@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAppDispatch } from '../../../store';
+import {  Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { actionOTPResetPassword } from '../../../store/authentication/action'
 import { notificationController } from '../../../controllers/notificationController'
 import { Image, Spin } from 'antd';
@@ -18,6 +18,8 @@ interface SecurityCodeFormProps {
 }
 
 export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, onNewPassword , onSecurityCode }) => {
+  const userId = useAppSelector(({authentication}) => authentication.userId)
+
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
   
@@ -33,7 +35,7 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
 
   const handleFinish = useCallback(async () => {
     try {
-      await dispatch(actionOTPResetPassword(Number(securityCode)))
+      await dispatch(actionOTPResetPassword({userId, otp: Number(securityCode)}))
       onSecurityCode(false)
       onNewPassword(true)
       setLoading(false)
@@ -43,6 +45,8 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
         message:error.errors.message,
         duration: null
       })
+      setLoading(false)
+      setSecurityCode('')
     }
   }, [securityCode])
 

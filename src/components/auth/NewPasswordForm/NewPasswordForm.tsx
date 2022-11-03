@@ -6,6 +6,7 @@ import { actionNewPassword } from '../../../store/authentication/action';
 import { notificationController } from '../../../controllers/notificationController'
 import { LOGIN_PATH } from '../../../constants/routes'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
+import { setUserId, setVerifyToken } from '../../../store/authentication/slice'
 import * as S from './NewPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
 
@@ -26,6 +27,8 @@ interface Props {
 
 export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
   const verifyCode = useAppSelector(({authentication}) => authentication.verifyToken)
+  const userId = useAppSelector(({authentication}) => authentication.userId)
+  
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
   const navigate = useNavigate();
@@ -35,7 +38,9 @@ export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
     setLoading(true);
     try {
       if(verifyCode){
-        await dispatch(actionNewPassword(verifyCode, values.password))  
+        await dispatch(actionNewPassword({userId, token: verifyCode, password: values.password}))
+        dispatch(setVerifyToken(undefined))
+        dispatch(setUserId(undefined))
         setLoading(false)
         navigate(LOGIN_PATH)
       }
@@ -44,7 +49,7 @@ export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
       setLoading(false)
       notificationController.error({
         message:error.errors.message,
-        duration:null
+        duration:10
       })
     }
   },[verifyCode]);

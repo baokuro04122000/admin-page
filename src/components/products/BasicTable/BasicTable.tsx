@@ -46,7 +46,7 @@ export const BasicTable: React.FC = () => {
  
 
   useEffect(() => {
-    dispatch(actionGetProducts({currentPage: 1, sellerId: authUser?.data?.sellers?._id, limit: 5}))
+    dispatch(actionGetProducts({currentPage: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
     return () => {
       dispatch(setProducts(undefined))
     }
@@ -63,14 +63,14 @@ export const BasicTable: React.FC = () => {
             ?  (pagination.current - 1)
             : pagination.current
           : 1 
-          , sellerId: authUser?.data?.sellers?._id
+          , sellerId: authUser?.data?.seller?._id
           , limit: 5}))  
         notificationController.success({message: deleted ? deleted : '', duration: 5})
         return
       }
       await dispatch(actionGetProducts({currentPage: 
         pagination.current 
-        , sellerId: authUser?.data?.sellers?._id
+        , sellerId: authUser?.data?.seller?._id
         , limit: 5}))  
       notificationController.success({message: deleted ? deleted : '', duration: 5})
       return
@@ -82,7 +82,7 @@ export const BasicTable: React.FC = () => {
 
   const handlePagination = async (page: number, pageSize: number) => {
     try {
-      await dispatch(actionGetProducts({currentPage: page, sellerId: authUser?.data?.sellers?._id, limit: 5}))
+      await dispatch(actionGetProducts({currentPage: page, sellerId: authUser?.data?.seller?._id, limit: 5}))
       setPagination({...pagination, current: page})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR"})

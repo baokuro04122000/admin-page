@@ -228,8 +228,14 @@
     "addProduct":"Add Product",
     "minLength2":"The value must be more than 2 characters long",
     "maxLength150":"The value must be less than 150 characters long",
-    "maxLength30":"The value must be less than 30 characters long"
-
+    "maxLength30":"The value must be less than 30 characters long",
+    "verifCodeSent": "We have sent a verification code to your email",
+    "verifyEmailPage": "Verify email page",
+    "emailError": "Please input users name or delete this field"
+  },
+  "securityCodeForm": {
+    "noCode": "Didn't get a verification code?",
+    "title": "Check your mail"
   },
   "forms": {
     "controlForm": "Control form",

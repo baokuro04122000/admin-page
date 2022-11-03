@@ -1,5 +1,5 @@
 import baseClient, { BASE_URL } from "./baseClient";
-import { AuthApiFactory, DeleteImagesRequest, SellerRegisterRequest, UserRegister } from "./openapi-generator";
+import { AuthApiFactory, DeleteImagesRequest, OTPRequest, ResetPasswordRequest, SellerRegisterRequest, UserRegister } from "./openapi-generator";
 
 const authApiFactory = AuthApiFactory(undefined, BASE_URL, baseClient);
 
@@ -18,11 +18,11 @@ export const register = (user: UserRegister) => {
 export const emailResetPassowrd = (email: string) => {
   return authApiFactory.authEmailResetPasswordPost({email})
 }
-export const otpResetPassword = (otp: number) => {
-  return authApiFactory.authOtpResetPasswordPost({otp})
+export const otpResetPassword = (otp: OTPRequest) => {
+  return authApiFactory.authOtpResetPasswordPost(otp)
 }
-export const newPassword = (token: string, password: string) => {
-  return authApiFactory.authResetPasswordPost({token,password})
+export const newPassword = (resetPassword: ResetPasswordRequest) => {
+  return authApiFactory.authResetPasswordPost(resetPassword)
 }
 export const checkTokenSellerRegister = (token: string) => {
   return authApiFactory.authCheckSellerRegisterRequestPost({token})

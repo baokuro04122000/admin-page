@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AnnouceSuccess"
+                $ref: "#/components/schemas/AnnouceSuccessAuth"
         "400":
           description: errors of the server
           content:
@@ -285,7 +285,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AnnouceSuccess"
+                $ref: "#/components/schemas/AnnouceSuccessAuth"
         "400":
             description: Invalid Email Format/Email is not Registered
             content:
@@ -859,7 +859,7 @@ components:
             typeLogin:
               type: string
               example: local | google
-            sellers:
+            seller:
               $ref: "#/components/schemas/SellerDetail"
                 
     SellerRegisterRequest:
@@ -956,10 +956,24 @@ components:
         _id:
           type: string
           example: 63312b2a82dc64f45360ff5a
-        name:
-          description: the brand of shop
-          type: string
-          example: HAPPY SHOP
+        info:
+          type: object
+          properties:
+            name:
+              type: string
+            address:
+              type: array
+              items:
+                type: string
+            phone: 
+              type: string
+        logo:
+          type: object
+          properties:
+            fileLink:
+              type: string
+            fileId:
+              type: string
         slogan:
           type: string
           example: you can do it!
@@ -1026,15 +1040,17 @@ components:
         otp:
           type: integer
           example: 123456
+        userId:
+          type: string
     
     OTPRequestActive:
       type: object
       required:
-        - email
+        - userId
         - otp
       description: OTP got from your email
       properties:
-        email:
+        userId:
           type: string
         otp:
           type: integer
@@ -1047,6 +1063,8 @@ components:
         password:
           type: string
           example: "12345678a"
+        userId:
+          type: string
           
     AnnouceSuccess:
       type: object
@@ -1060,6 +1078,19 @@ components:
             message:
               type: string
               example: "register is success, please check your email to active account"
+              
+    AnnouceSuccessAuth:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "register is success, please check your email to active account"
+        userId:
+          type: string
+          description: it use to validate with backend
     
     OTPResponse:
       type: object
@@ -1070,6 +1101,8 @@ components:
             token:
               type: string
               example: "12312-dasd-dasdasd"
+        userId:
+              type: string
               
     CategoriesResponse:
       type: object

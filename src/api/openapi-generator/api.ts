@@ -140,6 +140,25 @@ export interface AnnouceSuccess {
 /**
  * 
  * @export
+ * @interface AnnouceSuccessAuth
+ */
+export interface AnnouceSuccessAuth {
+    /**
+     * 
+     * @type {AnnouceSuccessData}
+     * @memberof AnnouceSuccessAuth
+     */
+    'data'?: AnnouceSuccessData;
+    /**
+     * it use to validate with backend
+     * @type {string}
+     * @memberof AnnouceSuccessAuth
+     */
+    'userId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface AnnouceSuccessData
  */
 export interface AnnouceSuccessData {
@@ -433,6 +452,12 @@ export interface OTPRequest {
      * @memberof OTPRequest
      */
     'otp': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OTPRequest
+     */
+    'userId'?: string;
 }
 /**
  * OTP got from your email
@@ -445,7 +470,7 @@ export interface OTPRequestActive {
      * @type {string}
      * @memberof OTPRequestActive
      */
-    'email': string;
+    'userId': string;
     /**
      * 
      * @type {number}
@@ -465,6 +490,12 @@ export interface OTPResponse {
      * @memberof OTPResponse
      */
     'data'?: OTPResponseData;
+    /**
+     * 
+     * @type {string}
+     * @memberof OTPResponse
+     */
+    'userId'?: string;
 }
 /**
  * 
@@ -614,6 +645,12 @@ export interface ResetPasswordRequest {
      * @memberof ResetPasswordRequest
      */
     'password'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResetPasswordRequest
+     */
+    'userId'?: string;
 }
 /**
  * Seller detail information
@@ -628,11 +665,17 @@ export interface SellerDetail {
      */
     '_id'?: string;
     /**
-     * the brand of shop
-     * @type {string}
+     * 
+     * @type {SellerDetailInfo}
      * @memberof SellerDetail
      */
-    'name'?: string;
+    'info'?: SellerDetailInfo;
+    /**
+     * 
+     * @type {SellerDetailLogo}
+     * @memberof SellerDetail
+     */
+    'logo'?: SellerDetailLogo;
     /**
      * 
      * @type {string}
@@ -657,6 +700,50 @@ export interface SellerDetail {
      * @memberof SellerDetail
      */
     'isDisable'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SellerDetailInfo
+ */
+export interface SellerDetailInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerDetailInfo
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof SellerDetailInfo
+     */
+    'address'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerDetailInfo
+     */
+    'phone'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SellerDetailLogo
+ */
+export interface SellerDetailLogo {
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerDetailLogo
+     */
+    'fileLink'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerDetailLogo
+     */
+    'fileId'?: string;
 }
 /**
  * the info of seller will send to server to create a seller account
@@ -859,7 +946,7 @@ export interface UserCredentialResponseData {
      * @type {SellerDetail}
      * @memberof UserCredentialResponseData
      */
-    'sellers'?: SellerDetail;
+    'seller'?: SellerDetail;
 }
 /**
  * 
@@ -1691,7 +1778,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+        async authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccessAuth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authEmailResetPasswordPost(forgotPasswordRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1720,7 +1807,7 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+        async authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccessAuth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authMobileRegisterPost(userMobileRegister, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1842,7 +1929,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+        authEmailResetPasswordPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: any): AxiosPromise<AnnouceSuccessAuth> {
             return localVarFp.authEmailResetPasswordPost(forgotPasswordRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1868,7 +1955,7 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: any): AxiosPromise<AnnouceSuccess> {
+        authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: any): AxiosPromise<AnnouceSuccessAuth> {
             return localVarFp.authMobileRegisterPost(userMobileRegister, options).then((request) => request(axios, basePath));
         },
         /**

@@ -8,6 +8,7 @@ const initialState: AuthenticationSlice = {
   authUser: null,
   notifyResetPassowrd: undefined,
   verifyToken: undefined,
+  userId: undefined
 };
 
 export const authenticationSlice = createSlice({
@@ -28,15 +29,21 @@ export const authenticationSlice = createSlice({
       {payload}: PayloadAction<string | undefined>
     ){
       state.verifyToken = payload
+    },
+    setUserId(
+      state,
+      {payload} : PayloadAction<string | undefined>
+    ){
+      state.userId = payload
     }
-
   },
 });
 
 export const { 
   setAuthUser,
   setNotifyResetPassowrd,
-  setVerifyToken
+  setVerifyToken,
+  setUserId
 } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

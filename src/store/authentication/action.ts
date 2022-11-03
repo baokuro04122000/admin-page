@@ -1,10 +1,11 @@
 import { AppThunk } from "..";
-import { DeleteImagesRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
+import { DeleteImagesRequest, OTPRequest, ResetPasswordRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
 import { AUTH_USER_DATA_LS_ITEM } from "../../constants/authentication";
 import { 
   setAuthUser,
   setNotifyResetPassowrd,
-  setVerifyToken
+  setVerifyToken,
+  setUserId
 } from "./slice";
 import axios,{ AxiosError } from 'axios'
 import { 
@@ -84,7 +85,8 @@ export const actionEmailResetPassword = (
   return async (dispatch) => {
     try {
       const { data } = await emailResetPassowrd(email)
-      dispatch(setNotifyResetPassowrd(data.data?.message))
+      await dispatch(setNotifyResetPassowrd(data.data?.message))
+      await dispatch(setUserId(data.userId))
     } catch (error) {
       const err = error as AxiosError
       console.log(err)
@@ -94,12 +96,13 @@ export const actionEmailResetPassword = (
 } 
 
 export const actionOTPResetPassword = (
-  otp: number
+  otp: OTPRequest
 ): AppThunk<Promise<void>> =>{
   return async (dispatch) => {
     try {
       const { data } = await otpResetPassword(otp)
-      dispatch(setVerifyToken(data.data?.token))
+      await dispatch(setVerifyToken(data.data?.token))
+      await dispatch(setUserId(data.userId))
     } catch (error) {
       const err = error as AxiosError
       throw err.response?.data;
@@ -108,12 +111,11 @@ export const actionOTPResetPassword = (
 } 
 
 export const actionNewPassword = (
-  token:string,
-  password: string
+  resetPassword: ResetPasswordRequest
 ): AppThunk<Promise<void>> =>{
   return async (dispatch) => {
     try {
-      const { data } = await newPassword(token, password)
+      const { data } = await newPassword(resetPassword)
       dispatch(setNotifyResetPassowrd(data.data?.message)) 
     } catch (error) {
       const err = error as AxiosError
