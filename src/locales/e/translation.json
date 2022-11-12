@@ -68,12 +68,13 @@
     "products":"Products",
     "productTable":"Product Table",
     "discount":"Discount",
-    "edit":"Edit",
+    "edit":"Edit De",
     "editProduct": "Edit Product",
     "addProduct":"Add Product",
     "actions":"Actions",
     "delete":"Delete",
-    "titlePopconfirmDelete":"Are you sure to delete?"
+    "titlePopconfirmDelete":"Are you sure to delete?",
+    "quickEdit":"Quick Edit"
 
   },
   "profile": {
@@ -164,8 +165,8 @@
     "users":"Users",
     "roles":"Roles",
     "requiredField":"This field is required!",
-    "notValidEmail":"",
-    "confirmPasswordError":"",
+    "notValidEmail":"Please input a valid email address!",
+    "confirmPasswordError":"The two passwords that you entered do not match!",
     "login":"Log In",
     "signUp":"Sign Up Seller",
     "email":"Email",
@@ -231,7 +232,8 @@
     "maxLength30":"The value must be less than 30 characters long",
     "verifCodeSent": "We have sent a verification code to your email",
     "verifyEmailPage": "Verify email page",
-    "emailError": "Please input users name or delete this field"
+    "emailError": "Please input users name or delete this field",
+    "passwordInValid":"Password must contain at least 8 characters, including letters, numbers and special characters"
   },
   "securityCodeForm": {
     "noCode": "Didn't get a verification code?",

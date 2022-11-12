@@ -10,7 +10,7 @@ const UserTest = () => {
     } catch (error: any) {
       notificationController.error({
         message:error ? error.errors.message : "NETWORK ERROR",
-        duration: null
+        duration: 5
       })
     }
   }
@@ -20,12 +20,12 @@ const UserTest = () => {
       const data = await dispatch(actionRegisterSellerRequest())
       notificationController.success({
         message:data,
-        duration: null
+        duration: 3
       })
     } catch (error: any) {
       notificationController.error({
         message:error ? error.errors.message : "NETWORK ERROR",
-        duration: null
+        duration: 5
       })      
     }
   }

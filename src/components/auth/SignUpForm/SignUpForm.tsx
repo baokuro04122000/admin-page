@@ -57,7 +57,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
     if(math.indexOf(file.type) === -1){
       notificationController.error({
         message:t('seller.imageInvalidFormat'),
-        duration:null
+        duration:5
       })
       setLogoLoading(false)
       return false
@@ -67,7 +67,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
       setLogoLoading(false)
       notificationController.error({
         message:t('seller.imageLimitSize'),
-        duration:null
+        duration:5
       })
       return false
     }
@@ -89,7 +89,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
     } else if(file.file.status === 'error'){
       notificationController.error({
         message:file.file.error ? file.file.error : "NETWORK ERROR",
-        duration:null
+        duration:5
       })
       return
     }
@@ -129,7 +129,7 @@ const useUploadProof = (t:any, dispatch: any) => {
     if(math.indexOf(file.type) === -1){
       notificationController.error({
         message:t('seller.imageInvalidFormat'),
-        duration:null
+        duration:5
       })
       setProofLoading(false)
       return false
@@ -139,7 +139,7 @@ const useUploadProof = (t:any, dispatch: any) => {
       setProofLoading(false)
       notificationController.error({
         message:t('seller.proofFileLimitSize'),
-        duration:null
+        duration:5
       })
       return false
     }
@@ -258,13 +258,15 @@ export const SignUpForm: React.FC = () => {
           fileList: filesDelete
         }
         await dispatch(actionDeleteFileList(deleteFiles))
-        await dispatch(actionSellerRegister(seller))
+        const success = await dispatch(actionSellerRegister(seller))
+        notificationController.success({message:success, duration: 3})
         return navigate(LOGIN_PATH)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.log(error)
         notificationController.error({
-          message: error ? error.errors.message : "NETWORK ERROR"
+          message: error ? error.errors.message : "NETWORK ERROR",
+          duration: 5
         })
       }
   }, [token, logo, proof, fileListDeleteLogo, fileListDeleteProof, dispatch, navigate])

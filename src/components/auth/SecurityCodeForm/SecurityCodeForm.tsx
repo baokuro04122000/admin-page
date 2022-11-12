@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {  Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { actionOTPResetPassword } from '../../../store/authentication/action'
+import { 
+  actionOTPResetPassword,
+  actionSendOtpAgain
+} from '../../../store/authentication/action'
 import { notificationController } from '../../../controllers/notificationController'
 import { Image, Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -33,6 +36,17 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
     }
   }, [securityCode]);
 
+  const handleSendOTPAgain = async () => {
+    try {
+      const success = await dispatch(actionSendOtpAgain(userId ? userId : ''))
+      notificationController.success({message: success, duration: 3})
+    } catch (error: any) {
+      notificationController.error({
+        message: error ? error.errors.message : 'NETWORK ERROR', 
+        duration: 5})
+    }
+  }
+
   const handleFinish = useCallback(async () => {
     try {
       await dispatch(actionOTPResetPassword({userId, otp: Number(securityCode)}))
@@ -43,7 +57,7 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
       console.log(error)
       notificationController.error({
         message:error.errors.message,
-        duration: null
+        duration: 5
       })
       setLoading(false)
       setSecurityCode('')
@@ -69,9 +83,9 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
           <Auth.FormTitle>{t('securityCodeForm.title')}</Auth.FormTitle>
           <S.VerifyEmailDescription>{t('common.verifCodeSent')}</S.VerifyEmailDescription>
           {isLoading ? <Spin /> : <VerificationCodeInput autoFocus onChange={setSecurityCode} />}
-          <Link to="/" target="_blank">
+          <span  onClick={handleSendOTPAgain}>
             <S.NoCodeText>{t('securityCodeForm.noCode')}</S.NoCodeText>
-          </Link>
+          </span>
         </S.ContentWrapper>
       </BaseForm>
     </Auth.FormWrapper>

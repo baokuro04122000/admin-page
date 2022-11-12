@@ -302,6 +302,68 @@ export interface EditProductRequest {
     'slug'?: string;
 }
 /**
+ * 
+ * @export
+ * @interface EditQuickProductRequest
+ */
+export interface EditQuickProductRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EditQuickProductRequest
+     */
+    'productId'?: string;
+    /**
+     * 
+     * @type {EditQuickProductRequestProductChanged}
+     * @memberof EditQuickProductRequest
+     */
+    'productChanged'?: EditQuickProductRequestProductChanged;
+}
+/**
+ * 
+ * @export
+ * @interface EditQuickProductRequestProductChanged
+ */
+export interface EditQuickProductRequestProductChanged {
+    /**
+     * 
+     * @type {string}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'author': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'summary': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'price': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'discountPercent': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof EditQuickProductRequestProductChanged
+     */
+    'quantity': number;
+}
+/**
  * Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
  * @export
  * @interface ErrorResponse
@@ -822,6 +884,19 @@ export interface SellerRegisterRequestLogo {
 /**
  * 
  * @export
+ * @interface SendOTPAgain
+ */
+export interface SendOTPAgain {
+    /**
+     * 
+     * @type {string}
+     * @memberof SendOTPAgain
+     */
+    'userId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface SpecsProduct
  */
 export interface SpecsProduct {
@@ -925,10 +1000,16 @@ export interface UserCredentialResponseData {
     'role'?: string;
     /**
      * 
-     * @type {FileInfo}
+     * @type {any}
      * @memberof UserCredentialResponseData
      */
-    'profilePicture'?: FileInfo;
+    'profilePicture'?: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
+    'name'?:string;
     /**
      * 
      * @type {UserCredentialResponseDataMeta}
@@ -1630,6 +1711,39 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Request send otp again
+         * @param {SendOTPAgain} [sendOTPAgain] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authRegisterSendOtpAgainPost: async (sendOTPAgain?: SendOTPAgain, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/register/send-otp-again`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sendOTPAgain, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Reset password follow by verify token - final step
          * @param {ResetPasswordRequest} [resetPasswordRequest] 
          * @param {*} [options] Override http request option.
@@ -1851,6 +1965,16 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Request send otp again
+         * @param {SendOTPAgain} [sendOTPAgain] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authRegisterSendOtpAgainPost(sendOTPAgain?: SendOTPAgain, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccessAuth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authRegisterSendOtpAgainPost(sendOTPAgain, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Reset password follow by verify token - final step
          * @param {ResetPasswordRequest} [resetPasswordRequest] 
          * @param {*} [options] Override http request option.
@@ -1992,6 +2116,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authRegisterPost(userRegister?: UserRegister, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.authRegisterPost(userRegister, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Request send otp again
+         * @param {SendOTPAgain} [sendOTPAgain] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authRegisterSendOtpAgainPost(sendOTPAgain?: SendOTPAgain, options?: any): AxiosPromise<AnnouceSuccessAuth> {
+            return localVarFp.authRegisterSendOtpAgainPost(sendOTPAgain, options).then((request) => request(axios, basePath));
         },
         /**
          * Reset password follow by verify token - final step
@@ -2155,6 +2288,17 @@ export class AuthApi extends BaseAPI {
      */
     public authRegisterPost(userRegister?: UserRegister, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authRegisterPost(userRegister, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Request send otp again
+     * @param {SendOTPAgain} [sendOTPAgain] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authRegisterSendOtpAgainPost(sendOTPAgain?: SendOTPAgain, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authRegisterSendOtpAgainPost(sendOTPAgain, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2553,6 +2697,39 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * update quick product by seller
+         * @param {EditQuickProductRequest} [editQuickProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerQuickUpdateProductPut: async (editQuickProductRequest?: EditQuickProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/seller/quick-update-product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(editQuickProductRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * update product by seller
          * @param {EditProductRequest} [editProductRequest] 
          * @param {*} [options] Override http request option.
@@ -2616,6 +2793,16 @@ export const SellerApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * update quick product by seller
+         * @param {EditQuickProductRequest} [editQuickProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerQuickUpdateProductPut(editQuickProductRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * update product by seller
          * @param {EditProductRequest} [editProductRequest] 
          * @param {*} [options] Override http request option.
@@ -2652,6 +2839,15 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
          */
         sellerDeleteProductIdDelete(id: string, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.sellerDeleteProductIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update quick product by seller
+         * @param {EditQuickProductRequest} [editQuickProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * update product by seller
@@ -2692,6 +2888,17 @@ export class SellerApi extends BaseAPI {
      */
     public sellerDeleteProductIdDelete(id: string, options?: AxiosRequestConfig) {
         return SellerApiFp(this.configuration).sellerDeleteProductIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update quick product by seller
+     * @param {EditQuickProductRequest} [editQuickProductRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

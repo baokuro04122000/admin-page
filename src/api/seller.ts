@@ -1,5 +1,5 @@
 import baseClient, { BASE_URL } from "./baseClient";
-import { AddProductRequest, EditProductRequest, SellerApiFactory } from "./openapi-generator";
+import { AddProductRequest, EditProductRequest, EditQuickProductRequest, SellerApiFactory } from "./openapi-generator";
 
 const sellerApiFactory = SellerApiFactory(undefined, BASE_URL, baseClient);
 
@@ -15,3 +15,6 @@ export const deleteProduct = (id: string) => {
   return sellerApiFactory.sellerDeleteProductIdDelete(id)
 }
 
+export const quickUpdateProduct = (product: EditQuickProductRequest) => {
+  return sellerApiFactory.sellerQuickUpdateProductPut(product)
+}

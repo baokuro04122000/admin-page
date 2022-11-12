@@ -19,7 +19,7 @@ const useUploadProductImages = (t:any, dispatch: any, fileListDefault: UploadFil
     if(math.indexOf(file.type) === -1){
       notificationController.error({
         message:t('seller.imageInvalidFormat'),
-        duration:null
+        duration:5
       })
       return false
     }
@@ -27,7 +27,7 @@ const useUploadProductImages = (t:any, dispatch: any, fileListDefault: UploadFil
     if(!limitFile){
       notificationController.error({
         message:t('seller.proofFileLimitSize'),
-        duration:null
+        duration:5
       })
       return false
     }

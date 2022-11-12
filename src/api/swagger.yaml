@@ -106,12 +106,42 @@ paths:
               $ref: "#/components/schemas/UserMobileRegister"
       responses:
         "200":
-          description: Server will send an email to user to active this account then it sets a cookie with the value {"active_account":false, expired:60s}
+          description: Server will send an email to user to active this account then it sets a cookie with the value {"active_account":false, expired:5m}
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AnnouceSuccessAuth"
         "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/register/send-otp-again:
+    post:
+      tags:
+        - Auth
+      description: Request send otp again
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendOTPAgain"
+      responses:
+        "200":
+          description: Server will send an email to user to active this account then it sets a cookie with the value {"active_account":false, expired:5m}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccessAuth"
+        "404":
           description: errors of the server
           content:
             application/json:
@@ -657,6 +687,44 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
+                  
+  /seller/quick-update-product:
+    put:
+      tags:
+        - Seller
+      description: update quick product by seller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditQuickProductRequest"
+      responses:
+        "200":
+          description: Add product is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        
+        "403":
+            description: product validation errors
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: product not found
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
   
   /seller/delete-product/{id}:
     delete:
@@ -1092,6 +1160,12 @@ components:
           type: string
           description: it use to validate with backend
     
+    SendOTPAgain:
+      type: object
+      properties:
+        userId:
+          type: string
+    
     OTPResponse:
       type: object
       properties:
@@ -1258,6 +1332,34 @@ components:
         slug:
           type: string
     
+    EditQuickProductRequest:
+      type: object
+      properties:
+        productId:
+          type: string
+        productChanged:
+          type: object
+          required:
+            - name
+            - author
+            - summary
+            - price
+            - discountPercent
+            - quantity
+          properties:
+            name:
+              type: string
+            author:
+              type: string
+            summary:
+              type: string
+            price:
+              type: number
+            discountPercent:
+              type: number
+            quantity:
+              type: number
+    
     ProductsResponse:
       type: object
       properties:
@@ -1276,7 +1378,3 @@ components:
               
             
         
-          
-          
-          
-          

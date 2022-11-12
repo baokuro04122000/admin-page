@@ -13,9 +13,11 @@ import {
 import {
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  quickUpdateProduct
 } from '../../api/seller'
-import { AddProductRequest, EditProductRequest } from "../../api/openapi-generator";
+import { AddProductRequest, EditProductRequest, EditQuickProductRequest } from "../../api/openapi-generator";
+import { notificationController } from '../../controllers/notificationController'
 import { RequestSearchParams } from "../../interfaces/api";
 
 export const actionGetAllCategories = ()
@@ -83,6 +85,23 @@ export const actionUpdateProduct = (product: EditProductRequest)
       console.log(error)
       const err = error as AxiosError
       throw err.response?.data;
+    }
+  }
+}
+
+export const actionQuickEditProduct = (product: EditQuickProductRequest)
+: AppThunk<Promise<string>> => {
+  return async () => {
+    try {
+      const {data} = await quickUpdateProduct(product)
+      return data.data?.message ? data.data.message : ''
+    } catch (error:any) {
+      console.log(error)
+      notificationController.error({
+        message: error ? error.response?.data.errors.message : '',
+        duration: 5
+      })
+      throw error.response?.data;
     }
   }
 }

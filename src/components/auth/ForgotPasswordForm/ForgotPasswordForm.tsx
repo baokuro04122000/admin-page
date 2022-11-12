@@ -37,7 +37,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({onForgot, onNewPassword, on
       setLoading(false)
       notificationController.error({
         message: error? error.errors.message:"Network Error",
-        duration: null
+        duration: 5
       })
     }
   }, [dispatch])

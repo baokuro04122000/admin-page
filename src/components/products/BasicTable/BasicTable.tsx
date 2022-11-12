@@ -65,17 +65,17 @@ export const BasicTable: React.FC = () => {
           : 1 
           , sellerId: authUser?.data?.seller?._id
           , limit: 5}))  
-        notificationController.success({message: deleted ? deleted : '', duration: 5})
+        notificationController.success({message: deleted ? deleted : '', duration: 3})
         return
       }
       await dispatch(actionGetProducts({currentPage: 
         pagination.current 
         , sellerId: authUser?.data?.seller?._id
         , limit: 5}))  
-      notificationController.success({message: deleted ? deleted : '', duration: 5})
+      notificationController.success({message: deleted ? deleted : '', duration: 3})
       return
     } catch (error: any) {
-      notificationController.error({message: error?error.errors.message:"NETWORK ERROR", duration:10})
+      notificationController.error({message: error?error.errors.message:"NETWORK ERROR", duration:5})
       return
     }
   };

@@ -45,7 +45,7 @@ export const LoginForm: React.FC = () => {
       notificationController.error(
         {
           message: error? error.errors.message: "NETWORK ERROR",
-          duration: null
+          duration: 5
         })    
     }
   }, [dispatch])
@@ -70,7 +70,13 @@ export const LoginForm: React.FC = () => {
         <Auth.FormItem
           label={t('common.password')}
           name="password"
-          rules={[{ required: true, message: t('common.requiredField') }]}
+          rules={[
+            { required: true, message: t('common.requiredField') },
+            {
+              pattern: /^(?=.*[a-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/,
+              message: t('common.passwordInValid'),
+            }
+          ]}
         >
           <Auth.FormInputPassword placeholder={t('common.password')} />
         </Auth.FormItem>

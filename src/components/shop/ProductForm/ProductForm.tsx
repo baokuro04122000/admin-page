@@ -79,7 +79,7 @@ export const ProductForm: React.FC = () => {
         navigate('/products')
       }).catch((error) => {
         setLoading(false);
-        notificationController.error({ message: error ? error.errors.message : "NETWORK ERROR" })
+        notificationController.error({ message: error ? error.errors.message : "NETWORK ERROR" , duration: 5})
       })
     },
     [t, productImages],

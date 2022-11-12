@@ -18,7 +18,8 @@ import {
   registerSellerRequest,
   checkTokenSellerRegister,
   deleteFileList,
-  sellerRegister
+  sellerRegister,
+  sendEmailAgain
 } from "../../api/authentication";
 import { ResponseUploadFile } from '../../interfaces/authentication'
 import { RcFile } from "antd/lib/upload";
@@ -211,12 +212,25 @@ export const actionDeleteFileListbySeller = (fileList: string[])
   }
 }
 export const actionSellerRegister = (seller: SellerRegisterRequest)
-: AppThunk<Promise<boolean>> => {
+: AppThunk<Promise<string>> => {
   return async () => {
     try {
       const {data} = await sellerRegister(seller)
-      console.log(data.data)
-      return true
+      return data.data?.message ? data.data?.message : ""
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
+
+export const actionSendOtpAgain = (userId: string)
+: AppThunk<Promise<string>> => {
+  return async () => {
+    try {
+      const {data} = await sendEmailAgain(userId)
+      return data.data?.message ? data.data?.message : "" 
     } catch (error) {
       console.log(error)
       const err = error as AxiosError

@@ -33,6 +33,10 @@ export const deleteFileList = (fileList:DeleteImagesRequest) => {
 export const sellerRegister = (seller:SellerRegisterRequest) => {
   return authApiFactory.authSellerRegisterPost(seller)
 }
+
+export const sendEmailAgain = (userId: string) => {
+  return authApiFactory.authRegisterSendOtpAgainPost({userId})
+}
 //test API for mobile app
 export const registerSellerRequest = () => {
   return authApiFactory.authSellerRegisterRequestGet()

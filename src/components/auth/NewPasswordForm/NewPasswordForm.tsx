@@ -49,7 +49,7 @@ export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
       setLoading(false)
       notificationController.error({
         message:error.errors.message,
-        duration:10
+        duration:5
       })
     }
   },[verifyCode]);
@@ -70,7 +70,13 @@ export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
         <Auth.FormItem
           name="password"
           label={t('common.password')}
-          rules={[{ required: true, message: t('common.requiredField') }]}
+          rules={[
+            { required: true, message: t('common.requiredField') },
+            {
+              pattern: /^(?=.*[a-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/,
+              message: t('common.passwordInValid'),
+            }
+          ]}
         >
           <Auth.FormInputPassword placeholder={t('common.password')} />
         </Auth.FormItem>
