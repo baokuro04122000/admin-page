@@ -57,7 +57,7 @@ const useUploadProductImages = (t:any, dispatch: any, fileListDefault: UploadFil
     multiple:true,
     listType:"picture",
     maxCount:5,
-    action:`http://localhost:5000/api/upload-image`,
+    action:`https://external-services-production.up.railway.app/api/upload-image`,
     beforeUpload:handleBeforeUpload,
     onChange:handleOnChange,
     onRemove:handleOnRemove,
