@@ -77,6 +77,28 @@
     "quickEdit":"Quick Edit"
 
   },
+  "order":{
+    "orders":"Orders",
+    "ordersTable":"Order Table",
+    "name":"Name",
+    "product":"Product",
+    "quantity":"Quantity",
+    "meta":"Meta",
+    "address":"Address",
+    "totalBuy":"Buy:",
+    "totalCancel":"Cancel:",
+    "deliveryName":"Name:",
+    "phone":"Phone",
+    "inventory":"Inventory",
+    "amountPaid":"Amount Paid",
+    "paymentType":"Payment Type",
+    "orderedAt": "Ordered at",
+    "status":"Status",
+    "actions":"Actions",
+    "confirm":"Confirm",
+    "details":"Details",
+    "titleConfirm":"Are you done this status?"
+  },
   "profile": {
     "fullness": "fullness of your profile",
     "nav": {

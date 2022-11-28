@@ -57,7 +57,7 @@ const useUploadProductImages = (t:any, dispatch: any, fileListDefault: UploadFil
     multiple:true,
     listType:"picture",
     maxCount:5,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://extenal-services.herokuapp.com"}/api/upload-image`,
+    action:`http://localhost:5000/api/upload-image`,
     beforeUpload:handleBeforeUpload,
     onChange:handleOnChange,
     onRemove:handleOnRemove,
@@ -74,6 +74,7 @@ const UploadItemProduct: React.FC<props> = ({fileListDefault}) => {
   const dispatch = useAppDispatch()
   const {configProof, productImages, fileListDelete} = useUploadProductImages(t, dispatch, fileListDefault)
   useEffect(() => {
+    
     return () => {
       if(fileListDelete.length > 0){
         dispatch(setProductImages(undefined))

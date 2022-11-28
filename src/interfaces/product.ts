@@ -1,4 +1,4 @@
-import {  CategoriesResponseDataInner, ProductsResponse, FileInfo, ProductDetails} from "../api/openapi-generator";
+import {  CategoriesResponseDataInner, ProductsResponse, FileInfo, ProductDetails, OrderList} from "../api/openapi-generator";
 
 
 
@@ -7,4 +7,5 @@ export interface ProductSlice {
   productImages: undefined | FileInfo[];
   products: undefined | ProductsResponse;
   product: undefined | ProductDetails;
+  orders: undefined | OrderList
 }

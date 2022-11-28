@@ -211,6 +211,7 @@ export const actionDeleteFileListbySeller = (fileList: string[])
     }
   }
 }
+
 export const actionSellerRegister = (seller: SellerRegisterRequest)
 : AppThunk<Promise<string>> => {
   return async () => {

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Popconfirm, Form, TablePaginationConfig, Space } from 'antd';
+import { Popconfirm, Form, Space } from 'antd';
 import { Table } from '../../common/Table/Table';
-import { getEditableTableData, BasicTableRow, Pagination } from '../../../api/table.api';
+import { Pagination } from '../../../api/table.api';
 import { EditableCell } from './EditableCell';
 import { Button } from '../../common/buttons/Button/Button';
 import { useTranslation } from 'react-i18next';
-import { useMounted } from '../../../hooks/useMounted';
 import { useAppDispatch, useAppSelector } from '../../../store'
 import {
   actionGetProducts,
@@ -48,7 +47,7 @@ export const EditableTable: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate()
   const dispatch =  useAppDispatch();
-  const { isMounted } = useMounted();
+  
 
   useEffect(() => {
     dispatch(actionGetProducts({currentPage: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
@@ -125,7 +124,7 @@ export const EditableTable: React.FC = () => {
       console.log('Validate Failed:', errInfo);
     }
   };
-  console.log(products)
+  
   const handleDeleteProduct = async (productId: string) => {
     try {
       const deleted = await dispatch(actionDeleteProduct(productId))

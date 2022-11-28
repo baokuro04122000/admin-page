@@ -221,7 +221,7 @@ export const SignUpForm: React.FC = () => {
   const checkTokenValid = async (token: string) => {
     try {
       const valid = await dispatch(actionCheckSellerRegister(token))
-      return valid
+      return true
     } catch (error) {
       console.log(error)
       return navigate('/auth/login')       

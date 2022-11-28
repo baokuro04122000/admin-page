@@ -7,7 +7,8 @@ import {
   SELLER_DASHBOARD_HOME_SUBPATH,
   SELLER_DASHBOARD_PATH,
   SELLER_DASHBOARD_PRODUCTS_SUBPATH,
-  SELLER_ADD_PRODUCT_SUBPATH
+  SELLER_ADD_PRODUCT_SUBPATH,
+  SELLER_DASHBOARD_ORDERS_SUBPATH
 } from '../../constants/routes'
 import { ReactComponent as NftIcon } from '../../assets/icons/nft-icon.svg';
 
@@ -45,7 +46,7 @@ export const sidebarNavigationSeller: SidebarNavigationItem[] = [
       {
         title: 'common.orders',
         key: 'orders',
-        url: '/apps/kanban',
+        url: SELLER_DASHBOARD_PATH+SELLER_DASHBOARD_ORDERS_SUBPATH,
       },
     ],
   },

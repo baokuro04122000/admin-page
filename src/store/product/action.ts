@@ -3,7 +3,8 @@ import { AxiosError } from "axios";
 import { 
   setCategories,
   setProducts,
-  setProduct
+  setProduct,
+  setOrders
  } from './slice'
 import { 
   getAllCategories,
@@ -14,7 +15,9 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
-  quickUpdateProduct
+  quickUpdateProduct,
+  orderList,
+  updateStatusOrder
 } from '../../api/seller'
 import { AddProductRequest, EditProductRequest, EditQuickProductRequest } from "../../api/openapi-generator";
 import { notificationController } from '../../controllers/notificationController'
@@ -112,6 +115,36 @@ export const actionDeleteProduct = (id: string)
     try {
       const {data} = await deleteProduct(id);
       return data.data?.message
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
+
+export const actionGetOrderList = (pagination: {currentPage: number, limit: number})
+: AppThunk<Promise<void>> => {
+  return async (dispatch) => {
+    const {currentPage, limit} = pagination;
+    try {
+      const {data} = await orderList(currentPage, limit)
+      dispatch(setOrders(data))
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
+
+export const actionUpdateStatusOrder = (orderId: string)
+: AppThunk<Promise<boolean>>  => {
+  return async  () => {
+    try {
+      const {data} = await updateStatusOrder(orderId);
+      console.log(data)
+      return true
     } catch (error) {
       console.log(error)
       const err = error as AxiosError

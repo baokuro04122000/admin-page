@@ -18,3 +18,11 @@ export const deleteProduct = (id: string) => {
 export const quickUpdateProduct = (product: EditQuickProductRequest) => {
   return sellerApiFactory.sellerQuickUpdateProductPut(product)
 }
+
+export const orderList = (currentPage: number, limit: number) => {
+  return sellerApiFactory.sellerOrdersProcessingGet(currentPage, limit)
+}
+
+export const updateStatusOrder = (orderId: string) => {
+  return sellerApiFactory.sellerStatusOrderPut({orderId})
+}

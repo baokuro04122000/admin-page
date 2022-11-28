@@ -202,3 +202,7 @@ export const checkEmptyObject = (obj: any) => {
 
   return JSON.stringify(obj) === JSON.stringify({});
 }
+
+export const totalPriceProduct = (price: number, quantity: number, discount: number) => {
+  return (discount !== 0) ? price*quantity*(1-discount/100) : price*quantity
+}

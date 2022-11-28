@@ -769,6 +769,79 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+                
+  /seller/orders-processing:
+    get:
+      tags:
+        - Seller
+      description: API get all orders that it not done
+      parameters:
+        - in: query
+          name: currentPage
+          schema:
+            type: number
+        - in: query
+          name: limit
+          schema:
+            type: number
+      
+      responses:
+      
+        "200":
+          description: order list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        "400":
+            description: Invalid verify code
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+                  
+  /seller/status-order:
+    put:
+      tags:
+        - Seller
+      description: update status of order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStatusOrderRequest"
+      responses:
+        "200":
+          description: Deleting is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         
   /admin/add-category:
     post:
@@ -804,7 +877,7 @@ components:
   
   schemas:
     FileInfo:
-      type: object
+      type: object 
       properties:
         fileLink:
           type: string
@@ -905,6 +978,8 @@ components:
             _id:
               type: string
             email:
+              type: string
+            name:
               type: string
             firstName:
               type: string
@@ -1375,6 +1450,137 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/ProductDetails"
+          
+    OrderDetails:
+      type: object
+      properties:
+        _id:
+          type: string
+        user:
+          type: object
+          properties:
+            info:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                gender:
+                  type: string
+                language:
+                  type: string
+                birthDay:
+                  type: string
+            meta:
+              type: object
+              properties:
+                totalBuy:
+                  type: number
+                totalCancel:
+                  type: number
+        address:
+          type: object
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            address:
+              type: string
+            zipCode:
+              type: number
+            isDefault:
+              type: boolean
+              
+        paymentType:
+              type: string
+        
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              shippingCode:
+                type: number
+              discount:
+                type: number
+              price:
+                type: number
+              totalPaid:
+                type: number
+              quantity:
+                type: number
+              shippingCost:
+                type: number
+              orderStatus:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    date:
+                      type: string
+                    isCompleted:
+                      type: boolean
+                    _id:
+                      type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+              _id:
+                type: string
+        product:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            quantity:
+              type: number
+            productPictures:
+              type: array
+              items:
+                type: object
+                properties:
+                  fileId:
+                    type: string
+                  fileLink:
+                    type: string
+            meta:
+              type: object
+              properties:
+                totalBuy:
+                  type: number
+                totalCancel:
+                  type: number
+    
+    OrderList:
+      type: object
+      properties:
+        page:
+          type: number
+        pageSize:
+          type: number
+        total:
+          type: number
+        total_page:
+          type: number
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderDetails"
+            
+    UpdateStatusOrderRequest:
+      type: object
+      properties:
+        orderId:
+          type: string
               
             
         

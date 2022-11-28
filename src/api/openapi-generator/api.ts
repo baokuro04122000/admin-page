@@ -575,6 +575,358 @@ export interface OTPResponseData {
 /**
  * 
  * @export
+ * @interface OrderDetails
+ */
+export interface OrderDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetails
+     */
+    '_id'?: string;
+    /**
+     * 
+     * @type {OrderDetailsUser}
+     * @memberof OrderDetails
+     */
+    'user'?: OrderDetailsUser;
+    /**
+     * 
+     * @type {OrderDetailsAddress}
+     * @memberof OrderDetails
+     */
+    'address'?: OrderDetailsAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetails
+     */
+    'paymentType'?: string;
+    /**
+     * 
+     * @type {Array<OrderDetailsItemsInner>}
+     * @memberof OrderDetails
+     */
+    'items'?: Array<OrderDetailsItemsInner>;
+    /**
+     * 
+     * @type {OrderDetailsProduct}
+     * @memberof OrderDetails
+     */
+    'product'?: OrderDetailsProduct;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsAddress
+ */
+export interface OrderDetailsAddress {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsAddress
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsAddress
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsAddress
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsAddress
+     */
+    'zipCode'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderDetailsAddress
+     */
+    'isDefault'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsItemsInner
+ */
+export interface OrderDetailsItemsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInner
+     */
+    'product'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'shippingCode'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'discount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'totalPaid'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsItemsInner
+     */
+    'shippingCost'?: number;
+    /**
+     * 
+     * @type {Array<OrderDetailsItemsInnerOrderStatusInner>}
+     * @memberof OrderDetailsItemsInner
+     */
+    'orderStatus'?: Array<OrderDetailsItemsInnerOrderStatusInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInner
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInner
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInner
+     */
+    '_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsItemsInnerOrderStatusInner
+ */
+export interface OrderDetailsItemsInnerOrderStatusInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInnerOrderStatusInner
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInnerOrderStatusInner
+     */
+    'date'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderDetailsItemsInnerOrderStatusInner
+     */
+    'isCompleted'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsItemsInnerOrderStatusInner
+     */
+    '_id'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsProduct
+ */
+export interface OrderDetailsProduct {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsProduct
+     */
+    '_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsProduct
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsProduct
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {Array<OrderDetailsProductProductPicturesInner>}
+     * @memberof OrderDetailsProduct
+     */
+    'productPictures'?: Array<OrderDetailsProductProductPicturesInner>;
+    /**
+     * 
+     * @type {OrderDetailsUserMeta}
+     * @memberof OrderDetailsProduct
+     */
+    'meta'?: OrderDetailsUserMeta;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsProductProductPicturesInner
+ */
+export interface OrderDetailsProductProductPicturesInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsProductProductPicturesInner
+     */
+    'fileId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsProductProductPicturesInner
+     */
+    'fileLink'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsUser
+ */
+export interface OrderDetailsUser {
+    /**
+     * 
+     * @type {OrderDetailsUserInfo}
+     * @memberof OrderDetailsUser
+     */
+    'info'?: OrderDetailsUserInfo;
+    /**
+     * 
+     * @type {OrderDetailsUserMeta}
+     * @memberof OrderDetailsUser
+     */
+    'meta'?: OrderDetailsUserMeta;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsUserInfo
+ */
+export interface OrderDetailsUserInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsUserInfo
+     */
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsUserInfo
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsUserInfo
+     */
+    'gender'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsUserInfo
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsUserInfo
+     */
+    'birthDay'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsUserMeta
+ */
+export interface OrderDetailsUserMeta {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsUserMeta
+     */
+    'totalBuy'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsUserMeta
+     */
+    'totalCancel'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OrderList
+ */
+export interface OrderList {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderList
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderList
+     */
+    'pageSize'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderList
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderList
+     */
+    'total_page'?: number;
+    /**
+     * 
+     * @type {Array<OrderDetails>}
+     * @memberof OrderList
+     */
+    'data'?: Array<OrderDetails>;
+}
+/**
+ * 
+ * @export
  * @interface ProductDetails
  */
 export interface ProductDetails {
@@ -940,6 +1292,19 @@ export interface SpecsProduct {
 /**
  * 
  * @export
+ * @interface UpdateStatusOrderRequest
+ */
+export interface UpdateStatusOrderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateStatusOrderRequest
+     */
+    'orderId'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UserCredentialResponse
  */
 export interface UserCredentialResponse {
@@ -979,6 +1344,12 @@ export interface UserCredentialResponseData {
      * @type {string}
      * @memberof UserCredentialResponseData
      */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
     'firstName'?: string;
     /**
      * 
@@ -1000,16 +1371,10 @@ export interface UserCredentialResponseData {
     'role'?: string;
     /**
      * 
-     * @type {any}
+     * @type {FileInfo}
      * @memberof UserCredentialResponseData
      */
-    'profilePicture'?: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCredentialResponseData
-     */
-    'name'?:string;
+    'profilePicture'?: FileInfo;
     /**
      * 
      * @type {UserCredentialResponseDataMeta}
@@ -2697,6 +3062,45 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * API get all orders that it not done
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerOrdersProcessingGet: async (currentPage?: number, limit?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/seller/orders-processing`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (currentPage !== undefined) {
+                localVarQueryParameter['currentPage'] = currentPage;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * update quick product by seller
          * @param {EditQuickProductRequest} [editQuickProductRequest] 
          * @param {*} [options] Override http request option.
@@ -2723,6 +3127,39 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(editQuickProductRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerStatusOrderPut: async (updateStatusOrderRequest?: UpdateStatusOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/seller/status-order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateStatusOrderRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2793,6 +3230,17 @@ export const SellerApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * API get all orders that it not done
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerOrdersProcessingGet(currentPage, limit, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * update quick product by seller
          * @param {EditQuickProductRequest} [editQuickProductRequest] 
          * @param {*} [options] Override http request option.
@@ -2800,6 +3248,16 @@ export const SellerApiFp = function(configuration?: Configuration) {
          */
         async sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sellerQuickUpdateProductPut(editQuickProductRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerStatusOrderPut(updateStatusOrderRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2841,6 +3299,16 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.sellerDeleteProductIdDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
+         * API get all orders that it not done
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: any): AxiosPromise<OrderList> {
+            return localVarFp.sellerOrdersProcessingGet(currentPage, limit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * update quick product by seller
          * @param {EditQuickProductRequest} [editQuickProductRequest] 
          * @param {*} [options] Override http request option.
@@ -2848,6 +3316,15 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
          */
         sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * update product by seller
@@ -2891,6 +3368,18 @@ export class SellerApi extends BaseAPI {
     }
 
     /**
+     * API get all orders that it not done
+     * @param {number} [currentPage] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).sellerOrdersProcessingGet(currentPage, limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * update quick product by seller
      * @param {EditQuickProductRequest} [editQuickProductRequest] 
      * @param {*} [options] Override http request option.
@@ -2899,6 +3388,17 @@ export class SellerApi extends BaseAPI {
      */
     public sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig) {
         return SellerApiFp(this.configuration).sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update status of order
+     * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
