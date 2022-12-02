@@ -31,4 +31,8 @@ export const ADMIN_CREATE_USER_SUCCESS_SUBPATH = 'create-user-success'
 // Paths for user dashboard pages
 export const USER_PATH = '/user'
 
+// Paths for shipper dashboard pages
+export const SHIPPER_DASHBOARD_PATH = "/shipper";
+export const SHIPPER_DASHBOARD_ORDERS_SUBPATH="orders"
+
 

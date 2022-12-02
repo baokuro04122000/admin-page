@@ -2,7 +2,12 @@ import React, {useMemo} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import * as S from './SiderMenu.styles';
-import { sidebarNavigationSeller, sidebarNavigationAdmin ,SidebarNavigationItem } from '../sidebarNavigation';
+import { 
+  sidebarNavigationSeller, 
+  sidebarNavigationAdmin ,
+  SidebarNavigationItem,
+  sidebarNavigationShipper
+} from '../sidebarNavigation';
 import { Menu } from 'antd';
 
 interface SiderContentProps {
@@ -44,6 +49,17 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed, page }) => {
       return {
         defaultOpenKeys,
         sidebarNavigation: sidebarNavigationSeller
+      }
+    }
+    if(page === "shipper"){
+      const openedSubmenu = sidebarNavigationSeller.find(({ children }) =>
+      children?.some(({ url }) => url === location.pathname),
+      );
+      const defaultOpenKeys = openedSubmenu ? [openedSubmenu.key] : [];
+
+      return {
+        defaultOpenKeys,
+        sidebarNavigation: sidebarNavigationShipper
       }
     }
     return null

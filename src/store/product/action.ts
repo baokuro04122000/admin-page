@@ -4,7 +4,8 @@ import {
   setCategories,
   setProducts,
   setProduct,
-  setOrders
+  setOrders,
+  setOrdersShipping
  } from './slice'
 import { 
   getAllCategories,
@@ -19,6 +20,10 @@ import {
   orderList,
   updateStatusOrder
 } from '../../api/seller'
+import {
+  ordersShipping,
+  updateStatusOrderShipping
+} from '../../api/shipper'
 import { AddProductRequest, EditProductRequest, EditQuickProductRequest } from "../../api/openapi-generator";
 import { notificationController } from '../../controllers/notificationController'
 import { RequestSearchParams } from "../../interfaces/api";
@@ -152,3 +157,32 @@ export const actionUpdateStatusOrder = (orderId: string)
     }
   }
 }
+
+export const actionOrderListShipping = (pagination:{currentPage: number, limit: number})
+: AppThunk<Promise<void>> => {
+  return async (dispatch) => {
+    const {currentPage, limit} = pagination
+    try {
+      const {data} = await ordersShipping(currentPage, limit)
+      dispatch(setOrdersShipping(data))
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
+
+export const actionUpdateStatusOrderShipping = (orderId: string)
+: AppThunk<Promise<boolean>> => {
+  return async () => {
+    try {
+      await updateStatusOrderShipping(orderId)
+      return true
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+} 

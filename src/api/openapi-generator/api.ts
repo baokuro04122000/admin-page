@@ -815,6 +815,117 @@ export interface OrderDetailsProductProductPicturesInner {
 /**
  * 
  * @export
+ * @interface OrderDetailsShipping
+ */
+export interface OrderDetailsShipping {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShipping
+     */
+    '_id'?: string;
+    /**
+     * 
+     * @type {OrderDetailsShippingProduct}
+     * @memberof OrderDetailsShipping
+     */
+    'product'?: OrderDetailsShippingProduct;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsShipping
+     */
+    'totalPaid'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsShipping
+     */
+    'quantity'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrderDetailsShipping
+     */
+    'isCancel'?: boolean;
+    /**
+     * 
+     * @type {Array<OrderDetailsItemsInnerOrderStatusInner>}
+     * @memberof OrderDetailsShipping
+     */
+    'orderStatus'?: Array<OrderDetailsItemsInnerOrderStatusInner>;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShipping
+     */
+    'createdAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShipping
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {OrderDetailsShippingAddress}
+     * @memberof OrderDetailsShipping
+     */
+    'address'?: OrderDetailsShippingAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShipping
+     */
+    'paymentType'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsShippingAddress
+ */
+export interface OrderDetailsShippingAddress {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShippingAddress
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShippingAddress
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShippingAddress
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderDetailsShippingAddress
+     */
+    'zipCode'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface OrderDetailsShippingProduct
+ */
+export interface OrderDetailsShippingProduct {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderDetailsShippingProduct
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
  * @interface OrderDetailsUser
  */
 export interface OrderDetailsUser {
@@ -923,6 +1034,43 @@ export interface OrderList {
      * @memberof OrderList
      */
     'data'?: Array<OrderDetails>;
+}
+/**
+ * 
+ * @export
+ * @interface OrderListShipping
+ */
+export interface OrderListShipping {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderListShipping
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderListShipping
+     */
+    'pageSize'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderListShipping
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderListShipping
+     */
+    'total_page'?: number;
+    /**
+     * 
+     * @type {Array<OrderDetailsShipping>}
+     * @memberof OrderListShipping
+     */
+    'data'?: Array<OrderDetailsShipping>;
 }
 /**
  * 
@@ -3410,6 +3558,179 @@ export class SellerApi extends BaseAPI {
      */
     public sellerUpdateProductPut(editProductRequest?: EditProductRequest, options?: AxiosRequestConfig) {
         return SellerApiFp(this.configuration).sellerUpdateProductPut(editProductRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ShipperApi - axios parameter creator
+ * @export
+ */
+export const ShipperApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * API get all orders of shipper
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shipperAllOrdersShippingGet: async (currentPage?: number, limit?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/shipper/all-orders-shipping`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (currentPage !== undefined) {
+                localVarQueryParameter['currentPage'] = currentPage;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shipperStatusOrderPut: async (updateStatusOrderRequest?: UpdateStatusOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/shipper/status-order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateStatusOrderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ShipperApi - functional programming interface
+ * @export
+ */
+export const ShipperApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ShipperApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * API get all orders of shipper
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shipperAllOrdersShippingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderListShipping>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shipperAllOrdersShippingGet(currentPage, limit, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async shipperStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.shipperStatusOrderPut(updateStatusOrderRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ShipperApi - factory interface
+ * @export
+ */
+export const ShipperApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ShipperApiFp(configuration)
+    return {
+        /**
+         * API get all orders of shipper
+         * @param {number} [currentPage] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shipperAllOrdersShippingGet(currentPage?: number, limit?: number, options?: any): AxiosPromise<OrderListShipping> {
+            return localVarFp.shipperAllOrdersShippingGet(currentPage, limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        shipperStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.shipperStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ShipperApi - object-oriented interface
+ * @export
+ * @class ShipperApi
+ * @extends {BaseAPI}
+ */
+export class ShipperApi extends BaseAPI {
+    /**
+     * API get all orders of shipper
+     * @param {number} [currentPage] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShipperApi
+     */
+    public shipperAllOrdersShippingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig) {
+        return ShipperApiFp(this.configuration).shipperAllOrdersShippingGet(currentPage, limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update status of order
+     * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ShipperApi
+     */
+    public shipperStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig) {
+        return ShipperApiFp(this.configuration).shipperStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

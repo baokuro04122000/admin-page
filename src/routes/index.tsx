@@ -20,7 +20,9 @@ import {
   USER_PATH,
   SELLER_ADD_PRODUCT_SUBPATH,
   SELLER_EDIT_PRODUCT_SUBPATH,
-  SELLER_DASHBOARD_ORDERS_SUBPATH
+  SELLER_DASHBOARD_ORDERS_SUBPATH,
+  SHIPPER_DASHBOARD_PATH,
+  SHIPPER_DASHBOARD_ORDERS_SUBPATH
 } from "../constants/routes";
 
 import { RouteConfig } from "../interfaces/routes";
@@ -38,6 +40,8 @@ import AddProduct from "../pages/AddProduct"
 import EditProduct from "../pages/EditProduct"
 import Product from "../pages/Products"
 import Orders from '../pages/Orders'
+import ShipperRoute from './ShipperRoute';
+import OrdersShipper from '../pages/OrdersShipper'
 
 const AuthLayout = React.lazy(() => import("../layout/AuthLayout/AuthLayout")) 
 const Login = React.lazy(() => import("../pages/Login"));
@@ -121,12 +125,28 @@ const sellerRoutes: RouteConfig = {
   ],
 };
 
+const shipperRoutes : RouteConfig = {
+  path: SHIPPER_DASHBOARD_PATH,
+  guard: <ShipperRoute />,
+  element: <Layout page="shipper" />,
+  children: [
+    {
+      path: SHIPPER_DASHBOARD_ORDERS_SUBPATH,
+      element: <OrdersShipper />,
+    },
+    {
+      path:LOGOUT_SUBPATH,
+      element: <Logout />
+    }
+  ],
+}
+
 const notfoundRoute: RouteConfig = {
   path: "*",
   element: <NotFound />,
 };
 
-const routes = [unauthRoutes, adminRoutes, sellerRoutes, userRoutes , notfoundRoute];
+const routes = [unauthRoutes, adminRoutes, sellerRoutes, userRoutes ,shipperRoutes, notfoundRoute];
 
 const Routes = () => {
   return (

@@ -97,7 +97,12 @@
     "actions":"Actions",
     "confirm":"Confirm",
     "details":"Details",
-    "titleConfirm":"Are you done this status?"
+    "titleConfirm":"Are you done this status?",
+    "totalPay":"Total Pay"
+  },
+  "shipper":{
+    "orders":"Orders",
+    "delivery":"Delivery"
   },
   "profile": {
     "fullness": "fullness of your profile",

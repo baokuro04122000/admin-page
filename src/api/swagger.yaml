@@ -21,6 +21,8 @@ tags:
     description: Admin
   - name: Seller
     description: Seller
+  - name: Shipper
+    description: Shipper
   - name: WithDraw Request
     description: WithDraw Request
 
@@ -842,6 +844,83 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+  /shipper/all-orders-shipping:
+    get:
+      tags:
+        - Shipper
+      description: API get all orders of shipper
+      parameters:
+        - in: query
+          name: currentPage
+          schema:
+            type: number
+        - in: query
+          name: limit
+          schema:
+            type: number
+      responses:
+       "200":
+          description: updating is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderListShipping"
+       "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+       "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              
+       "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /shipper/status-order:
+    put:
+      tags:
+        - Shipper
+      description: update status of order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStatusOrderRequest"
+      responses:
+        "200":
+          description: updating is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         
   /admin/add-category:
     post:
@@ -1560,6 +1639,54 @@ components:
                 totalCancel:
                   type: number
     
+    OrderDetailsShipping:
+      type: object
+      properties:
+        _id:
+          type: string
+        product:
+          type: object
+          properties:
+            name:
+              type: string
+        totalPaid:
+          type: number
+        quantity:
+          type: number
+        isCancel:
+          type: boolean
+        orderStatus:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              date:
+                type: string
+              isCompleted:
+                type: boolean
+              _id:
+                type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        address:
+          type: object
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            address:
+              type: string
+            zipCode:
+              type: number
+        paymentType:
+          type: string
+            
+    
     OrderList:
       type: object
       properties:
@@ -1575,12 +1702,30 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/OrderDetails"
-            
+
+    OrderListShipping:
+      type: object
+      properties:
+        page:
+          type: number
+        pageSize:
+          type: number
+        total:
+          type: number
+        total_page:
+          type: number
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderDetailsShipping"        
+    
     UpdateStatusOrderRequest:
       type: object
       properties:
         orderId:
           type: string
+
+    
               
             
         
