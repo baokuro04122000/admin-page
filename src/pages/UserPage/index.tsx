@@ -73,8 +73,10 @@ const UserTest = () => {
         headers:{
           "Content-Type": "application/json",
           "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzcyNzhmMDgwODc3ZjJlMzhkYmZlMTYiLCJuaWNrTmFtZSI6IiIsImZpcnN0TmFtZSI6IkJhbyIsImxhc3ROYW1lIjoiVHJhbiIsInJvbGUiOiJ1c2VyIiwibWV0YSI6eyJ0b3RhbEJ1eSI6MCwidG90YWxDYW5jZWwiOjB9LCJzcGVjaWFsIjpbXSwidHlwZUxvZ2luIjoibG9jYWwiLCJpYXQiOjE2Njg0NDY1NTgsImV4cCI6MTY3MTAzODU1OH0.PGmOOyQV_D7P7F6BBOve4Sxz5rVDvI_zB5bDS3HV-uc"
-        }
+        },
+        withCredentials: true
       })
+      window.open(data.link, '_blank', 'noopener,noreferrer')
     } catch (error) {
       console.log(error)
     }

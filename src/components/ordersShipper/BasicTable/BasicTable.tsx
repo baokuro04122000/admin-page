@@ -113,9 +113,19 @@ export const BasicTable: React.FC = () => {
       key: 'totalPaid',
       title: t('order.totalPay'),
       dataIndex: 'totalPaid',
-      render: (totalPaid: number) => (
+      render: (totalPaid: number, order: OrderDetailsShipping) => (
         <>
-          <span>{totalPaid}</span>
+          <span>{
+            (order.paymentType === 'cod') ?
+            (totalPaid).toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            })
+            : (0).toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND',
+            })
+          }</span>
         </>
         )
     },
@@ -165,20 +175,38 @@ export const BasicTable: React.FC = () => {
       key: 'action',
       title: t('order.actions'),
       dataIndex: '_id',
-      width: '15%',
+      width: '20%',
       fixed: 'right',
-      render: (orderId: string) => {
+      render: (orderId: string, payload: OrderDetailsShipping) => {
         return (
           <Space>
-            <Button
-            >
-              {t('order.details')}
-            </Button>
-            <Popconfirm title={t('order.confirm')} onConfirm={() => handleConfirmOrder(orderId)}>
-              <Button>
-                {t('order.confirm')}
-              </Button>
-            </Popconfirm>
+            
+              {payload.orderStatus?.at(-1)?.type === "shipped" ? ( 
+                <Popconfirm title={t('order.titleConfirmCancel')} onConfirm={() => handleConfirmOrder(orderId)}>
+                  <Button type="dashed" danger>
+                    {t('order.cancel')}
+                  </Button>
+                </Popconfirm>
+                  ) : 
+                (
+                  <Popconfirm title={t('order.titleConfirmCancel')} onConfirm={() => handleConfirmOrder(orderId)}>
+                    <Button type="dashed" danger>
+                      {t('order.deliveryReject')}
+                    </Button>
+                  </Popconfirm>
+                )
+              }
+            
+           
+              {(payload.orderStatus?.at(-1)?.type === "delivered" && payload.orderStatus?.at(-1)?.isCompleted === true) ? (<></>) : 
+                (
+                  <Popconfirm title={t('order.confirm')} onConfirm={() => handleConfirmOrder(orderId)}>
+                  <Button type='primary' block>
+                    {t('order.confirm')}
+                  </Button>
+                  </Popconfirm>
+                )
+              }
           </Space>
         );
       },

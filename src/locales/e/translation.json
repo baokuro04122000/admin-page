@@ -14,7 +14,7 @@
   },
   "forgotPassword": {
     "description": "Enter your email address and we’ll send an verification code to reset your password",
-    "sendInstructions": "Send instructions",
+    "sendInstructions": "Send",
     "successReset": "We've sent to your email address the reset link"
   },
   "signup": {
@@ -98,7 +98,12 @@
     "confirm":"Confirm",
     "details":"Details",
     "titleConfirm":"Are you done this status?",
-    "totalPay":"Total Pay"
+    "totalPay":"Total Pay",
+    "cancel":"Cancel",
+    "titleConfirmCancel":"Are you sure to cancel this order?",
+    "deliveryReject":"Client Reject",
+    "titleConfirmRejectOrder":"Did the client reject this order?",
+    "notAuthorize":"You can't change this status!"
   },
   "shipper":{
     "orders":"Orders",

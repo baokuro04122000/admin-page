@@ -52,13 +52,14 @@ export const sidebarNavigationSeller: SidebarNavigationItem[] = [
         url: SELLER_DASHBOARD_PATH+SELLER_DASHBOARD_ORDERS_SUBPATH,
       },
     ],
-  },
-  {
-    title: 'common.charts',
-    key: 'charts',
-    url: '/charts',
-    icon: <LineChartOutlined />,
   }
+  // ,
+  // {
+  //   title: 'common.charts',
+  //   key: 'charts',
+  //   url: '/charts',
+  //   icon: <LineChartOutlined />,
+  // }
 ];
 
 export const sidebarNavigationAdmin: SidebarNavigationItem[] = [
@@ -84,13 +85,14 @@ export const sidebarNavigationAdmin: SidebarNavigationItem[] = [
         url: '/admin/roles',
       },
     ],
-  },
-  {
-    title: 'common.charts',
-    key: 'charts',
-    url: '/charts',
-    icon: <LineChartOutlined />,
   }
+  // ,
+  // {
+  //   title: 'common.charts',
+  //   key: 'charts',
+  //   url: '/charts',
+  //   icon: <LineChartOutlined />,
+  // }
 ];
 
 export const sidebarNavigationShipper: SidebarNavigationItem[] = [

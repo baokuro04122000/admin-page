@@ -133,7 +133,10 @@ export const BasicTable: React.FC = () => {
       key: uuidv4(),
       title: t('product.price'),
       dataIndex: 'price',
-      render: (price) => <span key={uuidv4()}>{price}</span>
+      render: (price) => <span key={uuidv4()}>{(Number(price)).toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+      })}</span>
     },
     {
       key: uuidv4(),
