@@ -103,7 +103,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
   const config: UploadProps = {
     listType:"picture",
     maxCount:1,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-services-production.up.railway.app"}/api/upload-image`,
+    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-server-v1.onrender.com"}/api/upload-image`,
     onChange: handleOnChange,
     beforeUpload: handleBeforeUpload,
     onRemove:handleOnRemove,
@@ -168,7 +168,7 @@ const useUploadProof = (t:any, dispatch: any) => {
     multiple:true,
     listType:"picture",
     maxCount:5,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-services-production.up.railway.app"}/api/upload-image`,
+    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-server-v1.onrender.com"}/api/upload-image`,
     beforeUpload:handleBeforeUpload,
     onChange:handleOnChange,
     onRemove:handleOnRemove,
