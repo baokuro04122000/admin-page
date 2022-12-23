@@ -208,9 +208,7 @@ export const BasicTable: React.FC = () => {
                     {t('order.cancel')}
                   </Button>) : 
                 (
-                  <span>
-                    {t('order.notAuthorize')}
-                  </span>
+                  <></>
                 )
               }
             </Popconfirm>
