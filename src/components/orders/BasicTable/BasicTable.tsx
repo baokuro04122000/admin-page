@@ -214,7 +214,9 @@ export const BasicTable: React.FC = () => {
             </Popconfirm>
             <Popconfirm title={t('order.titleConfirm')} onConfirm={() => handleConfirmOrder(order.at(0)?._id)}>
               <>
-              {(order.at(0)?.orderStatus?.at(-1)?.type === "shipped" || order.at(0)?.orderStatus?.at(3)?.type === 'delivered') ? (<></>) : 
+              {(order.at(0)?.orderStatus?.at(-1)?.type === "shipped" || order.at(0)?.orderStatus?.at(3)?.type === 'delivered') ? (<span>
+                    {t('order.notAuthorize')}
+                  </span>) : 
                 (
                   <Button type='primary' block>
                     {t('order.confirm')}
