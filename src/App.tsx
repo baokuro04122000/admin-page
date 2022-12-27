@@ -17,7 +17,7 @@ import { actionAutoLogin } from "./store/authentication/action";
 
 function App() {
   const [checkPersistantLogin, setCheckPersistantLogin] = useState(false);
-
+  
   const { language } = useLanguage();
   const theme = useAppSelector((state) => state.theme.theme);
   
@@ -30,6 +30,7 @@ function App() {
     }
   }, [checkPersistantLogin, dispatch]);
 
+  
   usePWA();
   useAutoNightMode();
   useThemeWatcher();

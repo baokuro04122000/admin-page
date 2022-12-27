@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   UserCredentialResponse,
 } from "../../api/openapi-generator";
+
 import { AuthenticationSlice } from "../../interfaces/authentication";
 
 const initialState: AuthenticationSlice = {
   authUser: null,
   notifyResetPassowrd: undefined,
   verifyToken: undefined,
-  userId: undefined
+  userId: undefined,
+  socket: undefined
 };
 
 export const authenticationSlice = createSlice({
@@ -35,6 +37,11 @@ export const authenticationSlice = createSlice({
       {payload} : PayloadAction<string | undefined>
     ){
       state.userId = payload
+    },
+    setSocket(state,
+      {payload}: PayloadAction<any>)
+    {
+        state.socket = payload
     }
   },
 });
@@ -43,7 +50,8 @@ export const {
   setAuthUser,
   setNotifyResetPassowrd,
   setVerifyToken,
-  setUserId
+  setUserId,
+  setSocket
 } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

@@ -32,6 +32,7 @@ export const actionLogin = (
     try {
       const { data } = await login(email, password);
       dispatch(setAuthUser(data));
+      
       localStorage.setItem(AUTH_USER_DATA_LS_ITEM, JSON.stringify(data));
     } catch (error) {
       console.log(error)

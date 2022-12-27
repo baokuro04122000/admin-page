@@ -2,9 +2,39 @@ import { Button } from "../../components/common/buttons/Button/Button"
 import { useAppDispatch } from "../../store"
 import { actionLogout, actionRegisterSellerRequest } from '../../store/authentication/action'
 import { notificationController } from "../../controllers/notificationController"
+import { useSocket } from '../../hooks/useSocket'
+import { useAppSelector } from '../../store'
+import { setSocket } from '../../store/authentication/slice'
+import { useEffect } from 'react'
 import axios from 'axios'
+import io from 'socket.io-client'
 const UserTest = () => {
   const dispatch = useAppDispatch()
+  const auth  = useAppSelector(({authentication}) => authentication.authUser)
+  //const socket = useAppSelector(({authentication}) => authentication.socket)
+  
+  
+  useEffect(() => {
+    const socket = io('https://main-server-v1.onrender.com', {
+    extraHeaders:{
+      token: `Bearer ${auth?.access_token}`
+    }
+  })
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    socket.on('noti-confirm-order-success', (data: any) => {
+      console.log(data)
+    })
+    socket.on('send-noti-confirm-order', (data: any) => {
+      console.log(data)
+    })
+    socket.on('test', (data: any) =>{
+      console.log(data)
+    })
+    socket.on('send-noti-confirm-shipping', (data: any) => {
+      console.log(data)
+    })
+  },[])
+
   const handleLogout =async () => {
     try {
       await dispatch(actionLogout())
@@ -81,13 +111,33 @@ const UserTest = () => {
       console.log(error)
     }
   }
+  const handleTestSocket = async () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const socket = useSocket('ws://localhost:4000', {
+      extraHeaders:{
+        token: `Bearer ${auth?.access_token}`
+      }
+    })
+    socket.on('noti-confirm-order-success', (data: any) => {
+      console.log(data)
+    })
+    socket.on('send-noti-confirm-order', (data: any) => {
+      console.log(data)
+    })
+    socket.on('test', (data: any) =>{
+      console.log(data)
+    })
+    await dispatch(setSocket(socket))
+  }
+  
   return <>
     <span>This is an user page</span>
     <Button onClick={handleLogout}>Logout</Button>
     <Button onClick={handleRegisterSeller}>Register seller</Button>
     <Button onClick={handleTestCheckOut}>Paypal</Button>
     <Button onClick={handleTestCheckOut2}>Paypal 2</Button>
-
+    <Button onClick={handleTestSocket}>Test Socket</Button>
+    
   </>
 }
 export default UserTest

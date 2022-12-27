@@ -5,6 +5,7 @@ export interface AuthenticationSlice {
   notifyResetPassowrd: string | undefined;
   verifyToken:string | undefined;
   userId: string | undefined;
+  socket?: any
 }
 
 export interface JWTPayload {
