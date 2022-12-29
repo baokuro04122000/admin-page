@@ -15,7 +15,7 @@ const UserTest = () => {
   
   
   useEffect(() => {
-    const socket = io('https://main-server-v1.onrender.com', {
+    const socket = io('https://external-server-v1.onrender.com', {
     extraHeaders:{
       token: `Bearer ${auth?.access_token}`
     }
