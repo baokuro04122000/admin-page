@@ -22,7 +22,8 @@ import {
   SELLER_EDIT_PRODUCT_SUBPATH,
   SELLER_DASHBOARD_ORDERS_SUBPATH,
   SHIPPER_DASHBOARD_PATH,
-  SHIPPER_DASHBOARD_ORDERS_SUBPATH
+  SHIPPER_DASHBOARD_ORDERS_SUBPATH,
+  CHANGE_PASSWORD_SUBPATH
 } from "../constants/routes";
 
 import { RouteConfig } from "../interfaces/routes";
@@ -34,7 +35,8 @@ import UnauthRoute from "./UnauthRoute";
 import PermissionRoute from "./PermissionRoute";
 import UserTest from '../pages/UserPage';
 import Logout from "../pages/Logout";
-import ResetPassword from "../pages/ResetPassword";
+import ConfirmEmail from "../pages/ForgotPassword/ConfirmEmail";
+import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import SignUp from "../pages/SignUp"
 import AddProduct from "../pages/AddProduct"
 import EditProduct from "../pages/EditProduct"
@@ -58,7 +60,11 @@ const unauthRoutes: RouteConfig = {
     },
     {
       path: RESET_PASSWORD_SUBPATH,
-      element:<ResetPassword/>
+      element:<ConfirmEmail />
+    },
+    {
+      path: CHANGE_PASSWORD_SUBPATH,
+      element:<ResetPassword />
     },
     {
       path: SIGNUP_SUBPATH,

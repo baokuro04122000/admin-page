@@ -25,7 +25,7 @@ import {
 import {
   checkEmptyObject
 } from '../../../utils/utils'
-import { ResponseUploadFile } from '../../../interfaces/authentication';
+
 import { DeleteImagesRequest, SellerRegisterRequest } from '@app/api/openapi-generator';
 interface SignUpFormData {
   shopName: string;
@@ -46,7 +46,7 @@ const initValues = {
 };
 
 const useUploadLogo = (t: any, dispatch: any) => {
-  const [logo, setLogo] = useState<ResponseUploadFile>({})
+  const [logo, setLogo] = useState<string>('')
   const [logoLoading, setLogoLoading] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const [deleteList, setDeleteList] = useState<string[]>([])
@@ -77,13 +77,13 @@ const useUploadLogo = (t: any, dispatch: any) => {
     setFileList(file.fileList)
     if(file.file.status === 'done'){
       console.log(file.file)
-      const responseImage:ResponseUploadFile = file.file.response
+      const responseImage = file.file.response
       setFileList([{
-        uid:responseImage.fileId ? responseImage.fileId : "error",
+        uid:responseImage.uid,
         name: file.file.name,
-        thumbUrl:responseImage.fileLink
+        thumbUrl:responseImage.url
       }])
-      setLogo(responseImage)
+      setLogo(responseImage.url)
       setLogoLoading(false)
       return
     } else if(file.file.status === 'error'){
@@ -93,7 +93,6 @@ const useUploadLogo = (t: any, dispatch: any) => {
       })
       return
     }
-
   }
   const handleOnRemove = (file: any) => {
     setDeleteList([file.uid, ...deleteList])
@@ -103,7 +102,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
   const config: UploadProps = {
     listType:"picture",
     maxCount:1,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-server-v1.onrender.com"}/api/upload-image`,
+    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image`,
     onChange: handleOnChange,
     beforeUpload: handleBeforeUpload,
     onRemove:handleOnRemove,
@@ -118,7 +117,7 @@ const useUploadLogo = (t: any, dispatch: any) => {
 }
 
 const useUploadProof = (t:any, dispatch: any) => {
-  const [proof, setProof] = useState<ResponseUploadFile[]>([])
+  const [proof, setProof] = useState<any>([])
   const [proofLoading, setProofLoading] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const [deleteList, setDeleteList] = useState<string[]>([])
@@ -168,7 +167,7 @@ const useUploadProof = (t:any, dispatch: any) => {
     multiple:true,
     listType:"picture",
     maxCount:5,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "https://external-server-v1.onrender.com"}/api/upload-image`,
+    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image`,
     beforeUpload:handleBeforeUpload,
     onChange:handleOnChange,
     onRemove:handleOnRemove,
@@ -195,7 +194,6 @@ export const SignUpForm: React.FC = () => {
     proof
   } = useUploadProof(t, dispatch)
   const [isLoading, setLoading] = useState(false);
-  
   
   useEffect(() => {
     if(token){
@@ -237,18 +235,8 @@ export const SignUpForm: React.FC = () => {
         phone: values.shopPhone,
         fbLink: values.fbLink,
         inLink:values.inLink,
-        logo: checkEmptyObject(logo) ? {} : {
-          fileLink: logo.fileLink,
-          fileId: logo.fileId
-        },
-        proof: proof.length > 0 
-        ? proof.map((file: any) => {
-          return {
-            fileLink: file.thumbUrl,
-            fileId: file.uid
-          }
-        }) 
-        : []
+        logo: logo,
+        proof: []
       } 
       try {
         const filesDelete = [...fileListDeleteLogo, ...fileListDeleteProof]

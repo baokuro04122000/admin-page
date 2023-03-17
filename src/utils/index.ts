@@ -93,15 +93,15 @@ export const getAccessTokenFromLocalStorage = (name: string) => {
   const authData  = localStorage.getItem(name)
   if(!authData) return 
   const parsedUserData: UserCredentialResponse = JSON.parse(authData);
-  return parsedUserData.access_token
+  return parsedUserData.data.accessToken
 }
 
 export function getGoogleOAuthURL(){
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth"
   
   const options = {
-    redirect_uri:`${process.env.REACT_APP_BASE_URL}/api/oauth/google`,
-    client_id:"177322333542-5s78k6m5htmshg70qiprq450413qafts.apps.googleusercontent.com",
+    
+    client_id:"782585478907-b8t4h88cdv4bu0kh0t2uq5d2ahr0dlgi.apps.googleusercontent.com",
     access_type:"online",
     response_type:'code',
     prompt:"consent",

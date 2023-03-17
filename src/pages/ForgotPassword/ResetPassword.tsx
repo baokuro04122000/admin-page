@@ -3,7 +3,6 @@ import { useAppSelector, useAppDispatch } from '../../store'
 import { setNotifyResetPassowrd, setVerifyToken } from '../../store/authentication/slice'
 import { notificationController } from '../../controllers/notificationController'
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm/ForgotPasswordForm'
-import { SecurityCodeForm } from '../../components/auth/SecurityCodeForm/SecurityCodeForm'
 import { NewPasswordForm } from '../../components/auth/NewPasswordForm/NewPasswordForm'
 
 const useNotifycation = () => {
@@ -28,14 +27,12 @@ const useNotifycation = () => {
 
 const ResetPassword = () => {
     const [isForgot, setIsForgot] = useState(true)
-    const [isSecurityCode, setIsSecurityCode] = useState(false)
     const [isNewPassword, setIsNewPassword] = useState(false)
     useNotifycation()
     return (
         <>
-            {isForgot && <ForgotPasswordForm onForgot={setIsForgot} onSecurityCode={setIsSecurityCode} onNewPassword={setIsNewPassword} />}
-            {isSecurityCode && <SecurityCodeForm onForgot={setIsForgot} onSecurityCode={setIsSecurityCode} onNewPassword={setIsNewPassword}/>}
-            {isNewPassword && <NewPasswordForm onForgot={setIsForgot} onNewPassword={setIsNewPassword} />}
+          
+            <NewPasswordForm  />
         </>
     )
 }

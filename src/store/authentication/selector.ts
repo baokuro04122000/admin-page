@@ -13,7 +13,7 @@ import { JWTPayload } from "../../interfaces/authentication";
 export const selectAuthentication = (state: RootState) => state.authentication;
 
 export const selectIsAuth = createSelector(selectAuthentication, (auth) => {
-  const token = auth.authUser?.access_token;
+  const token = auth.authUser?.data.accessToken;
   if (!token) return false;
   const { exp } = jwtDecode<JWTPayload>(token);
   const now = new Date().getTime();

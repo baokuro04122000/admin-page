@@ -13,6 +13,7 @@ export interface JWTPayload {
 }
 
 export interface ResponseUploadFile {
-  fileLink?: string;
-  fileId?: string;
+  uid: string,
+  status: string,
+  url: string
 }

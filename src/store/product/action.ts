@@ -47,7 +47,7 @@ export const actionAddProduct = (product: AddProductRequest)
   return async () => {
     try {
       const {data} = await addProduct(product);
-      return data.data?.message
+      return data.message
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
@@ -88,7 +88,7 @@ export const actionUpdateProduct = (product: EditProductRequest)
   return async () => {
     try {
       const {data} = await updateProduct(product)
-      return data.data?.message
+      return data.message
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
@@ -102,7 +102,7 @@ export const actionQuickEditProduct = (product: EditQuickProductRequest)
   return async () => {
     try {
       const {data} = await quickUpdateProduct(product)
-      return data.data?.message ? data.data.message : ''
+      return data.message ? data.message : ''
     } catch (error:any) {
       console.log(error)
       notificationController.error({
@@ -119,7 +119,7 @@ export const actionDeleteProduct = (id: string)
   return async () => {
     try {
       const {data} = await deleteProduct(id);
-      return data.data?.message
+      return data.message
     } catch (error) {
       console.log(error)
       const err = error as AxiosError

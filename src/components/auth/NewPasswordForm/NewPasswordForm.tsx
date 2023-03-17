@@ -20,12 +20,9 @@ const initStates = {
   confirmPassword: '',
 };
 
-interface Props {
-  onForgot:(toggle: boolean) => void;
-  onNewPassword:(toggle: boolean) => void;
-}
 
-export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
+
+export const NewPasswordForm: React.FC = () => {
   const verifyCode = useAppSelector(({authentication}) => authentication.verifyToken)
   const userId = useAppSelector(({authentication}) => authentication.userId)
   
@@ -58,8 +55,7 @@ export const NewPasswordForm: React.FC<Props> = ({onForgot, onNewPassword}) => {
     <Auth.FormWrapper>
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initStates}>
         <Auth.BackWrapper onClick={() => {
-          onForgot(true)
-          onNewPassword(false)
+          console.log('go back')
         }
         }>
           <Auth.BackIcon />

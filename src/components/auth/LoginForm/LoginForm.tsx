@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useGoogleLogin } from '@react-oauth/google'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
 import { ReactComponent as GoogleIcon } from '../../../assets/icons/google.svg';
-import { getGoogleOAuthURL } from '../../../utils'
 import { useAppDispatch } from '../../../store'
 import { actionGoogleLogin, actionLogin } from '../../../store/authentication/action'
 import { notificationController } from '../../../controllers/notificationController'
@@ -12,6 +12,7 @@ import {
 } from '../../../constants/routes'
 import * as S from './LoginForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
+
 
 interface LoginFormData {
   email: string;
@@ -30,10 +31,6 @@ export const LoginForm: React.FC = () => {
   
   const dispatch = useAppDispatch()
   
-  useEffect(() => {
-    dispatch(actionGoogleLogin())
-  }, [dispatch])
-
   const handleSubmit = useCallback(async (values: LoginFormData) => {
     setLoading(true);
     try {
@@ -49,6 +46,16 @@ export const LoginForm: React.FC = () => {
         })    
     }
   }, [dispatch])
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (res) => {
+      await dispatch(actionGoogleLogin({accessToken: res.access_token}))
+    },
+    onError: (errorResponse) => {
+      console.log(errorResponse)
+    },
+  })
+
   return (
     <Auth.FormWrapper>
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initValues}>
@@ -97,14 +104,24 @@ export const LoginForm: React.FC = () => {
         </BaseForm.Item>
       </BaseForm>
         <BaseForm.Item noStyle>
-        <a href={getGoogleOAuthURL()}>
-          <Auth.SocialButton type="default" htmlType="submit">
+        
+
+
+         
+        <Auth.SocialButton onClick={() => {
+          googleLogin()
+        }}>
             <Auth.SocialIconWrapper>
               <GoogleIcon />
             </Auth.SocialIconWrapper>
             {t('login.googleLink')}
-          </Auth.SocialButton>
-        </a>
+        </Auth.SocialButton>
+        
+          
+
+                   
+          
+
         </BaseForm.Item>
     </Auth.FormWrapper>
   );

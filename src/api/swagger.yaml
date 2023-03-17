@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: http://localhost:4000/v1
+    url: http://localhost:4000/api/v1
 info:
   description: This is a BT API document
   version: 1.0.1
@@ -96,6 +96,36 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
                 
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      description: User sign up an local account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignUp"
+      responses:
+        "200":
+          description: Server will send an email to user to active this account then it sets a cookie with the value {"active_account":false, expired:60s}
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
   /auth/mobile-register:
     post:
       tags:
@@ -125,6 +155,160 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/seller/register:
+    get:
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      description: send request to sign up seller
+      responses:
+        "200":
+          description: Server will send an email to user to active this account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "404":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/token/check:
+    get:
+      tags:
+        - Auth
+      description: check token expire or exists
+      responses:
+        "200":
+          description: Server will send a notification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/seller/create:
+    post:
+      tags:
+        - Auth
+      description: create a new seller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerRegisterRequest"
+      responses:
+        "200":
+          description: Server will send a notification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: errors of the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /auth/password/email:
+    post:
+      tags:
+        - Auth
+      description: Send mail to reset password 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordRequest"
+      responses:
+        "200":
+          description: Server will send Link reset password to your email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Invalid Email Format/Email is not Registered
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"  
+  
+  /auth/password/reset:
+    post:
+      tags:
+        - Auth
+      description: Token matched then server will send for you verify token to reset password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        "200":
+          description: Server will send verify code to you, then you get it  to reset password
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
   
   /auth/register/send-otp-again:
     post:
@@ -416,34 +600,20 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
   
-  /api/oauth/google:
-    get:
+  
+  /auth/oauth/google:
+    post:
       tags:
         - Auth
-      description: Login by google account
+      description: Login by google account if not existed then create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GoogleLoginRequest"
       responses:
         "200":
-          description: redirect user for the web page
-        "400":
-          description: errors are from google api
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-  /api/me:
-    get:
-      tags:
-        - Auth
-      description: Get user when login by google successfully
-      responses:
-        "200":
-          description: login by google successfully
+          description: send access_token to server to verify
           content:
             application/json:
               schema:
@@ -460,12 +630,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+                
   
   /auth/logout:
-    get:
+    post:
       tags:
         - Auth
-      description: Users can only log themselves out, not other users
+      description: clear token redis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogoutRequest"
+              
       responses:
         "200":
           description: Logout was successful, clear refresh_token in redis
@@ -474,7 +651,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnnouceSuccess'
         "400":
-          description: server has some errors
+          description: bad request
           content:
             application/json:
               schema:
@@ -953,7 +1130,12 @@ paths:
                   $ref: "#/components/schemas/ErrorResponse"
         
 components:
-  
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT  
+      
   schemas:
     FileInfo:
       type: object 
@@ -1000,6 +1182,51 @@ components:
           type: string
           description: it kind of a checkbok
           example: "male | female "
+          
+    GoogleLoginRequest:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+    
+    LogoutRequest:
+      type: object
+      required:
+        - accessToken
+        - refreshToken
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+    
+    UserSignUp:
+      type: object
+      required:
+        - email
+        - password
+        - name
+        - gender
+        - birthDay
+      properties:
+        email:
+          type: string
+          example: baotrandinh100@gmail.com
+        password:
+          type: string
+          description: Password must be 8-16 characters and contain both numbers and letters characters
+          example: 12345678b
+        name:
+          type: string
+        gender:
+          type: string
+          description: it kind of a checkbok
+          example: "male | female "
+        bithDay:
+          type: string
+    
     
     UserMobileRegister:
       type: object
@@ -1048,29 +1275,35 @@ components:
 
     UserCredentialResponse:
       type: object
+      required:
+        - data
       properties:
-        access_token:
+        status:
+          type: number
+        message:
           type: string
         data:
           type: object
+          required:
+            - name
+            - avatar
+            - role
+            - gender
+            - typeLogin
+            - accessToken
+            - refreshToken
           properties:
-            _id:
-              type: string
-            email:
+            userId:
               type: string
             name:
-              type: string
-            firstName:
-              type: string
-            lastName:
               type: string
             nickName:
               type: string
             role:
               type: string
               example: user | seller
-            profilePicture:
-              $ref: "#/components/schemas/FileInfo"
+            avatar:
+              type: string
             meta:
               type: object
               properties:
@@ -1083,6 +1316,14 @@ components:
               example: local | google
             seller:
               $ref: "#/components/schemas/SellerDetail"
+            special:
+              type: array
+              items:
+                type: object
+            accessToken:
+              type: string
+            refreshToken:
+              type: string
                 
     SellerRegisterRequest:
       description: the info of seller will send to server to create a seller account
@@ -1110,18 +1351,14 @@ components:
           type: string
           example: 0329460523
         logo:
-          type: object
-          description: The logo of shop
-          properties:
-            fileLink: 
-              type: string
-            fileId:
-              type: string
+          type: string
+        address:
+          type: string
         proof:
           type: array
           description: It help the seller confirm the Genuine Store
           items:
-            $ref: "#/components/schemas/FileInfo"
+            type: string
             
     ErrorResponse:
       description: Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
@@ -1278,6 +1515,9 @@ components:
           type: integer
           
     ResetPasswordRequest:
+      required:
+        - token
+        - password
       type: object
       properties:
         token:
@@ -1285,8 +1525,6 @@ components:
         password:
           type: string
           example: "12345678a"
-        userId:
-          type: string
           
     AnnouceSuccess:
       type: object
@@ -1294,12 +1532,10 @@ components:
         status:
           type: integer
           example: 200
+        message:
+          type: string
         data:
           type: object
-          properties:
-            message:
-              type: string
-              example: "register is success, please check your email to active account"
               
     AnnouceSuccessAuth:
       type: object
@@ -1724,8 +1960,3 @@ components:
       properties:
         orderId:
           type: string
-
-    
-              
-            
-        

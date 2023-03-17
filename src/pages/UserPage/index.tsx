@@ -17,7 +17,7 @@ const UserTest = () => {
   useEffect(() => {
     const socket = io('https://external-server-v1.onrender.com', {
     extraHeaders:{
-      token: `Bearer ${auth?.access_token}`
+      token: `Bearer ${auth?.data.accessToken}`
     }
   })
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -37,7 +37,10 @@ const UserTest = () => {
 
   const handleLogout =async () => {
     try {
-      await dispatch(actionLogout())
+      await dispatch(actionLogout({
+        accessToken: auth?.data.accessToken as string,
+        refreshToken: auth?.data.refreshToken as string
+      }))
     } catch (error: any) {
       notificationController.error({
         message:error ? error.errors.message : "NETWORK ERROR",
@@ -115,7 +118,7 @@ const UserTest = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const socket = useSocket('ws://localhost:4000', {
       extraHeaders:{
-        token: `Bearer ${auth?.access_token}`
+        token: `Bearer ${auth?.data.accessToken}`
       }
     })
     socket.on('noti-confirm-order-success', (data: any) => {

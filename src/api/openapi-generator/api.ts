@@ -132,10 +132,16 @@ export interface AnnouceSuccess {
     'status'?: number;
     /**
      * 
-     * @type {AnnouceSuccessData}
+     * @type {string}
      * @memberof AnnouceSuccess
      */
-    'data'?: AnnouceSuccessData;
+    'message'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof AnnouceSuccess
+     */
+    'data'?: object;
 }
 /**
  * 
@@ -145,10 +151,10 @@ export interface AnnouceSuccess {
 export interface AnnouceSuccessAuth {
     /**
      * 
-     * @type {AnnouceSuccessData}
+     * @type {AnnouceSuccessAuthData}
      * @memberof AnnouceSuccessAuth
      */
-    'data'?: AnnouceSuccessData;
+    'data'?: AnnouceSuccessAuthData;
     /**
      * it use to validate with backend
      * @type {string}
@@ -159,13 +165,13 @@ export interface AnnouceSuccessAuth {
 /**
  * 
  * @export
- * @interface AnnouceSuccessData
+ * @interface AnnouceSuccessAuthData
  */
-export interface AnnouceSuccessData {
+export interface AnnouceSuccessAuthData {
     /**
      * 
      * @type {string}
-     * @memberof AnnouceSuccessData
+     * @memberof AnnouceSuccessAuthData
      */
     'message'?: string;
 }
@@ -439,6 +445,38 @@ export interface ForgotPasswordRequest {
      * @memberof ForgotPasswordRequest
      */
     'email': string;
+}
+/**
+ * 
+ * @export
+ * @interface GoogleLoginRequest
+ */
+export interface GoogleLoginRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GoogleLoginRequest
+     */
+    'accessToken': string;
+}
+/**
+ * 
+ * @export
+ * @interface LogoutRequest
+ */
+export interface LogoutRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LogoutRequest
+     */
+    'accessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogoutRequest
+     */
+    'refreshToken': string;
 }
 /**
  * 
@@ -1200,19 +1238,13 @@ export interface ResetPasswordRequest {
      * @type {string}
      * @memberof ResetPasswordRequest
      */
-    'token'?: string;
+    'token': string;
     /**
      * 
      * @type {string}
      * @memberof ResetPasswordRequest
      */
-    'password'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResetPasswordRequest
-     */
-    'userId'?: string;
+    'password': string;
 }
 /**
  * Seller detail information
@@ -1351,35 +1383,22 @@ export interface SellerRegisterRequest {
     'phone': string;
     /**
      * 
-     * @type {SellerRegisterRequestLogo}
+     * @type {string}
      * @memberof SellerRegisterRequest
      */
-    'logo'?: SellerRegisterRequestLogo;
+    'logo'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'address'?: string;
     /**
      * It help the seller confirm the Genuine Store
-     * @type {Array<FileInfo>}
+     * @type {Array<string>}
      * @memberof SellerRegisterRequest
      */
-    'proof'?: Array<FileInfo>;
-}
-/**
- * The logo of shop
- * @export
- * @interface SellerRegisterRequestLogo
- */
-export interface SellerRegisterRequestLogo {
-    /**
-     * 
-     * @type {string}
-     * @memberof SellerRegisterRequestLogo
-     */
-    'fileLink'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SellerRegisterRequestLogo
-     */
-    'fileId'?: string;
+    'proof'?: Array<string>;
 }
 /**
  * 
@@ -1458,16 +1477,22 @@ export interface UpdateStatusOrderRequest {
 export interface UserCredentialResponse {
     /**
      * 
+     * @type {number}
+     * @memberof UserCredentialResponse
+     */
+    'status'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof UserCredentialResponse
      */
-    'access_token'?: string;
+    'message'?: string;
     /**
      * 
      * @type {UserCredentialResponseData}
      * @memberof UserCredentialResponse
      */
-    'data'?: UserCredentialResponseData;
+    'data': UserCredentialResponseData;
 }
 /**
  * 
@@ -1480,31 +1505,13 @@ export interface UserCredentialResponseData {
      * @type {string}
      * @memberof UserCredentialResponseData
      */
-    '_id'?: string;
+    'userId'?: string;
     /**
      * 
      * @type {string}
      * @memberof UserCredentialResponseData
      */
-    'email'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCredentialResponseData
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCredentialResponseData
-     */
-    'firstName'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserCredentialResponseData
-     */
-    'lastName'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
@@ -1516,13 +1523,13 @@ export interface UserCredentialResponseData {
      * @type {string}
      * @memberof UserCredentialResponseData
      */
-    'role'?: string;
+    'role': string;
     /**
      * 
-     * @type {FileInfo}
+     * @type {string}
      * @memberof UserCredentialResponseData
      */
-    'profilePicture'?: FileInfo;
+    'avatar': string;
     /**
      * 
      * @type {UserCredentialResponseDataMeta}
@@ -1534,13 +1541,31 @@ export interface UserCredentialResponseData {
      * @type {string}
      * @memberof UserCredentialResponseData
      */
-    'typeLogin'?: string;
+    'typeLogin': string;
     /**
      * 
      * @type {SellerDetail}
      * @memberof UserCredentialResponseData
      */
     'seller'?: SellerDetail;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof UserCredentialResponseData
+     */
+    'special'?: Array<object>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
+    'accessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCredentialResponseData
+     */
+    'refreshToken': string;
 }
 /**
  * 
@@ -1735,6 +1760,43 @@ export interface UserRequestSignUpSeller {
      */
     'token': string;
 }
+/**
+ * 
+ * @export
+ * @interface UserSignUp
+ */
+export interface UserSignUp {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUp
+     */
+    'email': string;
+    /**
+     * Password must be 8-16 characters and contain both numbers and letters characters
+     * @type {string}
+     * @memberof UserSignUp
+     */
+    'password': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUp
+     */
+    'name': string;
+    /**
+     * it kind of a checkbok
+     * @type {string}
+     * @memberof UserSignUp
+     */
+    'gender': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSignUp
+     */
+    'bithDay'?: string;
+}
 
 /**
  * AdminApi - axios parameter creator
@@ -1843,64 +1905,6 @@ export class AdminApi extends BaseAPI {
  */
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Get user when login by google successfully
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiMeGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/me`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Login by google account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiOauthGoogleGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/oauth/google`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Check the token is valid to access the seller register page
          * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
@@ -2034,11 +2038,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Users can only log themselves out, not other users
+         * clear token redis
+         * @param {LogoutRequest} [logoutRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLogoutGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authLogoutPost: async (logoutRequest?: LogoutRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/auth/logout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2047,15 +2052,18 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(logoutRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2089,6 +2097,39 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userMobileRegister, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Login by google account if not existed then create
+         * @param {GoogleLoginRequest} [googleLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOauthGooglePost: async (googleLoginRequest?: GoogleLoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/oauth/google`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(googleLoginRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2155,6 +2196,72 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(oTPRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Send mail to reset password
+         * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authPasswordEmailPost: async (forgotPasswordRequest?: ForgotPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/password/email`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(forgotPasswordRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Token matched then server will send for you verify token to reset password
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authPasswordResetPost: async (resetPasswordRequest?: ResetPasswordRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/password/reset`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(resetPasswordRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2290,6 +2397,72 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * create a new seller
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerCreatePost: async (sellerRegisterRequest?: SellerRegisterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/seller/create`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sellerRegisterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * send request to sign up seller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/seller/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * API seller register account
          * @param {SellerRegisterRequest} [sellerRegisterRequest] 
          * @param {*} [options] Override http request option.
@@ -2351,6 +2524,68 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * User sign up an local account
+         * @param {UserSignUp} [userSignUp] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSignupPost: async (userSignUp?: UserSignUp, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/signup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userSignUp, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * check token expire or exists
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authTokenCheckGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/token/check`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2361,24 +2596,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Get user when login by google successfully
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiMeGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCredentialResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiMeGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Login by google account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiOauthGoogleGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiOauthGoogleGet(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
         /**
          * Check the token is valid to access the seller register page
          * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
@@ -2420,12 +2637,13 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Users can only log themselves out, not other users
+         * clear token redis
+         * @param {LogoutRequest} [logoutRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authLogoutGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authLogoutGet(options);
+        async authLogoutPost(logoutRequest?: LogoutRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authLogoutPost(logoutRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2436,6 +2654,16 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccessAuth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authMobileRegisterPost(userMobileRegister, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Login by google account if not existed then create
+         * @param {GoogleLoginRequest} [googleLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authOauthGooglePost(googleLoginRequest?: GoogleLoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCredentialResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authOauthGooglePost(googleLoginRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2456,6 +2684,26 @@ export const AuthApiFp = function(configuration?: Configuration) {
          */
         async authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTPResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authOtpResetPasswordPost(oTPRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Send mail to reset password
+         * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authPasswordEmailPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authPasswordEmailPost(forgotPasswordRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Token matched then server will send for you verify token to reset password
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authPasswordResetPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authPasswordResetPost(resetPasswordRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2498,6 +2746,25 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * create a new seller
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authSellerCreatePost(sellerRegisterRequest?: SellerRegisterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authSellerCreatePost(sellerRegisterRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * send request to sign up seller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authSellerRegisterGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authSellerRegisterGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * API seller register account
          * @param {SellerRegisterRequest} [sellerRegisterRequest] 
          * @param {*} [options] Override http request option.
@@ -2516,6 +2783,25 @@ export const AuthApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authSellerRegisterRequestGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * User sign up an local account
+         * @param {UserSignUp} [userSignUp] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authSignupPost(userSignUp?: UserSignUp, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authSignupPost(userSignUp, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * check token expire or exists
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authTokenCheckGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authTokenCheckGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2526,22 +2812,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
 export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AuthApiFp(configuration)
     return {
-        /**
-         * Get user when login by google successfully
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiMeGet(options?: any): AxiosPromise<UserCredentialResponse> {
-            return localVarFp.apiMeGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Login by google account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiOauthGoogleGet(options?: any): AxiosPromise<void> {
-            return localVarFp.apiOauthGoogleGet(options).then((request) => request(axios, basePath));
-        },
         /**
          * Check the token is valid to access the seller register page
          * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
@@ -2579,12 +2849,13 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authLoginPost(userCredentials, options).then((request) => request(axios, basePath));
         },
         /**
-         * Users can only log themselves out, not other users
+         * clear token redis
+         * @param {LogoutRequest} [logoutRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLogoutGet(options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.authLogoutGet(options).then((request) => request(axios, basePath));
+        authLogoutPost(logoutRequest?: LogoutRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authLogoutPost(logoutRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * User sign up an local account - spend for mobile
@@ -2594,6 +2865,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: any): AxiosPromise<AnnouceSuccessAuth> {
             return localVarFp.authMobileRegisterPost(userMobileRegister, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Login by google account if not existed then create
+         * @param {GoogleLoginRequest} [googleLoginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authOauthGooglePost(googleLoginRequest?: GoogleLoginRequest, options?: any): AxiosPromise<UserCredentialResponse> {
+            return localVarFp.authOauthGooglePost(googleLoginRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * User active account that it just created - mobile
@@ -2612,6 +2892,24 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: any): AxiosPromise<OTPResponse> {
             return localVarFp.authOtpResetPasswordPost(oTPRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Send mail to reset password
+         * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authPasswordEmailPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authPasswordEmailPost(forgotPasswordRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Token matched then server will send for you verify token to reset password
+         * @param {ResetPasswordRequest} [resetPasswordRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authPasswordResetPost(resetPasswordRequest?: ResetPasswordRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authPasswordResetPost(resetPasswordRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Refresh token when access token is expired
@@ -2649,6 +2947,23 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authResetPasswordPost(resetPasswordRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * create a new seller
+         * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerCreatePost(sellerRegisterRequest?: SellerRegisterRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authSellerCreatePost(sellerRegisterRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * send request to sign up seller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSellerRegisterGet(options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authSellerRegisterGet(options).then((request) => request(axios, basePath));
+        },
+        /**
          * API seller register account
          * @param {SellerRegisterRequest} [sellerRegisterRequest] 
          * @param {*} [options] Override http request option.
@@ -2665,6 +2980,23 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         authSellerRegisterRequestGet(options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.authSellerRegisterRequestGet(options).then((request) => request(axios, basePath));
         },
+        /**
+         * User sign up an local account
+         * @param {UserSignUp} [userSignUp] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authSignupPost(userSignUp?: UserSignUp, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authSignupPost(userSignUp, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * check token expire or exists
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authTokenCheckGet(options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.authTokenCheckGet(options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -2675,26 +3007,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
-    /**
-     * Get user when login by google successfully
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public apiMeGet(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).apiMeGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Login by google account
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public apiOauthGoogleGet(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).apiOauthGoogleGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Check the token is valid to access the seller register page
      * @param {UserRequestSignUpSeller} [userRequestSignUpSeller] 
@@ -2740,13 +3052,14 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * Users can only log themselves out, not other users
+     * clear token redis
+     * @param {LogoutRequest} [logoutRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authLogoutGet(options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authLogoutGet(options).then((request) => request(this.axios, this.basePath));
+    public authLogoutPost(logoutRequest?: LogoutRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authLogoutPost(logoutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2758,6 +3071,17 @@ export class AuthApi extends BaseAPI {
      */
     public authMobileRegisterPost(userMobileRegister?: UserMobileRegister, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authMobileRegisterPost(userMobileRegister, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Login by google account if not existed then create
+     * @param {GoogleLoginRequest} [googleLoginRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authOauthGooglePost(googleLoginRequest?: GoogleLoginRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authOauthGooglePost(googleLoginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2780,6 +3104,28 @@ export class AuthApi extends BaseAPI {
      */
     public authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authOtpResetPasswordPost(oTPRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Send mail to reset password
+     * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authPasswordEmailPost(forgotPasswordRequest?: ForgotPasswordRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authPasswordEmailPost(forgotPasswordRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Token matched then server will send for you verify token to reset password
+     * @param {ResetPasswordRequest} [resetPasswordRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authPasswordResetPost(resetPasswordRequest?: ResetPasswordRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authPasswordResetPost(resetPasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2826,6 +3172,27 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
+     * create a new seller
+     * @param {SellerRegisterRequest} [sellerRegisterRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authSellerCreatePost(sellerRegisterRequest?: SellerRegisterRequest, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authSellerCreatePost(sellerRegisterRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * send request to sign up seller
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authSellerRegisterGet(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authSellerRegisterGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * API seller register account
      * @param {SellerRegisterRequest} [sellerRegisterRequest] 
      * @param {*} [options] Override http request option.
@@ -2844,6 +3211,27 @@ export class AuthApi extends BaseAPI {
      */
     public authSellerRegisterRequestGet(options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authSellerRegisterRequestGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * User sign up an local account
+     * @param {UserSignUp} [userSignUp] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authSignupPost(userSignUp?: UserSignUp, options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authSignupPost(userSignUp, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * check token expire or exists
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authTokenCheckGet(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authTokenCheckGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

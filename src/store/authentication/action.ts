@@ -1,5 +1,6 @@
 import { AppThunk } from "..";
-import { DeleteImagesRequest, OTPRequest, ResetPasswordRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
+import { DeleteImagesRequest, GoogleLoginRequest, LogoutRequest, OTPRequest, ResetPasswordRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
+import { notificationController } from '../../controllers/notificationController'
 import { AUTH_USER_DATA_LS_ITEM } from "../../constants/authentication";
 import { 
   setAuthUser,
@@ -51,10 +52,10 @@ export const actionAutoLogin = (): AppThunk => {
   };
 };
 
-export const actionLogout = (): AppThunk<Promise<boolean>> => {
+export const actionLogout = (params: LogoutRequest): AppThunk<Promise<boolean>> => {
   return async (dispatch) => {
     try {
-      const {data} = await logout()
+      const {data} = await logout(params)
       localStorage.removeItem(AUTH_USER_DATA_LS_ITEM);
       dispatch(setAuthUser(null))
       console.log(data)
@@ -67,32 +68,35 @@ export const actionLogout = (): AppThunk<Promise<boolean>> => {
   };
 };
 
-export const actionGoogleLogin = (
+export const actionGoogleLogin = (google: GoogleLoginRequest
 ): AppThunk<Promise<void>> =>{
   return async (dispatch) => {
     try {
-      const { data } =await googleLogin()
+      const { data } =await googleLogin(google)
+      console.log(data)
       dispatch(setAuthUser(data));
       localStorage.setItem(AUTH_USER_DATA_LS_ITEM, JSON.stringify(data));
     } catch (error) {
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      notificationController.error({
+        message: err.message
+      })
     }
   }
-} 
+}
 
 export const actionEmailResetPassword = (
   email: string
-): AppThunk<Promise<void>> =>{
-  return async (dispatch) => {
+): AppThunk<Promise<string>> =>{
+  return async () => {
     try {
       const { data } = await emailResetPassowrd(email)
-      await dispatch(setNotifyResetPassowrd(data.data?.message))
-      await dispatch(setUserId(data.userId))
+      return data.message as string
     } catch (error) {
       const err = error as AxiosError
-      console.log(err)
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 } 
@@ -107,7 +111,10 @@ export const actionOTPResetPassword = (
       await dispatch(setUserId(data.userId))
     } catch (error) {
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      notificationController.error({
+        message: err.message
+      })
     }
   }
 } 
@@ -118,10 +125,13 @@ export const actionNewPassword = (
   return async (dispatch) => {
     try {
       const { data } = await newPassword(resetPassword)
-      dispatch(setNotifyResetPassowrd(data.data?.message)) 
+      dispatch(setNotifyResetPassowrd(data.message)) 
     } catch (error) {
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      notificationController.error({
+        message: err.message
+      })
     }
   }
 }
@@ -142,7 +152,8 @@ export const actionUploadImage = (file: RcFile): AppThunk<Promise<ResponseUpload
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -166,7 +177,8 @@ export const actionUploadProofSeller = (files: RcFile[]): AppThunk<Promise<Respo
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message;
     }
   }
 }
@@ -180,7 +192,8 @@ export const actionCheckSellerRegister = (token: string)
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -194,7 +207,8 @@ export const actionDeleteFileList = (fileList: DeleteImagesRequest)
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -208,7 +222,8 @@ export const actionDeleteFileListbySeller = (fileList: string[])
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -218,11 +233,12 @@ export const actionSellerRegister = (seller: SellerRegisterRequest)
   return async () => {
     try {
       const {data} = await sellerRegister(seller)
-      return data.data?.message ? data.data?.message : ""
+      return data.message ? data.message : ""
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -236,7 +252,8 @@ export const actionSendOtpAgain = (userId: string)
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
@@ -247,11 +264,12 @@ export const actionRegisterSellerRequest = ()
   return async () => {
     try {
       const {data} = await registerSellerRequest();
-      return data.data?.message
+      return data.message
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
-      throw err.response?.data;
+      if(err.response?.data) throw err.response?.data;
+      throw err.message
     }
   }
 }
