@@ -4,9 +4,7 @@ import { notificationController } from '../../controllers/notificationController
 import { AUTH_USER_DATA_LS_ITEM } from "../../constants/authentication";
 import { 
   setAuthUser,
-  setNotifyResetPassowrd,
-  setVerifyToken,
-  setUserId
+  setNotifyResetPassowrd
 } from "./slice";
 import axios,{ AxiosError } from 'axios'
 import { 
@@ -107,8 +105,6 @@ export const actionOTPResetPassword = (
   return async (dispatch) => {
     try {
       const { data } = await otpResetPassword(otp)
-      await dispatch(setVerifyToken(data.data?.token))
-      await dispatch(setUserId(data.userId))
     } catch (error) {
       const err = error as AxiosError
       if(err.response?.data) throw err.response?.data;

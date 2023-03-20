@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../store'
 import { actionEmailResetPassword } from '../../../store/authentication/action'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
-import {notificationController} from '../../../controllers/notificationController'
-import { Alert } from 'antd';
+import { Alert } from '../../../components/Alert/Alert'
 import { LOGIN_PATH } from '../../../constants/routes';
 import * as S from './ForgotPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';

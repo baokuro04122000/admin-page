@@ -8,8 +8,6 @@ import { AuthenticationSlice } from "../../interfaces/authentication";
 const initialState: AuthenticationSlice = {
   authUser: null,
   notifyResetPassowrd: undefined,
-  verifyToken: undefined,
-  userId: undefined,
   socket: undefined
 };
 
@@ -26,18 +24,6 @@ export const authenticationSlice = createSlice({
     ){
       state.notifyResetPassowrd = payload
     },
-    setVerifyToken(
-      state,
-      {payload}: PayloadAction<string | undefined>
-    ){
-      state.verifyToken = payload
-    },
-    setUserId(
-      state,
-      {payload} : PayloadAction<string | undefined>
-    ){
-      state.userId = payload
-    },
     setSocket(state,
       {payload}: PayloadAction<any>)
     {
@@ -49,8 +35,6 @@ export const authenticationSlice = createSlice({
 export const { 
   setAuthUser,
   setNotifyResetPassowrd,
-  setVerifyToken,
-  setUserId,
   setSocket
 } = authenticationSlice.actions;
 

@@ -31,7 +31,7 @@ export const deleteFileList = (fileList:DeleteImagesRequest) => {
   return authApiFactory.authDeleteFilesPost(fileList)
 }
 export const sellerRegister = (seller:SellerRegisterRequest) => {
-  return authApiFactory.authSellerRegisterPost(seller)
+  return authApiFactory.authSellerCreatePost(seller)
 }
 
 export const sendEmailAgain = (userId: string) => {

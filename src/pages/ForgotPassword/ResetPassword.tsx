@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store'
-import { setNotifyResetPassowrd, setVerifyToken } from '../../store/authentication/slice'
+import { setNotifyResetPassowrd } from '../../store/authentication/slice'
 import { notificationController } from '../../controllers/notificationController'
 import { ForgotPasswordForm } from '../../components/auth/ForgotPasswordForm/ForgotPasswordForm'
 import { NewPasswordForm } from '../../components/auth/NewPasswordForm/NewPasswordForm'
@@ -19,7 +19,6 @@ const useNotifycation = () => {
         dispatch(setNotifyResetPassowrd(undefined))
         return () => {
             dispatch(setNotifyResetPassowrd(undefined))
-            dispatch(setVerifyToken(undefined))
         }
     }, [notify, dispatch])
     

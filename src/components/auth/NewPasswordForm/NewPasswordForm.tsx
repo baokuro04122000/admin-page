@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppDispatch } from '../../../store';
+import { useLocation } from 'react-router-dom'
 import { actionNewPassword } from '../../../store/authentication/action';
 import { notificationController } from '../../../controllers/notificationController'
 import { LOGIN_PATH } from '../../../constants/routes'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
-import { setUserId, setVerifyToken } from '../../../store/authentication/slice'
 import * as S from './NewPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
 
@@ -23,21 +23,23 @@ const initStates = {
 
 
 export const NewPasswordForm: React.FC = () => {
-  const verifyCode = useAppSelector(({authentication}) => authentication.verifyToken)
-  const userId = useAppSelector(({authentication}) => authentication.userId)
   
+
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get('token');
+
   const handleSubmit = useCallback(async (values: NewPasswordFormData) => {
     setLoading(true);
     try {
-      if(verifyCode){
-        await dispatch(actionNewPassword({userId, token: verifyCode, password: values.password}))
-        dispatch(setVerifyToken(undefined))
-        dispatch(setUserId(undefined))
+      if(token){
+        await dispatch(actionNewPassword({token: token, password: values.password}))
         setLoading(false)
         navigate(LOGIN_PATH)
       }
@@ -49,7 +51,7 @@ export const NewPasswordForm: React.FC = () => {
         duration:5
       })
     }
-  },[verifyCode]);
+  },[]);
 
   return (
     <Auth.FormWrapper>
@@ -61,8 +63,8 @@ export const NewPasswordForm: React.FC = () => {
           <Auth.BackIcon />
           {t('common.back')}
         </Auth.BackWrapper>
-        <Auth.FormTitle>{t('newPassword.title')}</Auth.FormTitle>
-        <S.Description>{t('newPassword.description')}</S.Description>
+        <Auth.FormTitle>{t('forgotPassword.newPassword')}</Auth.FormTitle>
+        <S.Description>{t('forgotPassword.descriptionNewPassword')}</S.Description>
         <Auth.FormItem
           name="password"
           label={t('common.password')}
@@ -80,18 +82,24 @@ export const NewPasswordForm: React.FC = () => {
           name="confirmPassword"
           label={t('common.confirmPassword')}
           dependencies={['password']}
+
           rules={[
             { required: true, message: t('common.requiredField') },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error(t('common.confirmPasswordError')));
-              },
-            }),
+            ({ getFieldValue }) =>{
+              return ({
+              
+                validator(_, value) {
+                  if(value){
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error(t('common.confirmPasswordError')));
+                  }
+                },
+              })
+            } ,
           ]}
-          hasFeedback
+          
         >
           <Auth.FormInputPassword placeholder={t('common.confirmPassword')} />
         </Auth.FormItem>

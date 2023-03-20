@@ -21,7 +21,6 @@ interface SecurityCodeFormProps {
 }
 
 export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, onNewPassword , onSecurityCode }) => {
-  const userId = useAppSelector(({authentication}) => authentication.userId)
 
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
@@ -37,31 +36,11 @@ export const SecurityCodeForm: React.FC<SecurityCodeFormProps> = ({ onForgot, on
   }, [securityCode]);
 
   const handleSendOTPAgain = async () => {
-    try {
-      const success = await dispatch(actionSendOtpAgain(userId ? userId : ''))
-      notificationController.success({message: success, duration: 3})
-    } catch (error: any) {
-      notificationController.error({
-        message: error ? error.errors.message : 'NETWORK ERROR', 
-        duration: 5})
-    }
+    console.log('nothing to do')
   }
 
   const handleFinish = useCallback(async () => {
-    try {
-      await dispatch(actionOTPResetPassword({userId, otp: Number(securityCode)}))
-      onSecurityCode(false)
-      onNewPassword(true)
-      setLoading(false)
-    } catch (error: any) {
-      console.log(error)
-      notificationController.error({
-        message:error.errors.message,
-        duration: 5
-      })
-      setLoading(false)
-      setSecurityCode('')
-    }
+    console.log('nothing to do')
   }, [securityCode])
 
   return (
