@@ -2,8 +2,15 @@ import { notificationController } from "../controllers/notificationController"
 import { UploadFile } from "antd"
 import { RcFile, UploadChangeParam, UploadProps } from "antd/lib/upload"
 import { useState } from "react"
+import axios from "axios"
+export type PropsUpload = {
+  t: any;
+  token: string;
+  login?: boolean
+  name?: string
+}
 
-export const useUploadLogo = (t: any, dispatch: any) => {
+export const useUploadLogo = ({t, token, login=false, name}: PropsUpload) => {
   const [logo, setLogo] = useState<string>('')
   const [logoLoading, setLogoLoading] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([])
@@ -31,10 +38,30 @@ export const useUploadLogo = (t: any, dispatch: any) => {
     }
     return true
   }
+
+  const handleUpload =async ({file, onSuccess, onError}: any) => {
+    const formData = new FormData();
+    formData.append('file', file)
+    try {
+      const { data } = await axios.post(
+        `${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image?login=${login}`,
+        formData, {
+        headers: {
+          'Authorization': `${decodeURIComponent(token)}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      onSuccess(data, file);
+    } catch (err: any) {
+      setLogoLoading(false)
+      console.log('errr:::', err)
+      onError(null, err.response.data);
+    }
+  }
+
   const handleOnChange = (file: UploadChangeParam) => {
     setFileList(file.fileList)
     if(file.file.status === 'done'){
-      console.log(file.file)
       const responseImage = file.file.response
       setFileList([{
         uid:responseImage.uid,
@@ -46,12 +73,13 @@ export const useUploadLogo = (t: any, dispatch: any) => {
       return
     } else if(file.file.status === 'error'){
       notificationController.error({
-        message:file.file.error ? file.file.error : "NETWORK ERROR",
+        message:file.file.response ? file.file.response.error.message : "NETWORK ERROR",
         duration:5
       })
       return
     }
   }
+
   const handleOnRemove = (file: any) => {
     setDeleteList([file.uid, ...deleteList])
     return true
@@ -59,13 +87,16 @@ export const useUploadLogo = (t: any, dispatch: any) => {
 
   const config: UploadProps = {
     listType:"picture",
-    maxCount:1,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image`,
+    maxCount: 1,
     onChange: handleOnChange,
     beforeUpload: handleBeforeUpload,
-    onRemove:handleOnRemove,
-    fileList:fileList,
+    onRemove: handleOnRemove,
+    fileList: fileList,
+    customRequest: handleUpload,
+    name: name,
+
   }
+
   return {
     logoLoading:logoLoading,
     handleUploadLogoProps:config,
@@ -74,62 +105,5 @@ export const useUploadLogo = (t: any, dispatch: any) => {
   }
 }
 
-export const useUploadProof = (t:any, dispatch: any) => {
-  const [proof, setProof] = useState<any>([])
-  const [proofLoading, setProofLoading] = useState(false)
-  const [fileList, setFileList] = useState<UploadFile[]>([])
-  const [deleteList, setDeleteList] = useState<string[]>([])
-  
-  const handleBeforeUpload = (file:RcFile) => {
-    const math:string[] = ['image/jpeg','image/png','image/gif', 'image/jpg', 'file/dox', 'file/pdf']
-    setProofLoading(true)
-    if(math.indexOf(file.type) === -1){
-      notificationController.error({
-        message:t('seller.imageInvalidFormat'),
-        duration:5
-      })
-      setProofLoading(false)
-      return false
-    }
-    const limitFile = file.size / 1024 /1024 < 5
-    if(!limitFile){
-      setProofLoading(false)
-      notificationController.error({
-        message:t('seller.proofFileLimitSize'),
-        duration:5
-      })
-      return false
-    }
-    return true
-  }
 
-  const handleOnChange = (file: UploadChangeParam) => {
-    let newFileList: any = [...file.fileList];
-    newFileList = file.fileList.map(file => {
-      if (file.response) {
-        return {
-          uid:file.response.fileId ? file.response.fileId : "error",
-          name: file.name,
-          thumbUrl:file.response.fileLink
-        }
-      }
-      return file;
-    });
-    setFileList(newFileList);
-  }
-  const handleOnRemove=(file: any) => {
-    setDeleteList([file.uid, ...deleteList])
-    return true
-  }
-  const config:UploadProps = {
-    multiple:true,
-    listType:"picture",
-    maxCount:5,
-    action:`${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image`,
-    beforeUpload:handleBeforeUpload,
-    onChange:handleOnChange,
-    onRemove:handleOnRemove,
-    fileList:fileList
-  }
-  return { proofLoading, configProof:config, fileListDeleteProof:deleteList, proof: fileList }
-}
+

@@ -22,6 +22,7 @@ import {
 } from "../../api/authentication";
 import { ResponseUploadFile } from '../../interfaces/authentication'
 import { RcFile } from "antd/lib/upload";
+import { SaveFileParams } from "../../interfaces/api";
 
 export const actionLogin = (
   email: string,
@@ -229,6 +230,7 @@ export const actionSellerRegister = (seller: SellerRegisterRequest)
   return async () => {
     try {
       const {data} = await sellerRegister(seller)
+      console.log('create seller:::', data)
       return data.message ? data.message : ""
     } catch (error) {
       console.log(error)
@@ -267,5 +269,28 @@ export const actionRegisterSellerRequest = ()
       if(err.response?.data) throw err.response?.data;
       throw err.message
     }
+  }
+}
+
+export const saveFile = async ({fileUrl, token, login=false, type='images'}: SaveFileParams) => {
+  try {
+    const { data } = await axios.post(
+      `${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/save?login=${login}`,
+      {
+        path: fileUrl.replace('http://localhost:9000/temp/', ""),
+        type: type
+      }, {
+        headers:{
+          'Authorization': `${decodeURIComponent(token)}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+    return data
+  } catch (error) {
+    console.log(error)
+    const err = error as AxiosError
+    if(err.response?.data) throw err.response?.data;
+    throw err.message
   }
 }

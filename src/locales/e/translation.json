@@ -43,7 +43,8 @@
     "imageInvalidFormat":"You can only upload JPG/PNG/GIF/JPEG",
     "imageLimitSize":"Image must smaller than 2MB!",
     "proof":"Click to upload the proof of your shop",
-    "proofFileLimitSize":"file must smaller than 5MB!"
+    "proofFileLimitSize":"file must smaller than 5MB!",
+    "address":"Address"
   },
   "product":{
     "name":"Name",
@@ -267,7 +268,8 @@
     "verifCodeSent": "We have sent a verification code to your email",
     "verifyEmailPage": "Verify email page",
     "emailError": "Please input users name or delete this field",
-    "passwordInValid":"Password must contain at least 8 characters, including letters, numbers and special characters"
+    "passwordInValid":"Password must contain at least 8 characters, including letters, numbers and special characters",
+    "unauthorize":"Unauthorize"
   },
   "securityCodeForm": {
     "noCode": "Didn't get a verification code?",

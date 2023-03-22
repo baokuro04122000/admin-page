@@ -1356,13 +1356,25 @@ export interface SellerRegisterRequest {
      * @type {string}
      * @memberof SellerRegisterRequest
      */
-    'fbLink'?: string;
+    'facebook'?: string;
     /**
      * 
      * @type {string}
      * @memberof SellerRegisterRequest
      */
-    'inLink'?: string;
+    'instagram'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'youtube'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SellerRegisterRequest
+     */
+    'linkedin'?: string;
     /**
      * name is unique
      * @type {string}

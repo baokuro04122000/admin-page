@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../../store';
 import { useLocation } from 'react-router-dom'
 import { actionNewPassword } from '../../../store/authentication/action';
 import { notificationController } from '../../../controllers/notificationController'
-import { LOGIN_PATH } from '../../../constants/routes'
+import { LOGIN_PATH, RESET_PASSWORD_PATH } from '../../../constants/routes'
 import { BaseForm } from '../../../components/common/forms/BaseForm/BaseForm';
 import * as S from './NewPasswordForm.styles';
 import * as Auth from '../../../layout/AuthLayout/AuthLayout.styles';
@@ -57,7 +57,7 @@ export const NewPasswordForm: React.FC = () => {
     <Auth.FormWrapper>
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initStates}>
         <Auth.BackWrapper onClick={() => {
-          console.log('go back')
+          navigate(RESET_PASSWORD_PATH)
         }
         }>
           <Auth.BackIcon />

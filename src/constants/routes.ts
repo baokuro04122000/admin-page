@@ -3,7 +3,7 @@ export const LOGIN_PATH = "/auth/login";
 export const LOGIN_SUBPATH = "login"
 export const RESET_PASSWORD_SUBPATH = "forgot-password"
 export const RESET_PASSWORD_PATH = "/auth/forgot-password"
-export const CHANGE_PASSWORD_SUBPATH = "reset-password"
+export const CHANGE_PASSWORD_SUBPATH = "password/reset"
 export const NOTFOUND_PATH = "*";
 export const SIGNUP_SUBPATH='sign-up/:token'
 

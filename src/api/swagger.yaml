@@ -1336,9 +1336,13 @@ components:
         token:
           type: string
           description: check role
-        fbLink:
+        facebook:
           type: string
-        inLink:
+        instagram:
+          type: string
+        youtube:
+          type: string
+        linkedin:
           type: string
         name:
           type: string

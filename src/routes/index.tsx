@@ -45,8 +45,8 @@ import Orders from '../pages/Orders'
 import ShipperRoute from './ShipperRoute';
 import OrdersShipper from '../pages/OrdersShipper'
 
-const AuthLayout = React.lazy(() => import("../layout/AuthLayout/AuthLayout")) 
-const Login = React.lazy(() => import("../pages/Login"));
+import AuthLayout from "../layout/AuthLayout/AuthLayout" 
+import Login from "../pages/Login";
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
 const unauthRoutes: RouteConfig = {
