@@ -97,7 +97,7 @@ const UploadItemProduct: React.FC<props> = ({fileListDefault}) => {
   }, [productImages])
   
   return (
-    <BaseButtonsForm.Item name="file" label={t('product.multipleUpload')}>
+    <BaseButtonsForm.Item name="file" label={t('product.productPictures')}>
       <Upload
         {...configProof}
       >

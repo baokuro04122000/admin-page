@@ -77,7 +77,10 @@
     "actions":"Actions",
     "delete":"Delete",
     "titlePopconfirmDelete":"Are you sure to delete?",
-    "quickEdit":"Quick Edit"
+    "quickEdit":"Quick Edit",
+    "basicInfo":"Basic Information",
+    "detailInfo":"Detail Information",
+    "variant":"Variant"
 
   },
   "order":{
@@ -287,8 +290,8 @@
     },
     "dynamicForm": "Dynamic form",
     "dynamicFormLabels": {
-        "addSights": "Add sights",
-        "area": "Area",
+        "addAttributes": "Add attributes",
+        "productType": "Product Type",
         "areaError": "Area is required",
         "beijing": "Beijing",
         "greatWall": "Great Wall",
@@ -299,7 +302,15 @@
         "sight": "Sight",
         "sightError": "Sight is required",
         "theBund": "The Bund",
-        "tiananmen": "Tiananmen"
+        "tiananmen": "Tiananmen",
+        "productTypeRequired":"Type is required",
+        "kindle":"Kindle",
+        "paperBack":"Paper Back",
+        "fields":"Fields",
+        "quantity":"Quantity",
+        "quantityError":"Quantity is required",
+        "maxOrder":"Max Order"
+
     },
     "stepForm": "Step form",
     "stepFormLabels": {

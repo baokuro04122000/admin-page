@@ -7,8 +7,15 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 import { actionGetAllCategories } from '../../../store/product/action'
 import { setCategories } from '../../../store/product/slice'
 const useCategories = () => {
-  const categories = useAppSelector(({product}) => product.categories)
-
+  //const categories = useAppSelector(({product}) => product.categories)
+  const categories = [
+    {
+      slug: 'test',
+      name: 'test',
+      categoryImage: 'image',
+      _id:'162531'
+    }
+  ]
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(actionGetAllCategories())

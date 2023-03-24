@@ -11,7 +11,7 @@ import { UploadItem } from '../../../components/product/UploadItem/UploadItem';
 import { BirthdayItem } from '../../profile/profileCard/profileFormNav/nav/PersonalInfo/BirthdayItem/BirthdayItem';
 import { LanguageItem } from '../../product/LanguageItem/LanguageItem';
 import { CitiesItem } from '../../profile/profileCard/profileFormNav/nav/PersonalInfo/CitiesItem/CitiesItem';
-
+import { VariantForm } from '../../forms/DynamicForm/VariantForm'
 import { 
   useAppSelector,
   useAppDispatch
@@ -54,6 +54,8 @@ export const ProductForm: React.FC = () => {
   const navigate = useNavigate()
   const onFinish = useCallback(
      (values: ProductInfoFormValues) => {
+
+      console.log('values::', values)
       // todo dispatch an action here
       setLoading(true);
       const product: AddProductRequest = {
@@ -100,8 +102,12 @@ export const ProductForm: React.FC = () => {
         <Row gutter={{ xs: 10, md: 15, xl: 30 }}>
           <Col span={24}>
             <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.addProduct')}</BaseButtonsForm.Title>
+              <BaseButtonsForm.Title>{t('product.basicInfo')}</BaseButtonsForm.Title>
             </BaseButtonsForm.Item>
+          </Col>
+
+          <Col xs={24} md={24}>
+            <UploadItem fileListDefault={[]} />
           </Col>
 
           <Col xs={24} md={12}>
@@ -116,6 +122,24 @@ export const ProductForm: React.FC = () => {
                 {max:150, message:t('common.maxLength150')}
               ]} 
              />
+          </Col>
+
+          <Col xs={24} md={12}>
+            <CategoryItem />
+          </Col>
+ 
+          <Col xs={24} md={24}>
+            <TextAreaItem 
+              name="description" 
+              rows={6} 
+              label={t('product.description')}
+            />
+          </Col>
+          
+          <Col span={24}>
+            <BaseButtonsForm.Item>
+              <BaseButtonsForm.Title>{t('product.detailInfo')}</BaseButtonsForm.Title>
+            </BaseButtonsForm.Item>
           </Col>
 
           <Col xs={24} md={12}>
@@ -167,6 +191,23 @@ export const ProductForm: React.FC = () => {
             <LanguageItem />
           </Col>
 
+          <Col xs={24} md={12}>
+            <BirthdayItem 
+              name="publicationDate"
+              label={t('product.publicationDate')}
+              format="L"
+            />
+          </Col>
+
+          <Col span={24}>
+            <BaseButtonsForm.Item>
+              <BaseButtonsForm.Title>{t('product.variant')}</BaseButtonsForm.Title>
+            </BaseButtonsForm.Item>
+          </Col>
+
+          <Col span={24}>
+            <VariantForm/>
+          </Col>
           <Col xs={24} md={12}>
             <BaseInputItem 
               name="price" 
