@@ -192,11 +192,7 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <BirthdayItem 
-              name="publicationDate"
-              label={t('product.publicationDate')}
-              format="L"
-            />
+            <CitiesItem />
           </Col>
 
           <Col span={24}>
@@ -207,91 +203,6 @@ export const ProductForm: React.FC = () => {
 
           <Col span={24}>
             <VariantForm/>
-          </Col>
-          <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="price" 
-              label={t('product.price')} 
-              type="text"
-              placeHolder={t('product.price')}
-              rules ={[
-                {required: true, message:t('common.requiredField')},
-                {min:1, message:t('product.priceError')},
-                {max:9, message:t('product.priceMax')}
-              ]}
-             />
-          </Col>
-
-          <Col xs={24} md={12}>
-            <CategoryItem />
-          </Col>
-
-          <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="discount" 
-              label={t('product.discountPercent')} 
-              type="text"
-              placeHolder={t('product.discountPercent')}
-             />
-          </Col>
-          
-          <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="quantity" 
-              label={t('product.quantity')} 
-              type="text"
-              placeHolder={t('product.quantity')}
-              rules={[
-                {required: true, message:t('common.requiredField')},
-                {min: 1, message: t('product.priceMin')},
-                {max: 6, message: t('product.priceMax')}
-              ]}
-             />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.productDescription')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={24}>
-            <TextAreaItem 
-              name="summary" 
-              rows={2} 
-              label={t('product.summary')}
-              rules={[
-                {max: 150, message: t('common.maxLength150')}
-              ]}
-            />
-          </Col>
-
-          <Col xs={24} md={24}>
-            <TextAreaItem 
-              name="description" 
-              rows={6} 
-              label={t('product.description')}
-            />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.productPictures')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={24}>
-            <UploadItem fileListDefault={[]} />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('common.address')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={12}>
-            <CitiesItem />
           </Col>
 
         </Row>

@@ -33,11 +33,6 @@ export const VariantForm: React.FC = () => {
     }, 1000);
   };
 
-  const handleChange = (e: any) => {
-    console.log('event::', e)
-    form.setFieldsValue({ sights: [] });
-  };
-
   return (
    
       <BaseButtonsForm.List name="attributes">
@@ -50,11 +45,11 @@ export const VariantForm: React.FC = () => {
                  <Row gutter={[30,10]}>
                     <Col span={12}>
                       <BaseButtonsForm.Item
-                        name="type"
+                        name={[field.name, 'type']}
                         label={t('forms.dynamicFormLabels.productType')}
                         rules={[{ required: true, message: t('forms.dynamicFormLabels.productTypeRequired') }]}
                       >
-                        <Select options={types} onChange={handleChange} />
+                        <Select options={types} />
                       </BaseButtonsForm.Item>
                     </Col>
                     <Col span={12}>
