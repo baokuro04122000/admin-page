@@ -2,14 +2,14 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Switch, Table as TableAnt } from 'antd';
 import { Space, Popconfirm, Row, Col, Tag } from 'antd';
-import { Pagination } from 'api/table.api';
+import { Pagination } from '@app/api/table.api';
 import { Table } from '../../common/Table/Table';
 import { ColumnsType } from 'antd/es/table';
 import { Button } from 'components/common/buttons/Button/Button';
 import { useTranslation } from 'react-i18next';
 import { notificationController } from 'controllers/notificationController';
 import moment from 'moment';
-import { OrderDetailsItemsInnerOrderStatusInner, OrderDetailsProduct, OrderDetailsShipping, OrderDetailsShippingAddress } from '../../../api/openapi-generator';
+import { OrderDetailsItemsInnerOrderStatusInner, OrderDetailsProduct, OrderDetailsShipping, OrderDetailsShippingAddress } from '@app/api/openapi-generator';
 import { useAppDispatch, useAppSelector } from '../../../store'
 import { 
   actionOrderListShipping,
@@ -19,7 +19,7 @@ import {
    setOrdersShipping
 } from '../../../store/product/slice'
 import { defineColorByPriority } from '../../../utils/utils'
-import { Status } from '../../../components/common/Status/Status';
+import { Status } from 'components/common/Status/Status';
 
 export const BasicTable: React.FC = () => {
   
@@ -27,7 +27,7 @@ export const BasicTable: React.FC = () => {
   const orders = useAppSelector(({product}) => product.ordersShipping?.data)
   const totalOrders = useAppSelector(({product}) => product.ordersShipping?.total)
 
-  const [pagination, setPagination] = useState<Pagination>(
+  const [pagination, setPagination] = useState<any>(
     {
       current: 1,
       pageSize: 5,
@@ -70,7 +70,7 @@ export const BasicTable: React.FC = () => {
     try {
       console.log(page, pageSize)
       await dispatch(actionOrderListShipping({currentPage: page, limit: pageSize}))
-      await setPagination(pre => ({
+      await setPagination((pre: any) => ({
         ...pre,
         current: page
       }))

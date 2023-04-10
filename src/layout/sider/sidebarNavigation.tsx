@@ -80,9 +80,9 @@ export const sidebarNavigationAdmin: SidebarNavigationItem[] = [
         url: '/admin/users',
       },
       {
-        title: 'common.roles',
-        key: 'roles',
-        url: '/admin/roles',
+        title: 'Categories',
+        key: 'category',
+        url: '/admin/categories',
       },
     ],
   }

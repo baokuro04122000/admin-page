@@ -78,11 +78,7 @@ export const LoginForm: React.FC = () => {
           label={t('common.password')}
           name="password"
           rules={[
-            { required: true, message: t('common.requiredField') },
-            {
-              pattern: /^(?=.*[a-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/,
-              message: t('common.passwordInValid'),
-            }
+            { required: true, message: t('common.requiredField') }
           ]}
         >
           <Auth.FormInputPassword placeholder={t('common.password')} />

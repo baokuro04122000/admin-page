@@ -47,6 +47,8 @@ import OrdersShipper from '../pages/OrdersShipper'
 
 import AuthLayout from "../layout/AuthLayout/AuthLayout" 
 import Login from "../pages/Login";
+import ManageCategory from '../pages/Admin/ManageCategory';
+import ManageUser from 'pages/Admin/ManageUsers';
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
 const unauthRoutes: RouteConfig = {
@@ -84,9 +86,12 @@ const adminRoutes: RouteConfig = {
   element: <Layout page="admin"/>,
   children: [
     {
-      path: ADMIN_HOME_SUBPATH,
-      element: <Navigate to={ADMIN_USERS_SUBPATH} />,
-      permissions: [VIEW_ADMIN],
+      path: 'categories',
+      element: <ManageCategory />,
+    },
+    {
+      path: 'users',
+      element: <ManageUser />
     },
     {
       path: ADMIN_UNAUTHORIZED_SUBPATH,

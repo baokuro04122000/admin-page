@@ -16,16 +16,16 @@ import {
   useAppSelector,
   useAppDispatch
 } from '../../../store';
-
 import { notificationController } from '../../../controllers/notificationController';
 import { ResponseUploadFile } from '../../../interfaces/authentication';
 import { 
-  actionUpdateProduct
-} from '../../../store/product/action'
+ actionUpdateProduct,
+} from 'store/product/action'
 import {
   setProduct
 } from '../../../store/product/slice'
-import { EditProductRequest } from '../../../api/openapi-generator';
+import { VariantForm } from '../../../components/forms/DynamicForm/VariantForm';
+import { saveFile } from '../../../store/authentication/action';
 
 interface ProductInfoFormValues {
   name: string;
@@ -46,33 +46,33 @@ interface ProductInfoFormValues {
 
 export const ProductForm: React.FC = () => {
 
-  const product = useAppSelector(({product}) => product.product)
+  const product: any = useAppSelector(({product}) => product.product)
   const productImages = useAppSelector(({product}) => product.productImages)
+  const token = useAppSelector(({authentication}) => authentication.authUser?.data.accessToken)
   const fileListDefault = useAppSelector(
     ({product}) => product.product?.productPictures?.map(
-      (file, index) => {
+      (file: any, index: any) => {
         if(index === 0){
           return {
-            uid:file.fileId,
+            uid:file,
             name:'main-picture.png',
             status: 'done',
-            url: file.fileLink,
-            thumbUrl: file.fileLink
+            url: file,
+            thumbUrl: file
           }
         }
         return {
-          uid:file.fileId,
+          uid:file,
           name:'more-description-picture.png',
           status: 'done',
-          url: file.fileLink,
-          thumbUrl: file.fileLink
+          url: file,
+          thumbUrl: file
         }
       }))
  
 
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
-
 
   const productFormValues = useMemo(
     () => {
@@ -92,11 +92,11 @@ export const ProductForm: React.FC = () => {
         description: product.description,
         quantity: ""+product.quantity,
         city: product.specs?.city,
+        variants: product.variants,
         } 
       : {}
     }
   , [product])
-
   const [form] = BaseButtonsForm.useForm();
 
   const { t } = useTranslation()
@@ -104,44 +104,47 @@ export const ProductForm: React.FC = () => {
   const navigate = useNavigate()
   const {slug} = useParams()
   
-  useEffect(() => {
-    return () => {
-      dispatch(setProduct(undefined))
-    }
-  }, [dispatch])
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(setProduct(undefined))
+  //   }
+  // }, [])
 
   const onFinish = useCallback(
-     async (values: ProductInfoFormValues) => {
+     async (values: any) => {
       // todo dispatch an action here
       setLoading(true);
-      const productEdit: EditProductRequest = {
-        product: {
-          name:values.name,
-          author: values.author,
-          category: values.category,
-          publicationDate: `${(values.publicationDate.$D <= 9) ?"0"+(values.publicationDate.$D) : (values.publicationDate.$D)}/${((values.publicationDate.$M + 1) <= 9) ?"0"+(values.publicationDate.$M + 1) : (values.publicationDate.$M + 1)}/${values.publicationDate.$y}`,
-          printLength: values.printLength ? +values.printLength : undefined,
-          publisher:values.publisher,
-          discountPercent: values.discountPercent ? +values.discountPercent : 0,
-          price: +values.price,
-          summary: values.summary,
-          description: values.description,
-          quantity:+values.quantity,
-          city: values.city,
-          language: values.language,
-          productPictures: productImages
-        },
-        slug: slug
+      const product: any = {
+        name:values.name,
+          specs:[
+            {k:'author', v: values.author},
+            {k:'publicationDate', v: `${(values.publicationDate.$D <= 9) ?"0"+(values.publicationDate.$D) : (values.publicationDate.$D)}/${((values.publicationDate.$M + 1) <= 9) ?"0"+(values.publicationDate.$M + 1) : (values.publicationDate.$M + 1)}/${values.publicationDate.$y}`},
+            {k: 'printLength', v: values.printLength},
+            {k: 'publisher', v: values.publisher},
+            {k:'language', v: values.language},
+            {k:'city', v: values.city}
+          ],
+        variants: values.attributes.map((variant: any) => ({
+          type: variant.type, 
+          quantity: Number(variant.quantity),
+          discount: Number(variant.discount),
+          price: Number(variant.price),
+          maxOrder: Number(variant.maxOrder)
+        })),
+        category: values.category,
+        description: values.description,
+        productPictures: productImages?.map((image) => image.replace("temp", "images"))
       }
-      try {
-        const message = await dispatch(actionUpdateProduct(productEdit))
-        notificationController.success({message: message, duration: 5})
-        setLoading(false)
+        dispatch(actionUpdateProduct(slug as string,product)).then((success: any) => {
+        setLoading(false);
+        setFieldsChanged(false);
+        notificationController.success({ message: success, duration:5 });
+        productImages?.map((file: any) => saveFile({fileUrl: file as string, token: token as string, type:'images', login: true}))
         navigate('/products')
-      } catch (error: any) {
+      }).catch ((error: any) => {
         notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
         setLoading(false)
-      }
+      })
     },
     [t, productImages]
   );
@@ -159,10 +162,14 @@ export const ProductForm: React.FC = () => {
         onFinish={onFinish}
       >
         <Row gutter={{ xs: 10, md: 15, xl: 30 }}>
-          <Col span={24}>
+        <Col span={24}>
             <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.editProduct')}</BaseButtonsForm.Title>
+              <BaseButtonsForm.Title>{t('product.basicInfo')}</BaseButtonsForm.Title>
             </BaseButtonsForm.Item>
+          </Col>
+
+          <Col xs={24} md={24}>
+            <UploadItem fileListDefault={fileListDefault} />
           </Col>
 
           <Col xs={24} md={12}>
@@ -177,6 +184,24 @@ export const ProductForm: React.FC = () => {
                 {max:150, message:t('common.maxLength150')}
               ]} 
              />
+          </Col>
+
+          <Col xs={24} md={12}>
+            <CategoryItem />
+          </Col>
+ 
+          <Col xs={24} md={24}>
+            <TextAreaItem 
+              name="description" 
+              rows={6} 
+              label={t('product.description')}
+            />
+          </Col>
+          
+          <Col span={24}>
+            <BaseButtonsForm.Item>
+              <BaseButtonsForm.Title>{t('product.detailInfo')}</BaseButtonsForm.Title>
+            </BaseButtonsForm.Item>
           </Col>
 
           <Col xs={24} md={12}>
@@ -229,89 +254,18 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="price" 
-              label={t('product.price')} 
-              type="text"
-              placeHolder={t('product.price')}
-              rules ={[
-                {required: true, message:t('common.requiredField')},
-                {max:9, message:t('product.priceMax')}
-              ]}
-             />
-          </Col>
-
-          <Col xs={24} md={12}>
-            <CategoryItem defaultValue={product?.category?._id} />
-          </Col>
-
-          <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="discountPercent" 
-              label={t('product.discountPercent')} 
-              type="text"
-              placeHolder={t('product.discountPercent')}
-             />
-          </Col>
-          
-          <Col xs={24} md={12}>
-            <BaseInputItem 
-              name="quantity" 
-              label={t('product.quantity')} 
-              type="text"
-              placeHolder={t('product.quantity')}
-              rules={[
-                {required: true, message:t('common.requiredField')},
-                {max: 6, message: t('product.priceMax')}
-              ]}
-             />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.productDescription')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={24}>
-            <TextAreaItem 
-              name="summary" 
-              rows={2} 
-              label={t('product.summary')}
-              rules={[
-                {max: 150, message: t('common.maxLength150')}
-              ]}
-            />
-          </Col>
-
-          <Col xs={24} md={24}>
-            <TextAreaItem 
-              name="description" 
-              rows={6} 
-              label={t('product.description')}
-            />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('product.productPictures')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={24}>
-            <UploadItem fileListDefault={fileListDefault} />
-          </Col>
-
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('common.address')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={12}>
             <CitiesItem />
           </Col>
 
+          <Col span={24}>
+            <BaseButtonsForm.Item>
+              <BaseButtonsForm.Title>{t('product.variant')}</BaseButtonsForm.Title>
+            </BaseButtonsForm.Item>
+          </Col>
+
+          <Col span={24}>
+            <VariantForm initialValue={{attributes: product.variant}}/>
+          </Col>
         </Row>
       </BaseButtonsForm>
     </Card>

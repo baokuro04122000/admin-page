@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Space, Popconfirm } from 'antd';
-import { Pagination } from 'api/table.api';
+import { Space, Popconfirm, InputRef } from 'antd';
+import { Pagination } from '@app/api/table.api';
 import { Table } from '../../common/Table/Table';
-import { ColumnsType } from 'antd/es/table';
-import { Button } from 'components/common/buttons/Button/Button';
+import { ColumnType, ColumnsType } from 'antd/es/table';
+import { Button } from '@components/common/buttons/Button/Button';
 import { useTranslation } from 'react-i18next';
-import { notificationController } from 'controllers/notificationController';
+import { notificationController } from '@app/controllers/notificationController';
 
 import { CategoryInfo, ProductDetails, SpecsProduct } from '../../../api/openapi-generator';
 import { useAppDispatch, useAppSelector } from '../../../store'
@@ -22,6 +22,9 @@ import {
 import { 
   SELLER_DASHBOARD_PRODUCTS_SUBPATH 
 } from '../../../constants/routes';
+import { Input } from '@components/common/inputs/Input/Input';
+import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { SearchOutlined } from '@ant-design/icons';
 
 
 export const BasicTable: React.FC = () => {
@@ -43,20 +46,38 @@ export const BasicTable: React.FC = () => {
   const navigate = useNavigate()
   const dispatch =  useAppDispatch();
 
- 
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
 
   useEffect(() => {
-    dispatch(actionGetProducts({currentPage: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
+    dispatch(actionGetProducts({page: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
     return () => {
       dispatch(setProducts(undefined))
     }
   }, [])
 
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: any,
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+
   const handleDeleteProduct = async (productId: string) => {
     try {
       const deleted = await dispatch(actionDeleteProduct(productId))
       if(tableDataFilter.length === 1){
-        await dispatch(actionGetProducts({currentPage: 
+        await dispatch(actionGetProducts({page: 
           (pagination.current) 
           ? 
             (pagination.current > 1) 
@@ -68,7 +89,7 @@ export const BasicTable: React.FC = () => {
         notificationController.success({message: deleted ? deleted : '', duration: 3})
         return
       }
-      await dispatch(actionGetProducts({currentPage: 
+      await dispatch(actionGetProducts({page: 
         pagination.current 
         , sellerId: authUser?.data?.seller?._id
         , limit: 5}))  
@@ -82,7 +103,7 @@ export const BasicTable: React.FC = () => {
 
   const handlePagination = async (page: number, pageSize: number) => {
     try {
-      await dispatch(actionGetProducts({currentPage: page, sellerId: authUser?.data?.seller?._id, limit: 5}))
+      await dispatch(actionGetProducts({page: page, sellerId: authUser?.data?.seller?._id, limit: 5}))
       setPagination({...pagination, current: page})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR"})
@@ -127,13 +148,13 @@ export const BasicTable: React.FC = () => {
       key: uuidv4(),
       title: t('product.summary'),
       dataIndex: 'summary',
-      render: (summary) => <span key={uuidv4()}>{summary}</span>
+      render: (summary: string) => <span key={uuidv4()}>{summary}</span>
     },
     {
       key: uuidv4(),
       title: t('product.price'),
       dataIndex: 'price',
-      render: (price) => <span key={uuidv4()}>{(Number(price)).toLocaleString('vi-VN', {
+      render: (price: number) => <span key={uuidv4()}>{(Number(price)).toLocaleString('vi-VN', {
         style: 'currency',
         currency: 'VND',
       })}</span>

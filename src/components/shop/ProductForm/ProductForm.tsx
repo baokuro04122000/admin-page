@@ -21,29 +21,12 @@ import { ResponseUploadFile } from '../../../interfaces/authentication';
 import { 
   actionAddProduct
 } from '../../../store/product/action'
-import { AddProductRequest } from '@app/api/openapi-generator';
-
-interface ProductInfoFormValues {
-  name: string;
-  author: string;
-  publisher: string;
-  printLength: string;
-  publicationDate: any;
-  language: string;
-  price: string;
-  category: string;
-  discountPercent?: string;
-  summary?: string;
-  description?: string;
-  quantity: string;
-  city: string;
-  file: ResponseUploadFile[];
-}
-
+import { saveFile } from '../../../store/authentication/action'
 
 export const ProductForm: React.FC = () => {
 
   const productImages = useAppSelector(({product}) => product.productImages)
+  const token = useAppSelector(({authentication}) => authentication.authUser?.data.accessToken)
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -53,31 +36,37 @@ export const ProductForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onFinish = useCallback(
-     (values: ProductInfoFormValues) => {
+     (values: any) => {
 
       console.log('values::', values)
       // todo dispatch an action here
       setLoading(true);
-      const product: AddProductRequest = {
+      const product: any = {
         name:values.name,
-        author: values.author,
+          specs:[
+            {k:'author', v: values.author},
+            {k:'publicationDate', v: `${(values.publicationDate.$D <= 9) ?"0"+(values.publicationDate.$D) : (values.publicationDate.$D)}/${((values.publicationDate.$M + 1) <= 9) ?"0"+(values.publicationDate.$M + 1) : (values.publicationDate.$M + 1)}/${values.publicationDate.$y}`},
+            {k: 'printLength', v: values.printLength},
+            {k: 'publisher', v: values.publisher},
+            {k:'language', v: values.language},
+            {k:'city', v: values.city}
+          ],
+        variants: values.attributes.map((variant: any) => ({
+          ...variant, 
+          quantity: Number(variant.quantity),
+          discount: Number(variant.discount),
+          price: Number(variant.price),
+          maxOrder: Number(variant.maxOrder)
+        })),
         category: values.category,
-        publicationDate: `${(values.publicationDate.$D <= 9) ?"0"+(values.publicationDate.$D) : (values.publicationDate.$D)}/${((values.publicationDate.$M + 1) <= 9) ?"0"+(values.publicationDate.$M + 1) : (values.publicationDate.$M + 1)}/${values.publicationDate.$y}`,
-        printLength: values.printLength ? +values.printLength : undefined,
-        publisher:values.publisher,
-        discountPercent: values.discountPercent ? +values.discountPercent : 0,
-        price: +values.price,
-        summary: values.summary,
         description: values.description,
-        quantity:+values.quantity,
-        city: values.city,
-        productPictures: productImages,
-        language: values.language
+        productPictures: productImages?.map((image) => image.replace("temp", "images"))
       }
         dispatch(actionAddProduct(product)).then((success) => {
         setLoading(false);
         setFieldsChanged(false);
         notificationController.success({ message: success, duration:5 });
+        productImages?.map((file: any) => saveFile({fileUrl: file as string, token: token as string, type:'images', login: true}))
         navigate('/products')
       }).catch((error) => {
         setLoading(false);
@@ -125,7 +114,7 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <CategoryItem />
+            {/* <CategoryItem /> */}
           </Col>
  
           <Col xs={24} md={24}>
@@ -202,7 +191,7 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col span={24}>
-            <VariantForm/>
+            <VariantForm />
           </Col>
 
         </Row>

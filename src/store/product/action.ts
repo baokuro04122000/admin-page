@@ -10,13 +10,13 @@ import {
 import { 
   getAllCategories,
   getProducts,
+  getProductsByCategoryName,
   getSingleProduct
 } from '../../api/product'
 import {
   addProduct,
   updateProduct,
   deleteProduct,
-  quickUpdateProduct,
   orderList,
   updateStatusOrder
 } from '../../api/seller'
@@ -24,7 +24,7 @@ import {
   ordersShipping,
   updateStatusOrderShipping
 } from '../../api/shipper'
-import { AddProductRequest, EditProductRequest, EditQuickProductRequest } from "../../api/openapi-generator";
+import { AddProductRequest } from "../../api/openapi-generator";
 import { notificationController } from '../../controllers/notificationController'
 import { RequestSearchParams } from "../../interfaces/api";
 
@@ -61,6 +61,22 @@ export const actionGetProducts = (requestParams: RequestSearchParams)
   return async (dispatch) => {
     try {
       const {data} = await getProducts(requestParams);
+      console.log('data:::', data)
+      dispatch(setProducts(data))
+    } catch (error) {
+      console.log(error)
+      const err = error as AxiosError
+      throw err.response?.data;
+    }
+  }
+}
+
+export const actionGetProductsByCategoryName = (categoryName: string, limit: number, sellerId: string, page: number)
+: AppThunk<Promise<void>> => {
+  return async (dispatch) => {
+    try {
+      const {data} = await getProductsByCategoryName(categoryName, limit, sellerId, page);
+      console.log('check::', data)
       dispatch(setProducts(data))
     } catch (error) {
       console.log(error)
@@ -83,33 +99,16 @@ export const actionGetSingleProduct = (slug: string)
   }
 }
 
-export const actionUpdateProduct = (product: EditProductRequest)
+export const actionUpdateProduct = (slug: string,product: AddProductRequest)
 : AppThunk<Promise<string | undefined>> => {
   return async () => {
     try {
-      const {data} = await updateProduct(product)
+      const {data} = await updateProduct(slug,product)
       return data.message
     } catch (error) {
       console.log(error)
       const err = error as AxiosError
       throw err.response?.data;
-    }
-  }
-}
-
-export const actionQuickEditProduct = (product: EditQuickProductRequest)
-: AppThunk<Promise<string>> => {
-  return async () => {
-    try {
-      const {data} = await quickUpdateProduct(product)
-      return data.message ? data.message : ''
-    } catch (error:any) {
-      console.log(error)
-      notificationController.error({
-        message: error ? error.response?.data.errors.message : '',
-        duration: 5
-      })
-      throw error.response?.data;
     }
   }
 }

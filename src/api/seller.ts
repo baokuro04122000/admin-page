@@ -1,22 +1,18 @@
 import baseClient, { BASE_URL } from "./baseClient";
-import { AddProductRequest, EditProductRequest, EditQuickProductRequest, SellerApiFactory } from "./openapi-generator";
+import { AddProductRequest, SellerApiFactory } from "./openapi-generator";
 
 const sellerApiFactory = SellerApiFactory(undefined, BASE_URL, baseClient);
 
 export const addProduct = (product:AddProductRequest) => {
-  return sellerApiFactory.sellerAddProductPost(product)
+  return sellerApiFactory.productAddPost(product)
 }
 
-export const updateProduct = (product: EditProductRequest) => {
-  return sellerApiFactory.sellerUpdateProductPut(product)
+export const updateProduct = (slug: string,product: AddProductRequest) => {
+  return sellerApiFactory.productUpdatePut(slug, product)
 }
 
 export const deleteProduct = (id: string) => {
-  return sellerApiFactory.sellerDeleteProductIdDelete(id)
-}
-
-export const quickUpdateProduct = (product: EditQuickProductRequest) => {
-  return sellerApiFactory.sellerQuickUpdateProductPut(product)
+  return sellerApiFactory.productDeleteIdDelete(id)
 }
 
 export const orderList = (currentPage: number, limit: number) => {

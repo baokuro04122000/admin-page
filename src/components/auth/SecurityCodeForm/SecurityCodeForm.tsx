@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {  Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { 
-  actionOTPResetPassword,
   actionSendOtpAgain
 } from '../../../store/authentication/action'
 import { notificationController } from '../../../controllers/notificationController'

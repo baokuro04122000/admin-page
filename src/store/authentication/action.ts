@@ -1,5 +1,5 @@
 import { AppThunk } from "..";
-import { DeleteImagesRequest, GoogleLoginRequest, LogoutRequest, OTPRequest, ResetPasswordRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
+import { DeleteImagesRequest, GoogleLoginRequest, LogoutRequest, ResetPasswordRequest, SellerRegisterRequest, UserCredentialResponse } from "../../api/openapi-generator";
 import { notificationController } from '../../controllers/notificationController'
 import { AUTH_USER_DATA_LS_ITEM } from "../../constants/authentication";
 import { 
@@ -12,7 +12,6 @@ import {
   googleLogin,
   logout,
   emailResetPassowrd,
-  otpResetPassword,
   newPassword,
   registerSellerRequest,
   checkTokenSellerRegister,
@@ -96,22 +95,6 @@ export const actionEmailResetPassword = (
       const err = error as AxiosError
       if(err.response?.data) throw err.response?.data;
       throw err.message
-    }
-  }
-} 
-
-export const actionOTPResetPassword = (
-  otp: OTPRequest
-): AppThunk<Promise<void>> =>{
-  return async (dispatch) => {
-    try {
-      const { data } = await otpResetPassword(otp)
-    } catch (error) {
-      const err = error as AxiosError
-      if(err.response?.data) throw err.response?.data;
-      notificationController.error({
-        message: err.message
-      })
     }
   }
 } 

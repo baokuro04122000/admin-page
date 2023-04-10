@@ -4,6 +4,7 @@ import { CurrencyType } from '../interfaces/interfaces';
 import { Priority } from '../constants/enums/priorities';
 import { ReactComponent as ETHIcon } from '../assets/icons/eth.svg';
 import { ReactComponent as BTCIcon } from '../assets/icons/btc.svg';
+import moment from 'moment';
 
 export const camelize = (string: string): string => {
   return string
@@ -205,4 +206,8 @@ export const checkEmptyObject = (obj: any) => {
 
 export const totalPriceProduct = (price: number, quantity: number, discount: number) => {
   return (discount !== 0) ? price*quantity*(1-discount/100) : price*quantity
+}
+
+export const formatDay = (originalDateString: string) => {
+  return moment(originalDateString).format('hh:mm MM/DD/YYYY')
 }

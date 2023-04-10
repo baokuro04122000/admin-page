@@ -7,15 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 import { actionGetAllCategories } from '../../../store/product/action'
 import { setCategories } from '../../../store/product/slice'
 const useCategories = () => {
-  //const categories = useAppSelector(({product}) => product.categories)
-  const categories = [
-    {
-      slug: 'test',
-      name: 'test',
-      categoryImage: 'image',
-      _id:'162531'
-    }
-  ]
+  const categories = useAppSelector(({product}) => product.categories)
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(actionGetAllCategories())
@@ -27,7 +20,7 @@ const useCategories = () => {
   }, [])
 
   const categoriesOption = useMemo(() =>{
-    return categories?.map((category) => 
+    return categories?.map((category: any) => 
       <Option key={category.slug} value={category._id}>
         <Space align="center">
           {category.name}

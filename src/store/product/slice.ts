@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  CategoriesResponseDataInner, ProductsResponse, FileInfo, ProductDetails, OrderList, OrderListShipping,
+ ProductsResponse, FileInfo, ProductDetails, OrderList, OrderListShipping, CategoriesResponse,
 } from "../../api/openapi-generator";
 import { ProductSlice } from "../../interfaces/product";
 
@@ -17,10 +17,10 @@ export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setCategories(state, action: PayloadAction<CategoriesResponseDataInner[] | undefined>) {
+    setCategories(state, action: PayloadAction<CategoriesResponse[] | undefined>) {
       state.categories = action.payload;
     },
-    setProductImages(state, action: PayloadAction<FileInfo[] | undefined>){
+    setProductImages(state, action: PayloadAction<string[] | undefined>){
       state.productImages = action.payload
     },
     setProducts(state, action: PayloadAction<ProductsResponse | undefined>){

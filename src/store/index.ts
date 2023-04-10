@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authenticationSlice from "./authentication/slice";
 import productSlice from "./product/slice";
 import themeSlice from './theme/slice'
+import adminSlice  from "./admin/slice";
 
 export const store = configureStore({
   reducer: {
     authentication: authenticationSlice,
     product: productSlice,
-    theme: themeSlice
+    admin: adminSlice,
+    theme: themeSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

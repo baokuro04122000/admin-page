@@ -513,36 +513,6 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/ErrorResponse"  
-  
-  /auth/otp-reset-password:
-    post:
-      tags:
-        - Auth
-      description: OTP matched then server will send for you verify token to reset password - step 2
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/OTPRequest"
-      responses:
-        "200":
-          description: Server will send verify code to you, then you get it  to reset password
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/OTPResponse"
-        "400":
-            description: Invalid otp code
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ErrorResponse"
-        "500":
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
                   $ref: "#/components/schemas/ErrorResponse"
   
   /auth/reset-password:
@@ -657,7 +627,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /categories:
+  /category/all:
     get:
       tags:
         - Product
@@ -688,14 +658,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
                 
-  /products:
+  /product/list:
     get:
       tags:
         - Product
       description: Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
       parameters:
         - in: query
-          name: keyword
+          name: name
           schema:
             type: string
           description: search products by name
@@ -715,7 +685,7 @@ paths:
             type: string
           description: search products by category id
         - in: query
-          name: currentPage
+          name: page
           schema:
             type: number
           description: the current page of web site
@@ -758,6 +728,53 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  
+  /product/category/search:
+    get:
+      tags:
+        - Product
+      description: Get products follow by sellerId or not combine with category name
+      parameters:
+        - in: query
+          name: categoryName
+          schema:
+            type: string
+          description: search products by categoryName
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return
+        - in: query
+          name: sellerId
+          schema:
+            type: string
+          description: search products by seller id
+        - in: query
+          name: page
+          schema:
+            type: number
+          description: the current page of web site
+      responses:
+        "200":
+          description: product list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsResponse"
+        "404":
+          description: products are empty in the database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
   /product/{slug}:
     get:
       summary: Get product by slug
@@ -791,7 +808,7 @@ paths:
   
       
   
-  /seller/add-product:
+  /product/add:
     post:
       tags:
         - Seller
@@ -829,16 +846,21 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
   
-  /seller/update-product:
+  /product/update:
     put:
       tags:
         - Seller
       description: update product by seller
+      parameters:
+        - in: query
+          name: slug
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditProductRequest"
+              $ref: "#/components/schemas/AddProductRequest"
       responses:
         "200":
           description: Add product is success
@@ -866,46 +888,8 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
-                  
-  /seller/quick-update-product:
-    put:
-      tags:
-        - Seller
-      description: update quick product by seller
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/EditQuickProductRequest"
-      responses:
-        "200":
-          description: Add product is success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AnnouceSuccess"
-        
-        "403":
-            description: product validation errors
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ErrorResponse"
-        "404":
-            description: product not found
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ErrorResponse"
-
-        "500":
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ErrorResponse"
   
-  /seller/delete-product/{id}:
+  /product/delete/{id}:
     delete:
       tags: 
         - Seller
@@ -1099,7 +1083,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         
-  /admin/add-category:
+  /category/add:
     post:
       tags:
         - Admin
@@ -1128,7 +1112,191 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
-        
+  /category/edit:
+    put:
+      tags:
+        - Admin
+      description: update category by admin
+      parameters:
+        - in: query
+          name: slug
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryRequest"
+      responses:
+        "200":
+          description: Editting categoty is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: Category is not exist
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
+  /admin/user/all:
+    get:
+      tags:
+        - Admin
+      description: get user list
+      responses:
+        "200":
+          description: Editting categoty is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListResponse"
+        "400":
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: Users are empty
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  /admin/user/logout:
+    post:
+      tags:
+        - Admin
+      description: update category by admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogoutRequest"
+      responses:
+        "200":
+          description: Editting categoty is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: Users are empty
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+                  
+  /admin/user/block:
+    put:
+      tags:
+        - Admin
+      description: block account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogoutRequest"
+      responses:
+        "200":
+          description: block successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: Users are empty
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+                  
+  /admin/user/unblock:
+    put:
+      tags:
+        - Admin
+      description: unblock account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogoutRequest"
+      responses:
+        "200":
+          description: unlock successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "400":
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+        "404":
+            description: Users are empty
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+  
+  
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
@@ -1157,6 +1325,14 @@ components:
         password:
           type: string
           example: abc#1234
+    
+    UserLogoutRequest:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: string
     
     UserRegister:
       type: object
@@ -1262,16 +1438,6 @@ components:
         token:
           type: string
           example: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
-    
-    
-    ForgotPassword:
-      type: object
-      required:
-        - email
-      properties:
-        email:
-          type: string
-          example: baotrandinh100@gmail.com
 
     UserCredentialResponse:
       type: object
@@ -1378,38 +1544,6 @@ components:
             message:
               type: string
               example: Email is existed
-        
-    UserDetail:
-      description: user detail information
-      type: object
-      properties:
-        id:
-          type: string
-          example: 63312b2a82dc64f45360ff5a
-        role:
-          type: string
-          example: 'seller'
-        email:
-          type: string
-          example: baotrandinh100@gmail.com
-        name:
-          type: string
-          example: bao tran
-        meta:
-          type: object
-          properties:
-            totalBuy:
-              type: integer
-              default: 0
-            totalCancel:
-              type: string
-              default: 0
-        createdAt:
-          type: string
-          example: 2022-09-26T04:31:38.535+00:00
-        updatedAt:
-          type: string
-          example: 2022-09-26T04:31:54.365+00:00
           
     
     SellerDetail:
@@ -1493,18 +1627,6 @@ components:
         email:
           type: string
           example: baotrandinh100@gmail.com
-          
-    OTPRequest:
-      type: object
-      required:
-        - otp
-      description: OTP got from your email
-      properties:
-        otp:
-          type: integer
-          example: 123456
-        userId:
-          type: string
     
     OTPRequestActive:
       type: object
@@ -1540,6 +1662,19 @@ components:
           type: string
         data:
           type: object
+    
+    UserListResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
               
     AnnouceSuccessAuth:
       type: object
@@ -1560,18 +1695,6 @@ components:
         userId:
           type: string
     
-    OTPResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            token:
-              type: string
-              example: "12312-dasd-dasdasd"
-        userId:
-              type: string
-              
     CategoriesResponse:
       type: object
       properties:
@@ -1579,15 +1702,6 @@ components:
           type: array
           items:
             type: object
-            properties:
-              slug:
-                type: string
-              name:
-                type: string
-              categoryImage:
-                type: string
-              _id:
-                type: string
     
     CategoryRequest:
       type: object
@@ -1595,6 +1709,8 @@ components:
         - name
       properties:
         name:
+          type: string
+        categoryImage:
           type: string
           
     
@@ -1611,41 +1727,28 @@ components:
         - city
         - price
       properties:
-        sellerId:
-          type: string
         name:
           type: string
           example: name of book
-        author:
-          type: string
-        publisher:
-          type: string
-        language:
-          type: string
         category:
           type: string
           example: object id
-        publicationDate:
-          type: string
-          example: mm/dd/yyyy - 10/26/2022
-        quantity:
-          type: number
-        city:
-          type: string
         productPictures:
           type: array
           items:
-              $ref: "#/components/schemas/FileInfo"
-        summary:
-          type: string
+            type: string
         description:
           type: string
-        discountPercent:
-          type: number
-        printLength:
-          type: number
-        price:
-          type: number
+        variants:
+          type: array
+          items:
+            type: object
+        specs:
+          type: array
+          items:
+            type: object
+    
+        
     
     
     CategoryInfo:
@@ -1718,50 +1821,14 @@ components:
         meta:
             $ref: "#/components/schemas/MetaProduct"
         
-    EditProductRequest:
-      type: object
-      properties:
-        product:
-          $ref: "#/components/schemas/AddProductRequest"
-        slug:
-          type: string
-    
-    EditQuickProductRequest:
-      type: object
-      properties:
-        productId:
-          type: string
-        productChanged:
-          type: object
-          required:
-            - name
-            - author
-            - summary
-            - price
-            - discountPercent
-            - quantity
-          properties:
-            name:
-              type: string
-            author:
-              type: string
-            summary:
-              type: string
-            price:
-              type: number
-            discountPercent:
-              type: number
-            quantity:
-              type: number
-    
     ProductsResponse:
       type: object
       properties:
         data:
           type: array
           items:
-              $ref: "#/components/schemas/ProductDetails"
-        totalProduct:
+            type: object
+        total:
           type: number
     
     ProductDetailsResponse:

@@ -29,7 +29,7 @@ export interface ContractsQuery extends FilterQuery {
 }
 
 export interface RequestSearchParams {
-  keyword?: string;
+  name?: string;
   limit?: number;
   priceGte?: number;
   priceGt?: number;
@@ -37,7 +37,7 @@ export interface RequestSearchParams {
   priceLt?: number;
   sellerId?: string;
   category?: string;
-  currentPage?: number;
+  page?: number;
 }
 
 export interface FilterApiParams<T> {

@@ -7,7 +7,7 @@ interface Props {
   name:string;
   label?:string;
   rows?:number;
-  rules?:Rule[]
+  rules?:Rule[];
 }
 
 export const TextAreaItem: React.FC<Props> = ({name, label, rows=4, rules}) => {

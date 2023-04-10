@@ -1,64 +1,65 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Popconfirm, Form, Space, InputRef } from 'antd';
-import { Table } from '../../common/Table/Table';
+
 import { Pagination } from '../../../api/table.api';
-import { EditableCell } from './EditableCell';
-import { Button } from '../../common/buttons/Button/Button';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../store'
 import {
   actionGetProducts,
   actionDeleteProduct,
-  actionGetSingleProduct,
-  actionGetProductsByCategoryName
+  actionGetAllCategories
 } from '../../../store/product/action'
 import {
-  setProducts
+  setCategories,
 } from '../../../store/product/slice'
-import { CategoryInfo, ProductsResponse } from '../../../api/openapi-generator';
 import { notificationController } from '../../../controllers/notificationController';
-import { SELLER_DASHBOARD_PRODUCTS_SUBPATH } from '../../../constants/routes';
 import { ColumnsType } from 'antd/lib/table';
-import { ColumnType, FilterConfirmProps, SorterResult } from 'antd/es/table/interface';
+import { Button } from '../../../components/common/buttons/Button/Button';
+import { Table } from 'components/common/Table/Table';
+import { EditableCell } from 'components/common/tables/editableTable/EditableCell';
+import { actionAddCategory, actionBlockUser, actionEditCategory, actionGetUserList } from 'store/admin/action';
+import { Modal } from 'components/Modal/Modal'
 import { Input } from 'components/common/inputs/Input/Input';
+import { BaseButtonsForm } from 'components/common/forms/BaseButtonsForm/BaseButtonsForm';
+import { setUserList } from 'store/admin/slice';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import { ColumnType, FilterConfirmProps } from 'antd/es/table/interface';
 import { formatDay } from 'utils/utils';
-
-
 export const EditableTable: React.FC = () => {
 
   const authUser = useAppSelector(({authentication}) => authentication.authUser)
-  const products = useAppSelector(({product}) => product.products?.data)
-  const totalProduct = useAppSelector(({product}) => product.products?.total)
-
+  const users = useAppSelector(({admin}) => admin.userList)
 
   const [form] = Form.useForm();
   const [pagination, setPagination] = useState<Pagination>(
     {
       current: 1,
       pageSize: 5,
-      total:5
+      total:users?.length || 10
     })
   const [loading, setLoading] = useState<boolean>(true)
   const [editingKey, setEditingKey] = useState<string>('');
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState('')
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
-  
+
   const { t } = useTranslation();
   const navigate = useNavigate()
   const dispatch =  useAppDispatch();
-  
-  
 
   useEffect(() => {
-    dispatch(actionGetProducts({page: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
+    dispatch(actionGetUserList())
     return () => {
-      dispatch(setProducts(undefined))
+      dispatch(setUserList(undefined))
     }
-  }, [])
+  }, [dispatch])
+
 
   const handleSearch =async (
     selectedKeys: string[],
@@ -70,12 +71,8 @@ export const EditableTable: React.FC = () => {
     setSearchedColumn(dataIndex);
     const listSearch = new Map<any, any>([
       ['name', {page: 1, sellerId: authUser?.data?.seller?._id, limit: 5, name: selectedKeys[0]}], 
-      ['author', {page: 1, sellerId: authUser?.data?.seller?._id, limit: 5, author: selectedKeys[0]}],
+      ['email', {page: 1, sellerId: authUser?.data?.seller?._id, limit: 5, author: selectedKeys[0]}],
       ])
-    if(dataIndex === 'category'){
-      dispatch(actionGetProductsByCategoryName(selectedKeys[0], 5, authUser?.data?.seller?._id as string, 1))
-      return;
-    }
     if(selectedKeys[0]){
       dispatch(actionGetProducts(listSearch.get(dataIndex)))
     }else {
@@ -88,6 +85,7 @@ export const EditableTable: React.FC = () => {
     setSearchText('');
   };
   
+  // search
   const getColumnSearchProps = (dataIndex: any): ColumnType<any> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
@@ -145,133 +143,80 @@ export const EditableTable: React.FC = () => {
       ),
   });
 
+  const handleBlockAccount =async (userId: string) => {
+    try {
+      const message = await dispatch(actionBlockUser(userId));
+      notificationController.success({message: message, duration: 5})
+    } catch (error: any) {
+      notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
+    }
+  }
+
+  const isEditing = (category: any) => category._id === editingKey;
+
+  const edit = (category: any) => {
+    form.setFieldsValue({ name: '', slug:'', ...category });
+    setEditingKey(category._id);
+  };
 
   const tableDataFilter: any[] = useMemo(() => {
     setLoading(true)
     // eslint-disable-next-line no-unsafe-optional-chaining
-    if(products){
-      const list = products.map((product: any) => ({...product, key: product._id, author: product?.specs?.author}))
-      setPagination({...pagination, total: totalProduct})
+    if(users){
+      const list = users.map((category: any) => ({...category, key: category._id}))
+      setPagination({...pagination})
       setLoading(false)
       return list
     } else{
       setLoading(false)
       return []
     }
-  }, [products])
+  }, [users])
 
-  const handleDeleteProduct = async (productId: string) => {
-    try {
-      const deleted = await dispatch(actionDeleteProduct(productId))
-      if(tableDataFilter.length === 1){
-        await dispatch(actionGetProducts({page: 
-          (pagination.current) 
-          ? 
-            (pagination.current > 1) 
-            ?  (pagination.current - 1)
-            : pagination.current
-          : 1 
-          , sellerId: authUser?.data?.seller?._id
-          , limit: 5}))  
-        notificationController.success({message: deleted ? deleted : '', duration: 5})
-        return
-      }
-      await dispatch(actionGetProducts({page: 
-        pagination.current 
-        , sellerId: authUser?.data?.seller?._id
-        , limit: 5}))  
-      notificationController.success({message: deleted ? deleted : '', duration: 5})
-      return
-    } catch (error: any) {
-      notificationController.error({message: error?error.errors.message:"NETWORK ERROR", duration:5})
-      return
-    }
+  console.log("user list:::", users)
+  const cancel = () => {
+    setEditingKey('');
   };
 
   const handlePagination = async (page: number, pageSize: number) => {
     try {
-      await dispatch(actionGetProducts({page: page, sellerId: authUser?.data?.seller?._id, limit: 5}))
+      await dispatch(actionGetUserList())
       setPagination({...pagination, current: page})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
     }
   }
 
-  const columns: ColumnsType<any> = useMemo(() => 
+  const columns: ColumnsType<any>  = useMemo(() => 
   [
     {
       key:'stt',
-      title: 'STT',
+      title: 'Stt',
       width: '50px',
-      dataIndex: 'name',
-      render: (name: string, record: any, index: number) => {
-        return (
-          <>
-            {((Number(pagination.current) - 1)*Number(pagination.pageSize) + 1) + index}
-          </>
-        )
-      }
+      dataIndex: '_id',
+      render: (slug: string, record: any, index: number) => <>
+      {((Number(pagination.current) - 1)*Number(pagination.pageSize) + 1) + index}
+    </>
     },
     {
       key:'name',
-      title: t('common.name'),
-      dataIndex: 'name',
-      render: (text: string) => <span>{text}</span>,
+      title: 'Name',
+      dataIndex: 'info',
+      render: (info: any) => <span>{info.name}</span>,
       ...getColumnSearchProps('name'),
     },
     {
-      key:'category',
-      title: t('product.category'),
-      dataIndex: 'category',
-      ...getColumnSearchProps('category'),
-      render: (category: CategoryInfo) => <span>{category.name}</span>
+      key:'email',
+      title: 'Email',
+      dataIndex: 'local',
+      render: (local: any) => <span>{local.email}</span>,
+      ...getColumnSearchProps('email'),
     },
     {
-      key:'author',
-      title: t('product.author'),
-      dataIndex: 'author',
-      ...getColumnSearchProps('author'),
-      render: (author: string) => <span>{author}</span>
-    },
-    {
-      key:"kindle",
-      title: 'Kindle',
-      dataIndex: 'variants',
-      render: (variant: any) => {
-        for(const ele of variant) {
-          if(ele.type === 'kindle'){
-            return (<>
-              <div>Price: {ele.price}$</div>
-              <div>Quantity: {ele.quantity}</div>
-              <div>Discount: {ele.discount}</div>
-              <div>MaxOrder: {ele.maxOrder}</div>
-            </>)
-          }
-        }
-        return (<>
-          Null
-        </>)
-      }
-    },
-    {
-      key:"paperBack",
-      title: 'Paper Back',
-      dataIndex: 'variants',
-      render: (variant: any) => {
-        for(const ele of variant) {
-          if(ele.type === 'paperBack'){
-            return (<>
-              <div>Price: {ele.price}$</div>
-              <div>Quantity: {ele.quantity}</div>
-              <div>Discount: {ele.discount}</div>
-              <div>MaxOrder: {ele.maxOrder}</div>
-            </>)
-          }
-        }
-        return (<>
-          Null
-        </>)
-      }
+      key:'status',
+      title: 'Status',
+      dataIndex: 'status',
+      render: (status: string) => <span>{status}</span>
     },
     {
       key:'createdAt',
@@ -281,33 +226,29 @@ export const EditableTable: React.FC = () => {
         return 1
       },
       render: (createdAt: string) => <span>{formatDay(createdAt)}</span>
-      
     },
     {
       key:'actions',
       title: t('product.actions'),
-      dataIndex: 'slug',
+      dataIndex: '_id',
       width: '15%',
-      render: (slug: string, record: any) => {
+      render: (_id: string, record: any) => {
         return (
           <Space >
+            
             <>
-              <Button
-                type="ghost"
-                onClick={async() => {
-                  await dispatch(actionGetSingleProduct(slug))
-                  navigate(`/${SELLER_DASHBOARD_PRODUCTS_SUBPATH}/${slug}`)
-                  }
-                }
-              >
-                {t('product.edit')}
+
+              <Button type="ghost" disabled={editingKey !== ''} onClick={() => edit(record)}>
+                Details
               </Button>
-              <Popconfirm title={t('product.titlePopconfirmDelete')} onConfirm={() => handleDeleteProduct(record._id ? record._id : '')}>
+              
+              <Popconfirm title={'Do you wanna block this account'} onConfirm={() => handleBlockAccount(_id)}>
                 <Button type="default" danger>
-                  {t('product.delete')}
+                  Block
                 </Button>
               </Popconfirm>
             </>
+          
           </Space>
         );
       },
@@ -316,24 +257,26 @@ export const EditableTable: React.FC = () => {
   ], [editingKey])
 
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={tableDataFilter}
-        columns={columns}
-        rowClassName="editable-row"
-        pagination={{
-          ...pagination,
-          onChange: handlePagination,
-        }}
-        loading={loading}
-        scroll={{ x: 800 }}
-      />
-    </Form>
+    <>
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          dataSource={tableDataFilter}
+          columns={columns}
+          rowClassName="editable-row"
+          pagination={{
+            ...pagination,
+            onChange: handlePagination,
+          }}
+          loading={loading}
+          scroll={{ x: 800 }}
+        />
+      </Form>
+    </>
   );
 };

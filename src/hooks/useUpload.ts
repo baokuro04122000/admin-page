@@ -6,8 +6,9 @@ import axios from "axios"
 export type PropsUpload = {
   t: any;
   token: string;
-  login?: boolean
-  name?: string
+  login?: boolean;
+  name?: string;
+  fileListDefault?: any;
 }
 
 export const useUploadLogo = ({t, token, login=false, name}: PropsUpload) => {

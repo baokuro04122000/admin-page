@@ -32,31 +32,7 @@ export interface AddProductRequest {
      * @type {string}
      * @memberof AddProductRequest
      */
-    'sellerId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
-    'author': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
-    'publisher': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
-    'language': string;
     /**
      * 
      * @type {string}
@@ -65,34 +41,10 @@ export interface AddProductRequest {
     'category': string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof AddProductRequest
      */
-    'publicationDate': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof AddProductRequest
-     */
-    'quantity': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
-    'city': string;
-    /**
-     * 
-     * @type {Array<FileInfo>}
-     * @memberof AddProductRequest
-     */
-    'productPictures'?: Array<FileInfo>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AddProductRequest
-     */
-    'summary'?: string;
+    'productPictures'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -101,22 +53,16 @@ export interface AddProductRequest {
     'description'?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<object>}
      * @memberof AddProductRequest
      */
-    'discountPercent'?: number;
+    'variants'?: Array<object>;
     /**
      * 
-     * @type {number}
+     * @type {Array<object>}
      * @memberof AddProductRequest
      */
-    'printLength'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AddProductRequest
-     */
-    'price': number;
+    'specs'?: Array<object>;
 }
 /**
  * 
@@ -183,41 +129,10 @@ export interface AnnouceSuccessAuthData {
 export interface CategoriesResponse {
     /**
      * 
-     * @type {Array<CategoriesResponseDataInner>}
+     * @type {Array<object>}
      * @memberof CategoriesResponse
      */
-    'data'?: Array<CategoriesResponseDataInner>;
-}
-/**
- * 
- * @export
- * @interface CategoriesResponseDataInner
- */
-export interface CategoriesResponseDataInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoriesResponseDataInner
-     */
-    'slug'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoriesResponseDataInner
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoriesResponseDataInner
-     */
-    'categoryImage'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoriesResponseDataInner
-     */
-    '_id'?: string;
+    'data'?: Array<object>;
 }
 /**
  * 
@@ -262,6 +177,12 @@ export interface CategoryRequest {
      * @memberof CategoryRequest
      */
     'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryRequest
+     */
+    'categoryImage'?: string;
 }
 /**
  * API to save a list of photos to delete
@@ -287,87 +208,6 @@ export interface DeleteImagesRequest {
      * @memberof DeleteImagesRequest
      */
     'fileList'?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface EditProductRequest
- */
-export interface EditProductRequest {
-    /**
-     * 
-     * @type {AddProductRequest}
-     * @memberof EditProductRequest
-     */
-    'product'?: AddProductRequest;
-    /**
-     * 
-     * @type {string}
-     * @memberof EditProductRequest
-     */
-    'slug'?: string;
-}
-/**
- * 
- * @export
- * @interface EditQuickProductRequest
- */
-export interface EditQuickProductRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof EditQuickProductRequest
-     */
-    'productId'?: string;
-    /**
-     * 
-     * @type {EditQuickProductRequestProductChanged}
-     * @memberof EditQuickProductRequest
-     */
-    'productChanged'?: EditQuickProductRequestProductChanged;
-}
-/**
- * 
- * @export
- * @interface EditQuickProductRequestProductChanged
- */
-export interface EditQuickProductRequestProductChanged {
-    /**
-     * 
-     * @type {string}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'author': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'summary': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'discountPercent': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof EditQuickProductRequestProductChanged
-     */
-    'quantity': number;
 }
 /**
  * Error responses are sent when an error (e.g. unauthorized, bad request) occurred.
@@ -419,19 +259,6 @@ export interface FileInfo {
      * @memberof FileInfo
      */
     'fileId'?: string;
-}
-/**
- * 
- * @export
- * @interface ForgotPassword
- */
-export interface ForgotPassword {
-    /**
-     * 
-     * @type {string}
-     * @memberof ForgotPassword
-     */
-    'email': string;
 }
 /**
  * 
@@ -543,25 +370,6 @@ export interface MetaSeller {
 /**
  * OTP got from your email
  * @export
- * @interface OTPRequest
- */
-export interface OTPRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof OTPRequest
-     */
-    'otp': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof OTPRequest
-     */
-    'userId'?: string;
-}
-/**
- * OTP got from your email
- * @export
  * @interface OTPRequestActive
  */
 export interface OTPRequestActive {
@@ -577,38 +385,6 @@ export interface OTPRequestActive {
      * @memberof OTPRequestActive
      */
     'otp': number;
-}
-/**
- * 
- * @export
- * @interface OTPResponse
- */
-export interface OTPResponse {
-    /**
-     * 
-     * @type {OTPResponseData}
-     * @memberof OTPResponse
-     */
-    'data'?: OTPResponseData;
-    /**
-     * 
-     * @type {string}
-     * @memberof OTPResponse
-     */
-    'userId'?: string;
-}
-/**
- * 
- * @export
- * @interface OTPResponseData
- */
-export interface OTPResponseData {
-    /**
-     * 
-     * @type {string}
-     * @memberof OTPResponseData
-     */
-    'token'?: string;
 }
 /**
  * 
@@ -1216,16 +992,16 @@ export interface ProductDetailsResponse {
 export interface ProductsResponse {
     /**
      * 
-     * @type {Array<ProductDetails>}
+     * @type {Array<object>}
      * @memberof ProductsResponse
      */
-    'data'?: Array<ProductDetails>;
+    'data'?: Array<object>;
     /**
      * 
      * @type {number}
      * @memberof ProductsResponse
      */
-    'totalProduct'?: number;
+    'total'?: number;
 }
 /**
  * 
@@ -1618,72 +1394,42 @@ export interface UserCredentials {
     'password': string;
 }
 /**
- * user detail information
+ * 
  * @export
- * @interface UserDetail
+ * @interface UserListResponse
  */
-export interface UserDetail {
+export interface UserListResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserListResponse
+     */
+    'status'?: number;
     /**
      * 
      * @type {string}
-     * @memberof UserDetail
+     * @memberof UserListResponse
      */
-    'id'?: string;
+    'message'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof UserDetail
+     * @type {Array<object>}
+     * @memberof UserListResponse
      */
-    'role'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetail
-     */
-    'email'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetail
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {UserDetailMeta}
-     * @memberof UserDetail
-     */
-    'meta'?: UserDetailMeta;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetail
-     */
-    'createdAt'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetail
-     */
-    'updatedAt'?: string;
+    'data'?: Array<object>;
 }
 /**
  * 
  * @export
- * @interface UserDetailMeta
+ * @interface UserLogoutRequest
  */
-export interface UserDetailMeta {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserDetailMeta
-     */
-    'totalBuy'?: number;
+export interface UserLogoutRequest {
     /**
      * 
      * @type {string}
-     * @memberof UserDetailMeta
+     * @memberof UserLogoutRequest
      */
-    'totalCancel'?: string;
+    'userId': string;
 }
 /**
  * 
@@ -1817,13 +1563,75 @@ export interface UserSignUp {
 export const AdminApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Add a category from admin
-         * @param {CategoryRequest} [categoryRequest] 
+         * get user list
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAddCategoryPost: async (categoryRequest?: CategoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/admin/add-category`;
+        adminUserAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/user/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * block account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserBlockPut: async (userLogoutRequest?: UserLogoutRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/user/block`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userLogoutRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update category by admin
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserLogoutPost: async (userLogoutRequest?: UserLogoutRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/user/logout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1834,6 +1642,110 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userLogoutRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * unblock account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserUnblockPut: async (userLogoutRequest?: UserLogoutRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin/user/unblock`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userLogoutRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Add a category from admin
+         * @param {CategoryRequest} [categoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoryAddPost: async (categoryRequest?: CategoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/category/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(categoryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update category by admin
+         * @param {string} [slug] 
+         * @param {CategoryRequest} [categoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoryEditPut: async (slug?: string, categoryRequest?: CategoryRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/category/edit`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (slug !== undefined) {
+                localVarQueryParameter['slug'] = slug;
+            }
 
 
     
@@ -1860,13 +1772,63 @@ export const AdminApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminApiAxiosParamCreator(configuration)
     return {
         /**
+         * get user list
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminUserAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * block account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminUserBlockPut(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserBlockPut(userLogoutRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update category by admin
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminUserLogoutPost(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserLogoutPost(userLogoutRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * unblock account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminUserUnblockPut(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserUnblockPut(userLogoutRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Add a category from admin
          * @param {CategoryRequest} [categoryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAddCategoryPost(categoryRequest?: CategoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAddCategoryPost(categoryRequest, options);
+        async categoryAddPost(categoryRequest?: CategoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryAddPost(categoryRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update category by admin
+         * @param {string} [slug] 
+         * @param {CategoryRequest} [categoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async categoryEditPut(slug?: string, categoryRequest?: CategoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryEditPut(slug, categoryRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1880,13 +1842,58 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = AdminApiFp(configuration)
     return {
         /**
+         * get user list
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserAllGet(options?: any): AxiosPromise<UserListResponse> {
+            return localVarFp.adminUserAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * block account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserBlockPut(userLogoutRequest?: UserLogoutRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.adminUserBlockPut(userLogoutRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update category by admin
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserLogoutPost(userLogoutRequest?: UserLogoutRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.adminUserLogoutPost(userLogoutRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * unblock account
+         * @param {UserLogoutRequest} [userLogoutRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminUserUnblockPut(userLogoutRequest?: UserLogoutRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.adminUserUnblockPut(userLogoutRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Add a category from admin
          * @param {CategoryRequest} [categoryRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAddCategoryPost(categoryRequest?: CategoryRequest, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.adminAddCategoryPost(categoryRequest, options).then((request) => request(axios, basePath));
+        categoryAddPost(categoryRequest?: CategoryRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.categoryAddPost(categoryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update category by admin
+         * @param {string} [slug] 
+         * @param {CategoryRequest} [categoryRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        categoryEditPut(slug?: string, categoryRequest?: CategoryRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.categoryEditPut(slug, categoryRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1899,14 +1906,69 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
  */
 export class AdminApi extends BaseAPI {
     /**
+     * get user list
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminUserAllGet(options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminUserAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * block account
+     * @param {UserLogoutRequest} [userLogoutRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminUserBlockPut(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminUserBlockPut(userLogoutRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update category by admin
+     * @param {UserLogoutRequest} [userLogoutRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminUserLogoutPost(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminUserLogoutPost(userLogoutRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * unblock account
+     * @param {UserLogoutRequest} [userLogoutRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public adminUserUnblockPut(userLogoutRequest?: UserLogoutRequest, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).adminUserUnblockPut(userLogoutRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Add a category from admin
      * @param {CategoryRequest} [categoryRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public adminAddCategoryPost(categoryRequest?: CategoryRequest, options?: AxiosRequestConfig) {
-        return AdminApiFp(this.configuration).adminAddCategoryPost(categoryRequest, options).then((request) => request(this.axios, this.basePath));
+    public categoryAddPost(categoryRequest?: CategoryRequest, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).categoryAddPost(categoryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update category by admin
+     * @param {string} [slug] 
+     * @param {CategoryRequest} [categoryRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public categoryEditPut(slug?: string, categoryRequest?: CategoryRequest, options?: AxiosRequestConfig) {
+        return AdminApiFp(this.configuration).categoryEditPut(slug, categoryRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2175,39 +2237,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(oTPRequestActive, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * OTP matched then server will send for you verify token to reset password - step 2
-         * @param {OTPRequest} [oTPRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authOtpResetPasswordPost: async (oTPRequest?: OTPRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/auth/otp-reset-password`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(oTPRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2689,16 +2718,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * OTP matched then server will send for you verify token to reset password - step 2
-         * @param {OTPRequest} [oTPRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OTPResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authOtpResetPasswordPost(oTPRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Send mail to reset password
          * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
          * @param {*} [options] Override http request option.
@@ -2895,15 +2914,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authOtpRegisterPost(oTPRequestActive?: OTPRequestActive, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.authOtpRegisterPost(oTPRequestActive, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * OTP matched then server will send for you verify token to reset password - step 2
-         * @param {OTPRequest} [oTPRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: any): AxiosPromise<OTPResponse> {
-            return localVarFp.authOtpResetPasswordPost(oTPRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Send mail to reset password
@@ -3108,17 +3118,6 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * OTP matched then server will send for you verify token to reset password - step 2
-     * @param {OTPRequest} [oTPRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public authOtpResetPasswordPost(oTPRequest?: OTPRequest, options?: AxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authOtpResetPasswordPost(oTPRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Send mail to reset password
      * @param {ForgotPasswordRequest} [forgotPasswordRequest] 
      * @param {*} [options] Override http request option.
@@ -3259,8 +3258,8 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoriesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/categories`;
+        categoryAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/category/all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3271,6 +3270,129 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get products follow by sellerId or not combine with category name
+         * @param {string} [categoryName] search products by categoryName
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {number} [page] the current page of web site
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productCategorySearchGet: async (categoryName?: string, limit?: number, sellerId?: string, page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product/category/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (categoryName !== undefined) {
+                localVarQueryParameter['categoryName'] = categoryName;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sellerId !== undefined) {
+                localVarQueryParameter['sellerId'] = sellerId;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
+         * @param {string} [name] search products by name
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {string} [category] search products by category id
+         * @param {number} [page] the current page of web site
+         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
+         * @param {number} [priceGt] 
+         * @param {number} [priceLte] &lt;&#x3D;
+         * @param {number} [priceLt] &lt;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productListGet: async (name?: string, limit?: number, sellerId?: string, category?: string, page?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sellerId !== undefined) {
+                localVarQueryParameter['sellerId'] = sellerId;
+            }
+
+            if (category !== undefined) {
+                localVarQueryParameter['category'] = category;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (priceGte !== undefined) {
+                localVarQueryParameter['price[gte]'] = priceGte;
+            }
+
+            if (priceGt !== undefined) {
+                localVarQueryParameter['price[gt]'] = priceGt;
+            }
+
+            if (priceLte !== undefined) {
+                localVarQueryParameter['price[lte]'] = priceLte;
+            }
+
+            if (priceLt !== undefined) {
+                localVarQueryParameter['price[lt]'] = priceLt;
+            }
 
 
     
@@ -3317,80 +3439,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
-         * @param {string} [keyword] search products by name
-         * @param {number} [limit] The numbers of items to return
-         * @param {string} [sellerId] search products by seller id
-         * @param {string} [category] search products by category id
-         * @param {number} [currentPage] the current page of web site
-         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
-         * @param {number} [priceGt] 
-         * @param {number} [priceLte] &lt;&#x3D;
-         * @param {number} [priceLt] &lt;
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsGet: async (keyword?: string, limit?: number, sellerId?: string, category?: string, currentPage?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/products`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (keyword !== undefined) {
-                localVarQueryParameter['keyword'] = keyword;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (sellerId !== undefined) {
-                localVarQueryParameter['sellerId'] = sellerId;
-            }
-
-            if (category !== undefined) {
-                localVarQueryParameter['category'] = category;
-            }
-
-            if (currentPage !== undefined) {
-                localVarQueryParameter['currentPage'] = currentPage;
-            }
-
-            if (priceGte !== undefined) {
-                localVarQueryParameter['price[gte]'] = priceGte;
-            }
-
-            if (priceGt !== undefined) {
-                localVarQueryParameter['price[gt]'] = priceGt;
-            }
-
-            if (priceLte !== undefined) {
-                localVarQueryParameter['price[lte]'] = priceLte;
-            }
-
-            if (priceLt !== undefined) {
-                localVarQueryParameter['price[lt]'] = priceLt;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3406,8 +3454,39 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async categoriesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoriesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.categoriesGet(options);
+        async categoryAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoriesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.categoryAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get products follow by sellerId or not combine with category name
+         * @param {string} [categoryName] search products by categoryName
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {number} [page] the current page of web site
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productCategorySearchGet(categoryName?: string, limit?: number, sellerId?: string, page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productCategorySearchGet(categoryName, limit, sellerId, page, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
+         * @param {string} [name] search products by name
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {string} [category] search products by category id
+         * @param {number} [page] the current page of web site
+         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
+         * @param {number} [priceGt] 
+         * @param {number} [priceLte] &lt;&#x3D;
+         * @param {number} [priceLt] &lt;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productListGet(name?: string, limit?: number, sellerId?: string, category?: string, page?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productListGet(name, limit, sellerId, category, page, priceGte, priceGt, priceLte, priceLt, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3419,24 +3498,6 @@ export const ProductApiFp = function(configuration?: Configuration) {
          */
         async productSlugGet(slug: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productSlugGet(slug, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
-         * @param {string} [keyword] search products by name
-         * @param {number} [limit] The numbers of items to return
-         * @param {string} [sellerId] search products by seller id
-         * @param {string} [category] search products by category id
-         * @param {number} [currentPage] the current page of web site
-         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
-         * @param {number} [priceGt] 
-         * @param {number} [priceLte] &lt;&#x3D;
-         * @param {number} [priceLt] &lt;
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async productsGet(keyword?: string, limit?: number, sellerId?: string, category?: string, currentPage?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productsGet(keyword, limit, sellerId, category, currentPage, priceGte, priceGt, priceLte, priceLt, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3454,8 +3515,37 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        categoriesGet(options?: any): AxiosPromise<CategoriesResponse> {
-            return localVarFp.categoriesGet(options).then((request) => request(axios, basePath));
+        categoryAllGet(options?: any): AxiosPromise<CategoriesResponse> {
+            return localVarFp.categoryAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get products follow by sellerId or not combine with category name
+         * @param {string} [categoryName] search products by categoryName
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {number} [page] the current page of web site
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productCategorySearchGet(categoryName?: string, limit?: number, sellerId?: string, page?: number, options?: any): AxiosPromise<ProductsResponse> {
+            return localVarFp.productCategorySearchGet(categoryName, limit, sellerId, page, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
+         * @param {string} [name] search products by name
+         * @param {number} [limit] The numbers of items to return
+         * @param {string} [sellerId] search products by seller id
+         * @param {string} [category] search products by category id
+         * @param {number} [page] the current page of web site
+         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
+         * @param {number} [priceGt] 
+         * @param {number} [priceLte] &lt;&#x3D;
+         * @param {number} [priceLt] &lt;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productListGet(name?: string, limit?: number, sellerId?: string, category?: string, page?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: any): AxiosPromise<ProductsResponse> {
+            return localVarFp.productListGet(name, limit, sellerId, category, page, priceGte, priceGt, priceLte, priceLt, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3466,23 +3556,6 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         productSlugGet(slug: string, options?: any): AxiosPromise<ProductDetailsResponse> {
             return localVarFp.productSlugGet(slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
-         * @param {string} [keyword] search products by name
-         * @param {number} [limit] The numbers of items to return
-         * @param {string} [sellerId] search products by seller id
-         * @param {string} [category] search products by category id
-         * @param {number} [currentPage] the current page of web site
-         * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
-         * @param {number} [priceGt] 
-         * @param {number} [priceLte] &lt;&#x3D;
-         * @param {number} [priceLt] &lt;
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        productsGet(keyword?: string, limit?: number, sellerId?: string, category?: string, currentPage?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: any): AxiosPromise<ProductsResponse> {
-            return localVarFp.productsGet(keyword, limit, sellerId, category, currentPage, priceGte, priceGt, priceLte, priceLt, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3500,8 +3573,41 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public categoriesGet(options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).categoriesGet(options).then((request) => request(this.axios, this.basePath));
+    public categoryAllGet(options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).categoryAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get products follow by sellerId or not combine with category name
+     * @param {string} [categoryName] search products by categoryName
+     * @param {number} [limit] The numbers of items to return
+     * @param {string} [sellerId] search products by seller id
+     * @param {number} [page] the current page of web site
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productCategorySearchGet(categoryName?: string, limit?: number, sellerId?: string, page?: number, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productCategorySearchGet(categoryName, limit, sellerId, page, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
+     * @param {string} [name] search products by name
+     * @param {number} [limit] The numbers of items to return
+     * @param {string} [sellerId] search products by seller id
+     * @param {string} [category] search products by category id
+     * @param {number} [page] the current page of web site
+     * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
+     * @param {number} [priceGt] 
+     * @param {number} [priceLte] &lt;&#x3D;
+     * @param {number} [priceLt] &lt;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productListGet(name?: string, limit?: number, sellerId?: string, category?: string, page?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productListGet(name, limit, sellerId, category, page, priceGte, priceGt, priceLte, priceLt, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3514,25 +3620,6 @@ export class ProductApi extends BaseAPI {
      */
     public productSlugGet(slug: string, options?: AxiosRequestConfig) {
         return ProductApiFp(this.configuration).productSlugGet(slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get products follow by filter that it get from url,example - /products?sellerId=sellerId&price[gt]=2000
-     * @param {string} [keyword] search products by name
-     * @param {number} [limit] The numbers of items to return
-     * @param {string} [sellerId] search products by seller id
-     * @param {string} [category] search products by category id
-     * @param {number} [currentPage] the current page of web site
-     * @param {number} [priceGte] find products that it &gt;&#x3D; the price inputted
-     * @param {number} [priceGt] 
-     * @param {number} [priceLte] &lt;&#x3D;
-     * @param {number} [priceLt] &lt;
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProductApi
-     */
-    public productsGet(keyword?: string, limit?: number, sellerId?: string, category?: string, currentPage?: number, priceGte?: number, priceGt?: number, priceLte?: number, priceLt?: number, options?: AxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productsGet(keyword, limit, sellerId, category, currentPage, priceGte, priceGt, priceLte, priceLt, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3549,8 +3636,8 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sellerAddProductPost: async (addProductRequest?: AddProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/seller/add-product`;
+        productAddPost: async (addProductRequest?: AddProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product/add`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3582,10 +3669,10 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sellerDeleteProductIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productDeleteIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('sellerDeleteProductIdDelete', 'id', id)
-            const localVarPath = `/seller/delete-product/{id}`
+            assertParamExists('productDeleteIdDelete', 'id', id)
+            const localVarPath = `/product/delete/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3603,6 +3690,44 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update product by seller
+         * @param {string} [slug] 
+         * @param {AddProductRequest} [addProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productUpdatePut: async (slug?: string, addProductRequest?: AddProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/product/update`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (slug !== undefined) {
+                localVarQueryParameter['slug'] = slug;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addProductRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3649,39 +3774,6 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * update quick product by seller
-         * @param {EditQuickProductRequest} [editQuickProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerQuickUpdateProductPut: async (editQuickProductRequest?: EditQuickProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/seller/quick-update-product`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(editQuickProductRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * update status of order
          * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
          * @param {*} [options] Override http request option.
@@ -3714,39 +3806,6 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * update product by seller
-         * @param {EditProductRequest} [editProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerUpdateProductPut: async (editProductRequest?: EditProductRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/seller/update-product`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(editProductRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3763,8 +3822,8 @@ export const SellerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sellerAddProductPost(addProductRequest?: AddProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerAddProductPost(addProductRequest, options);
+        async productAddPost(addProductRequest?: AddProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productAddPost(addProductRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3773,8 +3832,19 @@ export const SellerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sellerDeleteProductIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerDeleteProductIdDelete(id, options);
+        async productDeleteIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productDeleteIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update product by seller
+         * @param {string} [slug] 
+         * @param {AddProductRequest} [addProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productUpdatePut(slug?: string, addProductRequest?: AddProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productUpdatePut(slug, addProductRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3789,16 +3859,6 @@ export const SellerApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * update quick product by seller
-         * @param {EditQuickProductRequest} [editQuickProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerQuickUpdateProductPut(editQuickProductRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * update status of order
          * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
          * @param {*} [options] Override http request option.
@@ -3806,16 +3866,6 @@ export const SellerApiFp = function(configuration?: Configuration) {
          */
         async sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sellerStatusOrderPut(updateStatusOrderRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * update product by seller
-         * @param {EditProductRequest} [editProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async sellerUpdateProductPut(editProductRequest?: EditProductRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerUpdateProductPut(editProductRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3834,8 +3884,8 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sellerAddProductPost(addProductRequest?: AddProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.sellerAddProductPost(addProductRequest, options).then((request) => request(axios, basePath));
+        productAddPost(addProductRequest?: AddProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.productAddPost(addProductRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3843,8 +3893,18 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sellerDeleteProductIdDelete(id: string, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.sellerDeleteProductIdDelete(id, options).then((request) => request(axios, basePath));
+        productDeleteIdDelete(id: string, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.productDeleteIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update product by seller
+         * @param {string} [slug] 
+         * @param {AddProductRequest} [addProductRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productUpdatePut(slug?: string, addProductRequest?: AddProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.productUpdatePut(slug, addProductRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * API get all orders that it not done
@@ -3857,15 +3917,6 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.sellerOrdersProcessingGet(currentPage, limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * update quick product by seller
-         * @param {EditQuickProductRequest} [editQuickProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * update status of order
          * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
          * @param {*} [options] Override http request option.
@@ -3873,15 +3924,6 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
          */
         sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * update product by seller
-         * @param {EditProductRequest} [editProductRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerUpdateProductPut(editProductRequest?: EditProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.sellerUpdateProductPut(editProductRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3900,8 +3942,8 @@ export class SellerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SellerApi
      */
-    public sellerAddProductPost(addProductRequest?: AddProductRequest, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerAddProductPost(addProductRequest, options).then((request) => request(this.axios, this.basePath));
+    public productAddPost(addProductRequest?: AddProductRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).productAddPost(addProductRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3911,8 +3953,20 @@ export class SellerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SellerApi
      */
-    public sellerDeleteProductIdDelete(id: string, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerDeleteProductIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    public productDeleteIdDelete(id: string, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).productDeleteIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update product by seller
+     * @param {string} [slug] 
+     * @param {AddProductRequest} [addProductRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public productUpdatePut(slug?: string, addProductRequest?: AddProductRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).productUpdatePut(slug, addProductRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3928,17 +3982,6 @@ export class SellerApi extends BaseAPI {
     }
 
     /**
-     * update quick product by seller
-     * @param {EditQuickProductRequest} [editQuickProductRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SellerApi
-     */
-    public sellerQuickUpdateProductPut(editQuickProductRequest?: EditQuickProductRequest, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerQuickUpdateProductPut(editQuickProductRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * update status of order
      * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
      * @param {*} [options] Override http request option.
@@ -3947,17 +3990,6 @@ export class SellerApi extends BaseAPI {
      */
     public sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig) {
         return SellerApiFp(this.configuration).sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * update product by seller
-     * @param {EditProductRequest} [editProductRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SellerApi
-     */
-    public sellerUpdateProductPut(editProductRequest?: EditProductRequest, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerUpdateProductPut(editProductRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

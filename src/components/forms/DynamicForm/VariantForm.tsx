@@ -10,17 +10,17 @@ import { notificationController } from '../../../controllers/notificationControl
 import * as S from './VariantForm.styles';
 
 
-export const VariantForm: React.FC = () => {
-
-  const [count, setCount] = useState(0);
+export const VariantForm: React.FC<any> = ({ initialValue }) => {
+  const [count, setCount] = useState(initialValue.attributes.length as number);
+  const [flag, setFlag] = useState(true);
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [form] = BaseButtonsForm.useForm();
   const { t } = useTranslation();
 
   const types = [
-    { label: t('forms.dynamicFormLabels.kindle'), value: t('forms.dynamicFormLabels.kindle') },
-    { label: t('forms.dynamicFormLabels.paperBack'), value: t('forms.dynamicFormLabels.paperBack') },
+    { label: t('forms.dynamicFormLabels.kindle'), value: 'kindle' },
+    { label: t('forms.dynamicFormLabels.paperBack'), value: 'paperBack' },
   ];
 
   const onFinish = (values = {}) => {
@@ -35,8 +35,12 @@ export const VariantForm: React.FC = () => {
 
   return (
    
-      <BaseButtonsForm.List name="attributes">
+      <BaseButtonsForm.List 
+        name="attributes"
+        initialValue={ initialValue.attributes }
+        >
         {(fields, { add, remove }) => {
+           
           return (
             <>
               {fields.map((field) => {
@@ -47,9 +51,11 @@ export const VariantForm: React.FC = () => {
                       <BaseButtonsForm.Item
                         name={[field.name, 'type']}
                         label={t('forms.dynamicFormLabels.productType')}
+                        key={field.key}
+                        initialValue={initialValue.attributes[field.key].type}
                         rules={[{ required: true, message: t('forms.dynamicFormLabels.productTypeRequired') }]}
                       >
-                        <Select options={types} />
+                        <Select options={types} defaultValue={initialValue.attributes[field.key].type}/>
                       </BaseButtonsForm.Item>
                     </Col>
                     <Col span={12}>
@@ -58,10 +64,11 @@ export const VariantForm: React.FC = () => {
                           label={t('forms.dynamicFormLabels.quantity')}
                           name={[field.name, 'quantity']}
                           fieldKey={[field.key, 'quantity']}
+                          initialValue={initialValue.attributes[field.key].quantity}
                           rules={[{ required: true, message: t('forms.dynamicFormLabels.quantityError') }]}
                         >
                           <S.Wrapper>
-                            <Input />
+                            <Input defaultValue={initialValue.attributes[field.key].quantity} />
                           </S.Wrapper>
                         </BaseButtonsForm.Item>
                     </Col>
@@ -73,23 +80,42 @@ export const VariantForm: React.FC = () => {
                          label={t('forms.dynamicFormLabels.price')}
                          name={[field.name, 'price']}
                          fieldKey={[field.key, 'price']}
+                         initialValue={initialValue.attributes[field.key].price}
+                         key={field.key}
                          rules={[{ required: true, message: t('forms.dynamicFormLabels.priceError') }]}
                        >
                          <S.Wrapper>
-                           <Input />
+                           <Input defaultValue={initialValue.attributes[field.key].price}/>
                          </S.Wrapper>
                        </BaseButtonsForm.Item>
                      </Col>
-                     <Col span={12}>
+                     <Col span={6}>
+                       <BaseButtonsForm.Item
+                         {...field}
+                         label={'Discount'}
+                         name={[field.name, 'discount']}
+                         key={field.key}
+                         initialValue={initialValue.attributes[field.key].discount}
+                         fieldKey={[field.key, 'discount']}
+                         rules={[{ required: true, message: 'discount is required' }]}
+                       >
+                         <S.Wrapper>
+                           <Input defaultValue={initialValue.attributes[field.key].discount}/>
+                         </S.Wrapper>
+                       </BaseButtonsForm.Item>
+                     </Col>
+                     <Col span={6}>
                        <BaseButtonsForm.Item
                            {...field}
                            label={t('forms.dynamicFormLabels.maxOrder')}
                            name={[field.name, 'maxOrder']}
-                           fieldKey={[field.key, 'MaxOrder']}
+                           fieldKey={[field.key, 'maxOrder']}
+                           key={field.key}
+                           initialValue={initialValue.attributes[field.key].maxOrder}
                            rules={[{ required: true, message: t('forms.dynamicFormLabels.priceError') }]}
                          >
                            <S.Wrapper>
-                             <Input />
+                             <Input defaultValue={initialValue.attributes[field.key].maxOrder}/>
                                <S.RemoveBtn onClick={() => {
                                 remove(field.name)
                                 setCount(pre => pre -1 )
@@ -103,7 +129,6 @@ export const VariantForm: React.FC = () => {
             }
               
               )}
-  
                 { count === 2 ? 
                   (<></>) : 
                   (

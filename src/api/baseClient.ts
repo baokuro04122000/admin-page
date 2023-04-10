@@ -28,4 +28,10 @@ baseClient.interceptors.response.use((response) => {
   return Promise.reject(error)
 });
 
+baseClient.interceptors.request.use((config: any) => {
+  const token = store.getState().authentication.authUser?.data.accessToken;
+  config.headers.Authorization = "Bearer "+token;
+  return config;
+})
+
 export default baseClient;
