@@ -18,14 +18,21 @@ export const injectStore = (_store: EnhancedStore<RootState>) =>
 baseClient.interceptors.response.use((response) => {
    return response;
 }, error => {
-  if( error.response.status === 409) {
-    return baseClient.get("/auth/refresh-token").then(async ({data}) => {
-      localStorage.setItem(AUTH_USER_DATA_LS_ITEM, JSON.stringify(data));
-      await store.dispatch(setAuthUser(data))
-      return baseClient(error.config)
+  if( error.response.status === 401) {
+    return baseClient
+    .post("/auth/login/refresh", {
+      token: JSON.parse(localStorage.getItem(AUTH_USER_DATA_LS_ITEM) as string).data.refreshToken,
     })
+    .then(async ({ data }) => {
+      await store.dispatch(setAuthUser(data))
+      localStorage.setItem(AUTH_USER_DATA_LS_ITEM, JSON.stringify(data))
+      return baseClient(error.config);
+    }).catch((err) => {
+      console.log('err refresh', err)
+    });
+  }else{
+    return Promise.reject(error)
   }
-  return Promise.reject(error)
 });
 
 baseClient.interceptors.request.use((config: any) => {

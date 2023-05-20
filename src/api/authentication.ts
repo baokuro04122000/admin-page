@@ -39,3 +39,7 @@ export const sendEmailAgain = (userId: string) => {
 export const registerSellerRequest = () => {
   return authApiFactory.authSellerRegisterRequestGet()
 }
+
+export const signUpUser = (body: any) => {
+  return authApiFactory.authSignupPost(body)
+}

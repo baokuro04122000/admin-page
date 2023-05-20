@@ -50,7 +50,7 @@ export const useUploadProductPictures = ({t, token, login=false, fileListDefault
         `${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/proof?login=${login}`,
         formData, {
         headers: {
-          'Authorization': token,
+          'Authorization': token as string,
           'Content-Type': 'multipart/form-data',
         },
       });

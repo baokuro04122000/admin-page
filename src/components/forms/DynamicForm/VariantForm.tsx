@@ -52,10 +52,10 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                         name={[field.name, 'type']}
                         label={t('forms.dynamicFormLabels.productType')}
                         key={field.key}
-                        initialValue={initialValue.attributes[field.key].type}
+                        initialValue={initialValue.attributes[field.key]?.type}
                         rules={[{ required: true, message: t('forms.dynamicFormLabels.productTypeRequired') }]}
                       >
-                        <Select options={types} defaultValue={initialValue.attributes[field.key].type}/>
+                        <Select options={types} defaultValue={initialValue.attributes[field.key]?.type}/>
                       </BaseButtonsForm.Item>
                     </Col>
                     <Col span={12}>
@@ -64,11 +64,11 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                           label={t('forms.dynamicFormLabels.quantity')}
                           name={[field.name, 'quantity']}
                           fieldKey={[field.key, 'quantity']}
-                          initialValue={initialValue.attributes[field.key].quantity}
+                          initialValue={initialValue.attributes[field?.key]?.quantity}
                           rules={[{ required: true, message: t('forms.dynamicFormLabels.quantityError') }]}
                         >
                           <S.Wrapper>
-                            <Input defaultValue={initialValue.attributes[field.key].quantity} />
+                            <Input defaultValue={initialValue.attributes[field.key]?.quantity} />
                           </S.Wrapper>
                         </BaseButtonsForm.Item>
                     </Col>
@@ -80,12 +80,12 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                          label={t('forms.dynamicFormLabels.price')}
                          name={[field.name, 'price']}
                          fieldKey={[field.key, 'price']}
-                         initialValue={initialValue.attributes[field.key].price}
+                         initialValue={initialValue.attributes[field.key]?.price}
                          key={field.key}
                          rules={[{ required: true, message: t('forms.dynamicFormLabels.priceError') }]}
                        >
                          <S.Wrapper>
-                           <Input defaultValue={initialValue.attributes[field.key].price}/>
+                           <Input defaultValue={initialValue.attributes[field.key]?.price}/>
                          </S.Wrapper>
                        </BaseButtonsForm.Item>
                      </Col>
@@ -95,12 +95,12 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                          label={'Discount'}
                          name={[field.name, 'discount']}
                          key={field.key}
-                         initialValue={initialValue.attributes[field.key].discount}
+                         initialValue={initialValue.attributes[field.key]?.discount}
                          fieldKey={[field.key, 'discount']}
                          rules={[{ required: true, message: 'discount is required' }]}
                        >
                          <S.Wrapper>
-                           <Input defaultValue={initialValue.attributes[field.key].discount}/>
+                           <Input defaultValue={initialValue.attributes[field.key]?.discount}/>
                          </S.Wrapper>
                        </BaseButtonsForm.Item>
                      </Col>
@@ -111,11 +111,11 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                            name={[field.name, 'maxOrder']}
                            fieldKey={[field.key, 'maxOrder']}
                            key={field.key}
-                           initialValue={initialValue.attributes[field.key].maxOrder}
+                           initialValue={initialValue.attributes[field.key]?.maxOrder}
                            rules={[{ required: true, message: t('forms.dynamicFormLabels.priceError') }]}
                          >
                            <S.Wrapper>
-                             <Input defaultValue={initialValue.attributes[field.key].maxOrder}/>
+                             <Input defaultValue={initialValue.attributes[field.key]?.maxOrder}/>
                                <S.RemoveBtn onClick={() => {
                                 remove(field.name)
                                 setCount(pre => pre -1 )

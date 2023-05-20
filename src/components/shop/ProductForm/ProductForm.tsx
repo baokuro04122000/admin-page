@@ -114,7 +114,7 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            {/* <CategoryItem /> */}
+            <CategoryItem />
           </Col>
  
           <Col xs={24} md={24}>
@@ -191,7 +191,7 @@ export const ProductForm: React.FC = () => {
           </Col>
 
           <Col span={24}>
-            <VariantForm />
+            <VariantForm initialValue={{attributes:[]}}/>
           </Col>
 
         </Row>

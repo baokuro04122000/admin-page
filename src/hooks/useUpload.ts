@@ -5,13 +5,14 @@ import { useState } from "react"
 import axios from "axios"
 export type PropsUpload = {
   t: any;
-  token: string;
+  token?: string;
   login?: boolean;
   name?: string;
   fileListDefault?: any;
+  userSignUp?: boolean
 }
 
-export const useUploadLogo = ({t, token, login=false, name}: PropsUpload) => {
+export const useUploadLogo = ({t, token, login=false, name, userSignUp}: PropsUpload) => {
   const [logo, setLogo] = useState<string>('')
   const [logoLoading, setLogoLoading] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([])
@@ -48,7 +49,7 @@ export const useUploadLogo = ({t, token, login=false, name}: PropsUpload) => {
         `${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/image?login=${login}`,
         formData, {
         headers: {
-          'Authorization': `${decodeURIComponent(token)}`,
+          'Authorization': `${decodeURIComponent(token as string)}`,
           'Content-Type': 'multipart/form-data',
         },
       });

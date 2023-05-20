@@ -197,5 +197,9 @@ export default createGlobalStyle`
   .ant-menu-inline, .ant-menu-vertical {
     border-right: 0;
   }
+
+  .rootClassName {
+    
+  }
   // notifications end
 `;

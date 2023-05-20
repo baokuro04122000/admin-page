@@ -12,7 +12,7 @@ export const editCategory = (slug: string, category: CategoryRequest) => {
   return adminApiFactory.categoryEditPut(slug, category)
 }
 
-export const getUserList = () => {
+export const getUserList = (params: any) => {
   return adminApiFactory.adminUserAllGet()
 }
 

@@ -6,22 +6,15 @@ import {
 
 } from "../../constants/routes";
 import { createSelector } from "@reduxjs/toolkit";
-import jwtDecode from "jwt-decode";
 import { RootState } from "..";
-import { JWTPayload } from "../../interfaces/authentication";
 
 export const selectAuthentication = (state: RootState) => state.authentication;
 
 export const selectIsAuth = createSelector(selectAuthentication, (auth) => {
   const token = auth.authUser?.data.accessToken;
+  console.log('token', token)
   if (!token) return false;
-  const { exp } = jwtDecode<JWTPayload>(token);
-  const now = new Date().getTime();
-  if (now > exp * 1000) { 
-    return false;
-  }else{
-    return true
-  }
+  return true;
 });
 
 export const selectIsAdmin = createSelector(selectAuthentication, (auth) => {

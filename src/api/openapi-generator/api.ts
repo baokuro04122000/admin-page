@@ -124,6 +124,25 @@ export interface AnnouceSuccessAuthData {
 /**
  * 
  * @export
+ * @interface CancelOrderRequest
+ */
+export interface CancelOrderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CancelOrderRequest
+     */
+    'orderItemId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CancelOrderRequest
+     */
+    'reason'?: string;
+}
+/**
+ * 
+ * @export
  * @interface CategoriesResponse
  */
 export interface CategoriesResponse {
@@ -606,6 +625,12 @@ export interface OrderDetailsProduct {
      * @memberof OrderDetailsProduct
      */
     'meta'?: OrderDetailsUserMeta;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof OrderDetailsProduct
+     */
+    'variants'?: Array<object>;
 }
 /**
  * 
@@ -3631,6 +3656,111 @@ export class ProductApi extends BaseAPI {
 export const SellerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * update status of order
+         * @param {CancelOrderRequest} [cancelOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerCancelPut: async (cancelOrderRequest?: CancelOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/order/seller/cancel`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cancelOrderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * API get all orders that it not done
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerNotDoneGet: async (page?: number, limit?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/order/seller/not-done`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerUpdateStatusPut: async (updateStatusOrderRequest?: UpdateStatusOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/order/seller/update-status`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateStatusOrderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Add product
          * @param {AddProductRequest} [addProductRequest] 
          * @param {*} [options] Override http request option.
@@ -3734,78 +3864,6 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * API get all orders that it not done
-         * @param {number} [currentPage] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerOrdersProcessingGet: async (currentPage?: number, limit?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/seller/orders-processing`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (currentPage !== undefined) {
-                localVarQueryParameter['currentPage'] = currentPage;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * update status of order
-         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerStatusOrderPut: async (updateStatusOrderRequest?: UpdateStatusOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/seller/status-order`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateStatusOrderRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3816,6 +3874,37 @@ export const SellerApiAxiosParamCreator = function (configuration?: Configuratio
 export const SellerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SellerApiAxiosParamCreator(configuration)
     return {
+        /**
+         * update status of order
+         * @param {CancelOrderRequest} [cancelOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderSellerCancelPut(cancelOrderRequest?: CancelOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderSellerCancelPut(cancelOrderRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * API get all orders that it not done
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderSellerNotDoneGet(page?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderSellerNotDoneGet(page, limit, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderSellerUpdateStatusPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderSellerUpdateStatusPut(updateStatusOrderRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Add product
          * @param {AddProductRequest} [addProductRequest] 
@@ -3847,27 +3936,6 @@ export const SellerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productUpdatePut(slug, addProductRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * API get all orders that it not done
-         * @param {number} [currentPage] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerOrdersProcessingGet(currentPage, limit, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * update status of order
-         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnouceSuccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sellerStatusOrderPut(updateStatusOrderRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -3878,6 +3946,34 @@ export const SellerApiFp = function(configuration?: Configuration) {
 export const SellerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SellerApiFp(configuration)
     return {
+        /**
+         * update status of order
+         * @param {CancelOrderRequest} [cancelOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerCancelPut(cancelOrderRequest?: CancelOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.orderSellerCancelPut(cancelOrderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API get all orders that it not done
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerNotDoneGet(page?: number, limit?: number, options?: any): AxiosPromise<OrderList> {
+            return localVarFp.orderSellerNotDoneGet(page, limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update status of order
+         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderSellerUpdateStatusPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
+            return localVarFp.orderSellerUpdateStatusPut(updateStatusOrderRequest, options).then((request) => request(axios, basePath));
+        },
         /**
          * Add product
          * @param {AddProductRequest} [addProductRequest] 
@@ -3906,25 +4002,6 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
         productUpdatePut(slug?: string, addProductRequest?: AddProductRequest, options?: any): AxiosPromise<AnnouceSuccess> {
             return localVarFp.productUpdatePut(slug, addProductRequest, options).then((request) => request(axios, basePath));
         },
-        /**
-         * API get all orders that it not done
-         * @param {number} [currentPage] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: any): AxiosPromise<OrderList> {
-            return localVarFp.sellerOrdersProcessingGet(currentPage, limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * update status of order
-         * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: any): AxiosPromise<AnnouceSuccess> {
-            return localVarFp.sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -3935,6 +4012,40 @@ export const SellerApiFactory = function (configuration?: Configuration, basePat
  * @extends {BaseAPI}
  */
 export class SellerApi extends BaseAPI {
+    /**
+     * update status of order
+     * @param {CancelOrderRequest} [cancelOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public orderSellerCancelPut(cancelOrderRequest?: CancelOrderRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).orderSellerCancelPut(cancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API get all orders that it not done
+     * @param {number} [page] 
+     * @param {number} [limit] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public orderSellerNotDoneGet(page?: number, limit?: number, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).orderSellerNotDoneGet(page, limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update status of order
+     * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SellerApi
+     */
+    public orderSellerUpdateStatusPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig) {
+        return SellerApiFp(this.configuration).orderSellerUpdateStatusPut(updateStatusOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Add product
      * @param {AddProductRequest} [addProductRequest] 
@@ -3967,29 +4078,6 @@ export class SellerApi extends BaseAPI {
      */
     public productUpdatePut(slug?: string, addProductRequest?: AddProductRequest, options?: AxiosRequestConfig) {
         return SellerApiFp(this.configuration).productUpdatePut(slug, addProductRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * API get all orders that it not done
-     * @param {number} [currentPage] 
-     * @param {number} [limit] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SellerApi
-     */
-    public sellerOrdersProcessingGet(currentPage?: number, limit?: number, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerOrdersProcessingGet(currentPage, limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * update status of order
-     * @param {UpdateStatusOrderRequest} [updateStatusOrderRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SellerApi
-     */
-    public sellerStatusOrderPut(updateStatusOrderRequest?: UpdateStatusOrderRequest, options?: AxiosRequestConfig) {
-        return SellerApiFp(this.configuration).sellerStatusOrderPut(updateStatusOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

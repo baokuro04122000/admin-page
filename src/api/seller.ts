@@ -16,9 +16,16 @@ export const deleteProduct = (id: string) => {
 }
 
 export const orderList = (currentPage: number, limit: number) => {
-  return sellerApiFactory.sellerOrdersProcessingGet(currentPage, limit)
+  return sellerApiFactory.orderSellerNotDoneGet(currentPage, limit)
 }
 
 export const updateStatusOrder = (orderId: string) => {
-  return sellerApiFactory.sellerStatusOrderPut({orderId})
+  return sellerApiFactory.orderSellerUpdateStatusPut({orderId})
+}
+
+export const cancelOrderBySeller = (orderItemId: string, reason: string) => {
+  return sellerApiFactory.orderSellerCancelPut({
+    orderItemId: orderItemId,
+    reason
+  })
 }

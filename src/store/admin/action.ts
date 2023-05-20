@@ -32,11 +32,11 @@ export const actionEditCategory = (slug: string, category: CategoryRequest)
   }
 }
 
-export const actionGetUserList = ()
+export const actionGetUserList = (params: any)
 : AppThunk<Promise<void>> => {
   return async (dispatch) => {
     try {
-      const {data} = await getUserList();
+      const {data} = await getUserList(params);
       console.log('users:::', data)
       dispatch(setUserList(data.data))
     } catch (error) {

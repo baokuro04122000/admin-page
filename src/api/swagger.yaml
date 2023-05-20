@@ -933,14 +933,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
                 
-  /seller/orders-processing:
+  /order/seller/not-done:
     get:
       tags:
         - Seller
       description: API get all orders that it not done
       parameters:
         - in: query
-          name: currentPage
+          name: page
           schema:
             type: number
         - in: query
@@ -969,7 +969,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/ErrorResponse"
                   
-  /seller/status-order:
+  /order/seller/update-status:
     put:
       tags:
         - Seller
@@ -979,6 +979,43 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateStatusOrderRequest"
+      responses:
+        "200":
+          description: Deleting is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
+  /order/seller/cancel:
+    put:
+      tags:
+        - Seller
+      description: update status of order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CancelOrderRequest"
       responses:
         "200":
           description: Deleting is success
@@ -1945,6 +1982,10 @@ components:
                   type: number
                 totalCancel:
                   type: number
+            variants:
+              type: array
+              items:
+                type: object
     
     OrderDetailsShipping:
       type: object
@@ -2031,3 +2072,31 @@ components:
       properties:
         orderId:
           type: string
+          
+    CancelOrderRequest:
+      type: object
+      properties:
+        orderItemId:
+          type: string
+        reason:
+          type: string
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+          
+          

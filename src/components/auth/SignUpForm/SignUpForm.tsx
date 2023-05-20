@@ -17,7 +17,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useAppDispatch } from '../../../store'
 import { LOGIN_PATH } from '../../../constants/routes'
 import { 
-  actionCheckSellerRegister,
   actionSellerRegister,
   saveFile
 } from '../../../store/authentication/action'
@@ -25,7 +24,7 @@ import {
 import { SellerRegisterRequest } from '@app/api/openapi-generator';
 import { PropsUpload, useUploadLogo } from '../../../hooks/useUpload';
 import { RcFile, UploadChangeParam, UploadProps } from 'antd/lib/upload';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 interface SignUpFormData {
   shopName: string;
   shopPhone: string;
@@ -81,7 +80,7 @@ export const useUploadProof = ({t, token, login=false}: PropsUpload) => {
         `${process.env.SERVER_UPLOAD ? process.env.SERVER_UPLOAD : "http://localhost:9000"}/api/upload/proof?login=${login}`,
         formData, {
         headers: {
-          'Authorization': `${decodeURIComponent(token)}`,
+          'Authorization': `${decodeURIComponent(token as string)}`,
           'Content-Type': 'multipart/form-data',
         },
       });

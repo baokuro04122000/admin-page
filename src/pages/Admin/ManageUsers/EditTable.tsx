@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Popconfirm, Form, Space, InputRef } from 'antd';
+import { Popconfirm, Form, Space, InputRef, Tag } from 'antd';
 
 import { Pagination } from '../../../api/table.api';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { Button } from '../../../components/common/buttons/Button/Button';
 import { Table } from 'components/common/Table/Table';
 import { EditableCell } from 'components/common/tables/editableTable/EditableCell';
-import { actionAddCategory, actionBlockUser, actionEditCategory, actionGetUserList } from 'store/admin/action';
+import { actionAddCategory, actionBlockUser, actionEditCategory, actionGetUserList, actionUnBlockUser } from 'store/admin/action';
 import { Modal } from 'components/Modal/Modal'
 import { Input } from 'components/common/inputs/Input/Input';
 import { BaseButtonsForm } from 'components/common/forms/BaseButtonsForm/BaseButtonsForm';
@@ -54,7 +54,7 @@ export const EditableTable: React.FC = () => {
   const dispatch =  useAppDispatch();
 
   useEffect(() => {
-    dispatch(actionGetUserList())
+    dispatch(actionGetUserList({}))
     return () => {
       dispatch(setUserList(undefined))
     }
@@ -70,13 +70,13 @@ export const EditableTable: React.FC = () => {
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
     const listSearch = new Map<any, any>([
-      ['name', {page: 1, sellerId: authUser?.data?.seller?._id, limit: 5, name: selectedKeys[0]}], 
-      ['email', {page: 1, sellerId: authUser?.data?.seller?._id, limit: 5, author: selectedKeys[0]}],
+      ['name', {page: 1, name: selectedKeys[0], limit: 5}], 
+      ['email', {page: 1, email: selectedKeys[0], limit: 5}],
       ])
     if(selectedKeys[0]){
-      dispatch(actionGetProducts(listSearch.get(dataIndex)))
+      dispatch(actionGetUserList(listSearch.get(dataIndex)))
     }else {
-      dispatch(actionGetProducts({page: 1, sellerId: authUser?.data?.seller?._id, limit: 5}))
+      dispatch(actionGetUserList({}))
     }
   };
 
@@ -120,16 +120,6 @@ export const EditableTable: React.FC = () => {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
     render: (text) =>
       searchedColumn === dataIndex ? (
         <Highlighter
@@ -143,9 +133,20 @@ export const EditableTable: React.FC = () => {
       ),
   });
 
-  const handleBlockAccount =async (userId: string) => {
+  const handleBlockAccount = async (userId: string) => {
     try {
       const message = await dispatch(actionBlockUser(userId));
+      dispatch(actionGetUserList({}))
+      notificationController.success({message: message, duration: 5})
+    } catch (error: any) {
+      notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
+    }
+  }
+
+  const handleUnBlockAccount = async (userId: string) => {
+    try {
+      const message = await dispatch(actionUnBlockUser(userId));
+      dispatch(actionGetUserList({}))
       notificationController.success({message: message, duration: 5})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
@@ -163,7 +164,7 @@ export const EditableTable: React.FC = () => {
     setLoading(true)
     // eslint-disable-next-line no-unsafe-optional-chaining
     if(users){
-      const list = users.map((category: any) => ({...category, key: category._id}))
+      const list = users.map((user: any) => ({...user, key: user._id}))
       setPagination({...pagination})
       setLoading(false)
       return list
@@ -173,14 +174,13 @@ export const EditableTable: React.FC = () => {
     }
   }, [users])
 
-  console.log("user list:::", users)
   const cancel = () => {
     setEditingKey('');
   };
 
   const handlePagination = async (page: number, pageSize: number) => {
     try {
-      await dispatch(actionGetUserList())
+      await dispatch(actionGetUserList({}))
       setPagination({...pagination, current: page})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR", duration: 5})
@@ -199,24 +199,42 @@ export const EditableTable: React.FC = () => {
     </>
     },
     {
+      key:'id',
+      title: 'User Id',
+      dataIndex: '_id',
+      render: (id: any) => <span>{id}</span>,
+    },
+    {
       key:'name',
       title: 'Name',
-      dataIndex: 'info',
-      render: (info: any) => <span>{info.name}</span>,
+      dataIndex: 'name',
+      render: (name: any, record: any) => <span>{name}</span>,
       ...getColumnSearchProps('name'),
     },
     {
       key:'email',
       title: 'Email',
-      dataIndex: 'local',
-      render: (local: any) => <span>{local.email}</span>,
+      dataIndex: 'email',
+      render: (email: any) => {
+        return <span>{email}</span>
+      },
       ...getColumnSearchProps('email'),
     },
     {
       key:'status',
       title: 'Status',
       dataIndex: 'status',
-      render: (status: string) => <span>{status}</span>
+      render: (status: string) => {
+        return (
+          <>
+            { status === 'normal' ?
+              (<Tag color="green">{status}</Tag>)
+             :
+             (<Tag color="magenta">{status}</Tag>)}
+            
+          </>
+        )
+      }
     },
     {
       key:'createdAt',
@@ -242,11 +260,23 @@ export const EditableTable: React.FC = () => {
                 Details
               </Button>
               
-              <Popconfirm title={'Do you wanna block this account'} onConfirm={() => handleBlockAccount(_id)}>
+              {record.status === 'normal' ? (
+                <Popconfirm title={'Do you wanna block this account'} onConfirm={() => handleBlockAccount(_id)}>
+                
                 <Button type="default" danger>
                   Block
                 </Button>
               </Popconfirm>
+
+                ): (
+                <Popconfirm title={'Do you wanna unblock this account'} onConfirm={() => handleUnBlockAccount(_id)}>
+                
+                <Button type="ghost">
+                  UnBlock
+                </Button>
+              </Popconfirm>
+                )}
+              
             </>
           
           </Space>

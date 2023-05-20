@@ -17,7 +17,8 @@ import {
   checkTokenSellerRegister,
   deleteFileList,
   sellerRegister,
-  sendEmailAgain
+  sendEmailAgain,
+  signUpUser
 } from "../../api/authentication";
 import { ResponseUploadFile } from '../../interfaces/authentication'
 import { RcFile } from "antd/lib/upload";
@@ -270,6 +271,18 @@ export const saveFile = async ({fileUrl, token, login=false, type='images'}: Sav
       }
     )
     return data
+  } catch (error) {
+    console.log(error)
+    const err = error as AxiosError
+    if(err.response?.data) throw err.response?.data;
+    throw err.message
+  }
+}
+
+export const actionSignUpUser = async (body:any) => {
+  try {
+    const { data } = await signUpUser(body)
+    return data.message
   } catch (error) {
     console.log(error)
     const err = error as AxiosError

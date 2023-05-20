@@ -38,6 +38,7 @@ import Logout from "../pages/Logout";
 import ConfirmEmail from "../pages/ForgotPassword/ConfirmEmail";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import SignUp from "../pages/SignUp"
+import SignUpUser from "../pages/UserSignUp"
 import AddProduct from "../pages/AddProduct"
 import EditProduct from "../pages/EditProduct"
 import Product from "../pages/Products"
@@ -71,6 +72,10 @@ const unauthRoutes: RouteConfig = {
     {
       path: SIGNUP_SUBPATH,
       element:<SignUp/>
+    },
+    {
+      path: 'sign-up',
+      element:<SignUpUser/>
     }
   ]
 };
@@ -97,6 +102,10 @@ const adminRoutes: RouteConfig = {
       path: ADMIN_UNAUTHORIZED_SUBPATH,
       element: <Unauthorized />,
     },
+    {
+      path:LOGOUT_SUBPATH,
+      element: <Logout />
+    }
   ],
 };
 
