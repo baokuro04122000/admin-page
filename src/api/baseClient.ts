@@ -18,6 +18,7 @@ export const injectStore = (_store: EnhancedStore<RootState>) =>
 baseClient.interceptors.response.use((response) => {
    return response;
 }, error => {
+  console.log('err:::', error)
   if( error.response.status === 401) {
     return baseClient
     .post("/auth/login/refresh", {
