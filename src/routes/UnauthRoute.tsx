@@ -25,7 +25,7 @@ const UnauthRoute: FC<Props> = () => {
   
   if (!isAuth) return <Outlet />;
   if (isUser) return < Navigate to={USER_PATH} />;
-  if (isSeller) return < Navigate to={SELLER_DASHBOARD_PATH} />;
+  if (isSeller) return < Navigate to={SELLER_DASHBOARD_PATH+'dashboard'} />;
   if (isAdmin) return < Navigate to={ADMIN_PATH} />;
   if(isShipper) return < Navigate to={SHIPPER_DASHBOARD_PATH+"/"+SHIPPER_DASHBOARD_ORDERS_SUBPATH} />
   return  <Outlet />

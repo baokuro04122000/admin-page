@@ -85,14 +85,15 @@ export const BasicTable: React.FC = () => {
             : pagination.current
           : 1 
           , sellerId: authUser?.data?.seller?._id
-          , limit: 5}))  
+          , limit: 5,
+        order:'desc'}))  
         notificationController.success({message: deleted ? deleted : '', duration: 3})
         return
       }
       await dispatch(actionGetProducts({page: 
         pagination.current 
         , sellerId: authUser?.data?.seller?._id
-        , limit: 5}))  
+        , limit: 5,  order:'desc'}))  
       notificationController.success({message: deleted ? deleted : '', duration: 3})
       return
     } catch (error: any) {
@@ -103,7 +104,7 @@ export const BasicTable: React.FC = () => {
 
   const handlePagination = async (page: number, pageSize: number) => {
     try {
-      await dispatch(actionGetProducts({page: page, sellerId: authUser?.data?.seller?._id, limit: 5}))
+      await dispatch(actionGetProducts({page: page, sellerId: authUser?.data?.seller?._id, limit: 5,  order:'desc'}))
       setPagination({...pagination, current: page})
     } catch (error: any) {
       notificationController.error({message: error ? error.errors.message : "NETWORK ERROR"})

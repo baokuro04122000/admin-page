@@ -6,6 +6,7 @@ import {
   setProduct,
   setOrders,
   setOrdersShipping,
+  setOrdersDone,
 } from "./slice";
 import {
   getAllCategories,
@@ -20,8 +21,14 @@ import {
   orderList,
   updateStatusOrder,
   cancelOrderBySeller,
+  allOrderDoneBySeller,
 } from "../../api/seller";
-import { ordersShipping, updateStatusOrderShipping } from "../../api/shipper";
+import {
+  cancelOrderShipping,
+  ordersShipping,
+  rejectOrderShipping,
+  updateStatusOrderShipping,
+} from "../../api/shipper";
 import { AddProductRequest } from "../../api/openapi-generator";
 import { notificationController } from "../../controllers/notificationController";
 import { RequestSearchParams } from "../../interfaces/api";
@@ -55,7 +62,7 @@ export const actionAddProduct = (
 };
 
 export const actionGetProducts = (
-  requestParams: RequestSearchParams
+  requestParams: any
 ): AppThunk<Promise<void>> => {
   return async (dispatch) => {
     try {
@@ -129,6 +136,7 @@ export const actionDeleteProduct = (
 ): AppThunk<Promise<string | undefined>> => {
   return async () => {
     try {
+      console.log('productId', id);
       const { data } = await deleteProduct(id);
       return data.message;
     } catch (error) {
@@ -213,6 +221,55 @@ export const actionCancelOrderBySeller = (
     try {
       const { data } = await cancelOrderBySeller(orderItemId, reason);
       return data.message as string;
+    } catch (error) {
+      console.log(error);
+      const err = error as AxiosError;
+      throw err.response?.data;
+    }
+  };
+};
+
+export const actionCancelOrderByShipper = (
+  orderItemId: string,
+  reason: string
+): AppThunk<Promise<string>> => {
+  return async () => {
+    try {
+      const { data } = await cancelOrderShipping(orderItemId, reason);
+      return data.message as string;
+    } catch (error) {
+      console.log(error);
+      const err = error as AxiosError;
+      throw err.response?.data;
+    }
+  };
+};
+
+export const actionRejectOrderByShipper = (
+  orderItemId: string,
+  reason: string
+): AppThunk<Promise<string>> => {
+  return async () => {
+    try {
+      const { data } = await rejectOrderShipping(orderItemId, reason);
+      return data.message as string;
+    } catch (error) {
+      console.log(error);
+      const err = error as AxiosError;
+      throw err.response?.data;
+    }
+  };
+};
+
+export const actionAllOrderDoneBySeller = ({
+  currentPage,
+  limit,
+}: any): AppThunk<Promise<void>> => {
+  return async (dispatch) => {
+    try {
+      const { data } = await allOrderDoneBySeller(currentPage, limit);
+      console.log('data::', data)
+      dispatch(setOrdersDone(data.data));
     } catch (error) {
       console.log(error);
       const err = error as AxiosError;

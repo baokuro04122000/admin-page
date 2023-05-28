@@ -169,6 +169,19 @@ export const BasicTable: React.FC = () => {
         },
       },
       {
+        key: "variant",
+        title: 'Variant',
+        dataIndex: "items",
+        render: (order: any, payload: any) => {
+          console.log('check::', order)
+          console.log('test', payload?.product?.variants?.find((v:any) => v._id === order?.at(0)?.variant))
+          return (
+          <span>{
+            payload?.product?.variants?.find((v:any) => v._id === order?.at(0)?.variant).type === 'kindle' ? 'E-Book' : 'HardBook'
+            }</span>
+        )},
+      },
+      {
         key: "quantity",
         title: t("order.quantity"),
         dataIndex: "items",
@@ -187,7 +200,7 @@ export const BasicTable: React.FC = () => {
         title: t("order.meta"),
         dataIndex: "user",
         width: "8%",
-        render: (user: OrderDetailsUser) => (
+        render: (user: any) => (
           <>
             <span>
               {t("order.totalBuy")} {user.meta?.totalBuy}
@@ -195,6 +208,10 @@ export const BasicTable: React.FC = () => {
             <br />
             <span>
               {t("order.totalCancel")} {user.meta?.totalCancel}
+            </span>
+            <br />
+            <span>
+              Reject: {user.meta?.totalOrderReject}
             </span>
           </>
         ),

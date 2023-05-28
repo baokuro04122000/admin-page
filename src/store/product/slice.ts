@@ -10,7 +10,8 @@ const initialState: ProductSlice = {
   products: undefined,
   product: undefined,
   orders: undefined,
-  ordersShipping: undefined
+  ordersShipping: undefined,
+  ordersDone: undefined,
 };
 
 export const productSlice = createSlice({
@@ -34,6 +35,9 @@ export const productSlice = createSlice({
     },
     setOrdersShipping(state, action: PayloadAction<OrderListShipping | undefined>){
       state.ordersShipping = action.payload
+    },
+    setOrdersDone(state, action: PayloadAction<any>){
+      state.ordersDone = action.payload
     }
   },
 });
@@ -44,7 +48,8 @@ export const {
   setProducts,
   setProduct,
   setOrders,
-  setOrdersShipping
+  setOrdersShipping,
+  setOrdersDone
 } = productSlice.actions;
 
 export default productSlice.reducer;

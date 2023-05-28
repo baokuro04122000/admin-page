@@ -8,5 +8,6 @@ export interface ProductSlice {
   products: any;
   product: any;
   orders: undefined | OrderList;
-  ordersShipping: undefined | OrderListShipping
+  ordersShipping: undefined | OrderListShipping,
+  ordersDone: any
 }

@@ -690,6 +690,10 @@ paths:
             type: number
           description: the current page of web site
         - in: query
+          name: order
+          schema:
+            type: string
+        - in: query
           name: price[gte]
           schema:
             type: number
@@ -1042,15 +1046,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+                
+  /order/seller/done:
+    get:
+      tags:
+        - Seller
+      description: API get all orders that done
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+        - in: query
+          name: limit
+          schema:
+            type: number
+      responses:
+        "200":
+          description: all order done
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
-  /shipper/all-orders-shipping:
+  /order/shipper/get-order:
     get:
       tags:
         - Shipper
       description: API get all orders of shipper
       parameters:
         - in: query
-          name: currentPage
+          name: page
           schema:
             type: number
         - in: query
@@ -1083,7 +1128,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /shipper/status-order:
+  /order/shipper/update-order:
     put:
       tags:
         - Shipper
@@ -1119,7 +1164,81 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  
+  /order/shipper/cancel-order:
+    put:
+      tags:
+        - Shipper
+      description: cancel of order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CancelOrderRequest"
+      responses:
+        "200":
+          description: updating is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         
+  /order/shipper/reject-order:
+    put:
+      tags:
+        - Shipper
+      description: reject of order by user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CancelOrderRequest"
+      responses:
+        "200":
+          description: updating is success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnnouceSuccess"
+        "403":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  
   /category/add:
     post:
       tags:
@@ -1994,9 +2113,6 @@ components:
           type: string
         product:
           type: object
-          properties:
-            name:
-              type: string
         totalPaid:
           type: number
         quantity:
@@ -2070,7 +2186,7 @@ components:
     UpdateStatusOrderRequest:
       type: object
       properties:
-        orderId:
+        orderItemId:
           type: string
           
     CancelOrderRequest:

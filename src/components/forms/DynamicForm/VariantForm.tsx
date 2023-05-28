@@ -11,7 +11,7 @@ import * as S from './VariantForm.styles';
 
 
 export const VariantForm: React.FC<any> = ({ initialValue }) => {
-  const [count, setCount] = useState(initialValue.attributes.length as number);
+  const [count, setCount] = useState(initialValue?.attributes?.length as number);
   const [flag, setFlag] = useState(true);
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -64,11 +64,11 @@ export const VariantForm: React.FC<any> = ({ initialValue }) => {
                           label={t('forms.dynamicFormLabels.quantity')}
                           name={[field.name, 'quantity']}
                           fieldKey={[field.key, 'quantity']}
-                          initialValue={initialValue.attributes[field?.key]?.quantity}
+                          initialValue={initialValue?.attributes[field?.key]?.quantity}
                           rules={[{ required: true, message: t('forms.dynamicFormLabels.quantityError') }]}
                         >
                           <S.Wrapper>
-                            <Input defaultValue={initialValue.attributes[field.key]?.quantity} />
+                            <Input defaultValue={initialValue?.attributes[field.key]?.quantity} />
                           </S.Wrapper>
                         </BaseButtonsForm.Item>
                     </Col>

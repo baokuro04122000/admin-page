@@ -10,22 +10,10 @@ import { LoadingOutlined } from "@ant-design/icons";
 import * as Auth from "../../../layout/AuthLayout/AuthLayout.styles";
 import * as S from "./SignUpForm.styles";
 import { notificationController } from "../../../controllers/notificationController";
-import { FacebookIcon } from "../../../components/common/icons/FacebookIcon";
-import { LinkedinIcon } from "../../../components/common/icons/LinkedinIcon";
-import { Button } from "../../../components/common/buttons/Button/Button";
-import { UploadOutlined } from "@ant-design/icons";
-import { useAppDispatch } from "../../../store";
-import { LOGIN_PATH } from "../../../constants/routes";
 import {
-  actionSellerRegister,
   actionSignUpUser,
-  saveFile,
 } from "../../../store/authentication/action";
 
-import { SellerRegisterRequest } from "@app/api/openapi-generator";
-import { PropsUpload, useUploadLogo } from "../../../hooks/useUpload";
-import { RcFile, UploadChangeParam, UploadProps } from "antd/lib/upload";
-import axios, { AxiosError } from "axios";
 import { Select } from "components/common/selects/Select/Select";
 import { DatePicker } from "components/common/pickers/DatePicker";
 
@@ -42,10 +30,6 @@ const initValues = {
 export const SignUpForm: React.FC = () => {
   const { t } = useTranslation();
 
-  const { handleUploadLogoProps, logoLoading, logo } = useUploadLogo({
-    t,
-    name: "logo",
-  });
 
   const [isLoading, setLoading] = useState(false);
 
@@ -56,19 +40,18 @@ export const SignUpForm: React.FC = () => {
     const day = date.getDate().toString().padStart(2, '0'); 
     const year = date.getFullYear().toString();
     const dateStr = `${month}/${day}/${year}`;
-    console.log("check::", values);
     const user: any = {
       name: values.name,
       email: values.email,
       password: values.password,
-      avatar: logo.replace("temp", "images"),
+      avatar: "https://i.stack.imgur.com/l60Hf.png",
       gender: values.gender,
       birthDay: dateStr
     };
 
     try {
       await actionSignUpUser(user);
-      window.location.href = process.env.REACT_APP_BOOK_ECOMMERCE_HOST + '/auth/login'
+      window.location.href = process.env.REACT_APP_BOOK_ECOMMERCE_HOST + '/'
     } catch (error: any) {
       console.log(error);
       notificationController.error({
@@ -160,23 +143,6 @@ export const SignUpForm: React.FC = () => {
               />
             </Auth.FormItem>
           </Col>
-          <Col xs={24} md={8}>
-            <Auth.FormItem label={t("seller.logo")} name="logo">
-              <ImgCrop rotate={true}>
-                <Upload {...handleUploadLogoProps}>
-                  <Button
-                    type="default"
-                    icon={
-                      logoLoading ? <LoadingOutlined /> : <UploadOutlined />
-                    }
-                  >
-                    {t("seller.upload")}
-                  </Button>
-                </Upload>
-              </ImgCrop>
-            </Auth.FormItem>
-          </Col>
-
           <Col xs={24} md={24}>
             <Auth.FormItem
               label="Birth Date"
@@ -213,7 +179,7 @@ export const SignUpForm: React.FC = () => {
                 htmlType="submit"
                 loading={isLoading}
               >
-                {t("common.signUp")}
+                Sign Up
               </Auth.SubmitButton>
             </BaseForm.Item>
           </Col>
@@ -221,7 +187,7 @@ export const SignUpForm: React.FC = () => {
             <Auth.FooterWrapper>
               <Auth.Text>
                 {t("signup.alreadyHaveAccount")}{" "}
-                <Link to={process.env.REACT_APP_BOOK_ECOMMERCE_HOST + '/auth/login'}>
+                <Link to={process.env.REACT_APP_BOOK_ECOMMERCE_HOST + '/'}>
                   <Auth.LinkText>{t("common.here")}</Auth.LinkText>
                 </Link>
               </Auth.Text>

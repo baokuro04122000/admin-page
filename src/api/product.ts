@@ -17,8 +17,9 @@ export const getProducts = ({
   priceGt,
   priceGte,
   priceLt,
-  priceLte
-}: RequestSearchParams) => {
+  priceLte,
+  order
+}: any) => {
   return productApiFactory.productListGet(
     name, 
     limit, 
@@ -28,7 +29,8 @@ export const getProducts = ({
     priceGte,
     priceGt,
     priceLte,
-    priceLt)
+    priceLt,
+    order)
 }
 
 export const getSingleProduct = (slug: string) => {

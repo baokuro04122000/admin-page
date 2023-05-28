@@ -20,7 +20,7 @@ export const orderList = (currentPage: number, limit: number) => {
 }
 
 export const updateStatusOrder = (orderId: string) => {
-  return sellerApiFactory.orderSellerUpdateStatusPut({orderId})
+  return sellerApiFactory.orderSellerUpdateStatusPut({orderItemId: orderId})
 }
 
 export const cancelOrderBySeller = (orderItemId: string, reason: string) => {
@@ -28,4 +28,8 @@ export const cancelOrderBySeller = (orderItemId: string, reason: string) => {
     orderItemId: orderItemId,
     reason
   })
+}
+
+export const allOrderDoneBySeller = (page: number, limit: number) => {
+  return sellerApiFactory.orderSellerDoneGet(page, limit)
 }

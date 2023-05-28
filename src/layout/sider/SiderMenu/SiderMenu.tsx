@@ -45,18 +45,18 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed, page }) => {
       children?.some(({ url }) => url === location.pathname),
       );
       const defaultOpenKeys = openedSubmenu ? [openedSubmenu.key] : [];
-
+      console.log('default key', openedSubmenu)
       return {
         defaultOpenKeys,
         sidebarNavigation: sidebarNavigationSeller
       }
     }
     if(page === "shipper"){
-      const openedSubmenu = sidebarNavigationSeller.find(({ children }) =>
+      const openedSubmenu = sidebarNavigationShipper.find(({ children }) =>
       children?.some(({ url }) => url === location.pathname),
       );
       const defaultOpenKeys = openedSubmenu ? [openedSubmenu.key] : [];
-
+      console.log('default key', openedSubmenu)
       return {
         defaultOpenKeys,
         sidebarNavigation: sidebarNavigationShipper

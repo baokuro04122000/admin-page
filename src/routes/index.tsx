@@ -50,6 +50,7 @@ import AuthLayout from "../layout/AuthLayout/AuthLayout"
 import Login from "../pages/Login";
 import ManageCategory from '../pages/Admin/ManageCategory';
 import ManageUser from 'pages/Admin/ManageUsers';
+import Dashboard from 'pages/Dashboard';
 const NotFound = React.lazy(() => import("../pages/NotFound"));
 const Unauthorized = React.lazy(() => import("../pages/Unauthorized"));
 const unauthRoutes: RouteConfig = {
@@ -116,7 +117,7 @@ const sellerRoutes: RouteConfig = {
   children: [
     {
       path: SELLER_DASHBOARD_HOME_SUBPATH,
-      element: <Navigate to={SELLER_DASHBOARD_PRODUCTS_SUBPATH} />,
+      element: <Dashboard />,
     },
     {
       path: SELLER_DASHBOARD_PRODUCTS_SUBPATH,
